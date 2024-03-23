@@ -1,10 +1,11 @@
 <template>
-  <nav class="">
+  <nav class="navbar">
+    <img src="../assets/logo-no-background.png" alt="Logo" class="logo"> <!-- Shto imazhin në anën e majtë -->
     <ul>
-      <li><a href="default.asp">Home</a></li>
-      <li><a href="news.asp">News</a></li>
-      <li><a href="contact.asp">Contact</a></li>
-      <li><a href="about.asp">About</a></li>
+      <li><a href="default.asp">Rreth nesh</a></li>
+      <li><a href="news.asp">Na kontakto</a></li>
+      <li><a href="contact.asp">Bëhu vullnetarë</a></li>
+      <li><a href="about.asp">Dhuro</a></li>
     </ul>
   </nav>
 </template>
@@ -16,27 +17,52 @@ export default {
 </script>
 
 <style scoped>
-ul {
+/* Resetimi i margin-it dhe padding-ut për të eliminuar hapësirat e panevojshme */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: transparent;
+  margin-top: 0;
+  padding: 0;
+}
+
+.logo {
+  float: left; /* Shto imazhin në anën e majtë */
+  height: 11vh; /* Përshtatja e lartësisë së imazhit */
+  margin:2%; /* Margini i djathtë i imazhit */
+}
+
+.navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background-color: #333;
 }
 
-li {
-  float: left;
+.navbar li {
+  float: right;
 }
 
-li a {
+.navbar li a {
   display: block;
-  color: white;
+  color: black;
   text-align: center;
-  padding: 14px 16px;
+  padding: 50px ;
   text-decoration: none;
+  font-size: 25px;
+  
+
 }
 
-li a:hover {
-  background-color: #111;
+.navbar li a:hover {
+  color: rgb(102, 102, 102);
 }
 </style>

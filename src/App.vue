@@ -1,27 +1,37 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <NavBar></NavBar>
+  <HomePage></HomePage>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import NavBar from './components/nav.vue'
+// import NavBar from './components/nav.vue'
+// import BannerT from './components/banner.vue'
+// import PageFooter from './components/footer.vue'
+import HomePage from './components/HomePage.vue'
 export default {
   name: 'App',
   components: {
-    NavBar
+    HomePage
   }
 }
 </script>
 
 <style>
+body{
+  background-color: rgb(252, 251, 249);
+  /* font-family:apple-system, BlinkMacSystemFont, segoe ui, Roboto; */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 0%;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  /* padding: 0%;
+  margin: 0%; */
+ 
 }
 </style>

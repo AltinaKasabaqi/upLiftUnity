@@ -22,8 +22,8 @@
       <img src="../assets/sign.webp" alt="">
     </div>
     <div class="right">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum doloremque, quasi eius, ducimus quam ipsum voluptatum qui ratione autem quisquam quibusdam, reiciendis obcaecati! Officiis error quisquam corporis explicabo blanditiis fuga?</p>
-    </div>
+      <p>Kur ndjeheni nën presion ose keni mendime të vështira, jemi këtu për t'ju ndihmuar në çdo kohë. Telefononi në UpLift Unity, një shërbim falas, në numrin +311 222 345. Ne jemi të disponueshëm 24/7, 365 ditë në vit, për t'ju ofruar mbështetje dhe dëgjim.</p>
+   </div>
   </div>
 </template>
 
@@ -109,6 +109,7 @@ h3{
   flex-grow: 1;
   width: 100%; /* Vendos paragrafin të zënë gjithë hapësirën e disponueshme */
   margin-top: 0; /* Fshij marginin e sipërm që mund të ketë paragrafi */
+  font-size: 20px;
 }
 
 .Info>img {

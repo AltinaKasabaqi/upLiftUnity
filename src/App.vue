@@ -1,11 +1,11 @@
 <template>
   <HomePage></HomePage>
+  <!-- <AplicationForm></AplicationForm> -->
   <!-- <SuperDashboard></SuperDashboard> -->
 </template>
 
 <script>
 import HomePage from './components/HomePage.vue'
-// import SuperDashboard from './components/dashboards/superAdminD.vue'
 export default {
   name: 'App',
   components: {

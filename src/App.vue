@@ -2,6 +2,7 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <HomePage></HomePage>
+  <!-- <AplicationForm></AplicationForm> -->
 </template>
 
 <script>
@@ -10,6 +11,7 @@
 // import BannerT from './components/banner.vue'
 // import PageFooter from './components/footer.vue'
 import HomePage from './components/HomePage.vue'
+// import AplicationForm from './components/VAplicationForm.vue'
 export default {
   name: 'App',
   components: {

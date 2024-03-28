@@ -1,16 +1,21 @@
 <template>
-  <HomePage></HomePage>
-  <!-- <AplicationForm></AplicationForm> -->
+  <!-- <HomePage></HomePage> -->
+  <AplicationForm></AplicationForm>
   <!-- <SuperDashboard></SuperDashboard> -->
+  <SignUpForm></SignUpForm>
 </template>
 
 <script>
-import HomePage from './components/HomePage.vue'
+// import HomePage from './components/HomePage.vue'
+import SignUpForm from './components/SignUpForm.vue'
+// import AplicationForm from './components/VAplicationForm.vue'
 export default {
   name: 'App',
   components: {
-    HomePage
+    // HomePage
     // SuperDashboard
+    SignUpForm
+    
   }
 }
 </script>

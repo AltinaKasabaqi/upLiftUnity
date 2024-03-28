@@ -1,6 +1,6 @@
 <template>
     <NavBar></NavBar>
-    <div class="container">
+    <!-- <div class="container">
       <div class="title">
         <h1>Regjistrohu</h1>
       </div>
@@ -33,33 +33,18 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <PageFooter></PageFooter>
   </template>
   
   <script>
-  //import NavBar from './nav.vue';
+  import NavBar from './nav.vue';
   //import PageFooter from './footer.vue'
  
   export default {
+    
     components:{
-    //PageFooter
-    },
-    data() {
-      return {
-        formData: {
-          firstname: '',
-          lastname: '',
-          email: '',
-          password: '',
-          confirmPassword: ''
-        }
-      };
-    },
-    methods: {
-      submitForm() {
-        console.log('FormData:', this.formData);
-      }
+      NavBar
     }
   };
   </script>
@@ -92,9 +77,10 @@
   }
   
   .right {
-    flex: 1;
-  
-  }
+  flex: 1;
+  display: flex;
+  justify-content: center; /* vendos formën në qendër */
+}
   
   .image-container {
     padding: 20px;

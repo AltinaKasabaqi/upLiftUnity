@@ -1,16 +1,17 @@
 <template>
   <HomePage></HomePage>
   <!-- <AplicationForm></AplicationForm> -->
-  <!-- <SuperDashboard></SuperDashboard> -->
+  <SideBar></SideBar>
 </template>
 
 <script>
-import HomePage from './components/HomePage.vue'
+// import HomePage from './components/HomePage.vue'
+import SideBar from './components/sideBar.vue'
 export default {
   name: 'App',
   components: {
-    HomePage
-    // SuperDashboard
+    // HomePage
+    SideBar
   }
 }
 </script>

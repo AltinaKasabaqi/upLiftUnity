@@ -1,13 +1,13 @@
 <template>
     <div>
-      <form @submit.prevent="login">
+      <form action="http://localhost:5051/login" method="post">
         <div>
           <label for="email">Email:</label>
-          <input type="email" id="email" v-model="email" required>
+          <input type="email" id="email" name="email" required>
         </div>
         <div>
           <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required>
+          <input type="password" id="password" name="password" required>
         </div>
         <button type="submit">Login</button>
       </form>
@@ -15,23 +15,35 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        loginSuccess: false
       };
     },
     methods: {
-      login() {
-        // Këtu mund të shtoni logjikën për të verifikuar emailin dhe fjalëkalimin
-        // Në këtë rast, thjesht po printojmë të dhënat në console për testim
-        console.log('Email:', this.email);
-        console.log('Password:', this.password);
+      submitForm() {
+        axios.post('http://localhost:5051/login', {
+          email: this.email,
+          password: this.password
+        })
+        .then(() => {
+          alert('Kyçja u krye me sukses');
+          this.loginSuccess = true; // Caktoni vlerën e loginSuccess si true për të treguar kyçjen e suksesshme
+        })
+        .catch(error => {
+          console.error('Gabim në kyçje', error);
+          // Optionally, handle error response
+        });
       }
     }
   };
   </script>
+  
+  
   
   <style scoped>
   /* Stilizimi mund të bëhet këtu */

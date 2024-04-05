@@ -23,6 +23,7 @@ export default {
     // SuperDashboard
     // SignUpForm
     LoginForm
+    // AplicationForm
     
   }
 }

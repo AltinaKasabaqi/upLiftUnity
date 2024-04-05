@@ -12,6 +12,7 @@
 // import HomePage from './components/HomePage.vue'
 // import SideBar from './components/sideBar.vue'
 // import SignUpForm from './components/SignUpForm.vue'
+// import SignUpForm from './components/SignUpForm.vue'
 // import AplicationForm from './components/VAplicationForm.vue'
 import SuperDashboard from './components/dashboards/superDashboard.vue'
 
@@ -21,6 +22,8 @@ export default {
     // HomePage
     // SideBar
     SuperDashboard
+    // SignUpForm
+    // SuperDashboard
     // SignUpForm
     
   }

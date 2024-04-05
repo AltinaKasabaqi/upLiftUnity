@@ -34,6 +34,24 @@
         </div>
       </div>
     </div> -->
+    <form action="/regjistrohu" method="post">
+        <label for="emri">Emri:</label><br>
+        <input type="text" id="emri" name="emri" required><br>
+
+        <label for="mbiemri">Mbiemri:</label><br>
+        <input type="text" id="mbiemri" name="mbiemri" required><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="fjalekalimi">Fjalëkalimi:</label><br>
+        <input type="password" id="fjalekalimi" name="fjalekalimi" required><br>
+
+        <label for="konfirmo_fjalekalimin">Konfirmo Fjalëkalimin:</label><br>
+        <input type="password" id="konfirmo_fjalekalimin" name="konfirmo_fjalekalimin" required><br>
+
+        <input type="submit" value="Regjistrohu">
+    </form>
     <PageFooter></PageFooter>
   </template>
   

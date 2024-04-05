@@ -1,24 +1,26 @@
 <template>
-  <HomePage></HomePage>
-  <!-- <AplicationForm></AplicationForm> -->
-  <SideBar></SideBar>
   <!-- <HomePage></HomePage> -->
-  <AplicationForm></AplicationForm>
-  <!-- <SuperDashboard></SuperDashboard> -->
-  <SignUpForm></SignUpForm>
+  <!-- <AplicationForm></AplicationForm> -->
+  <!-- <SideBar></SideBar> -->
+  <!-- <HomePage></HomePage> -->
+  <!-- <AplicationForm></AplicationForm> -->
+  <SuperDashboard></SuperDashboard>
+  <!-- <SignUpForm></SignUpForm> -->
 </template>
 
 <script>
 // import HomePage from './components/HomePage.vue'
-import SideBar from './components/sideBar.vue'
+// import SideBar from './components/sideBar.vue'
 // import SignUpForm from './components/SignUpForm.vue'
 // import AplicationForm from './components/VAplicationForm.vue'
+import SuperDashboard from './components/dashboards/superDashboard.vue'
+
 export default {
   name: 'App',
   components: {
     // HomePage
-    SideBar
-    // SuperDashboard
+    // SideBar
+    SuperDashboard
     // SignUpForm
     
   }

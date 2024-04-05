@@ -1,48 +1,130 @@
 <template>
+  <NotificationBar></NotificationBar>
+  <SideBar></SideBar>
   <div class="super-dashboard">
-    <h1>Admin Super Dashboard</h1>
+    <h1>Paneli i Administratorit</h1>
     <div class="dashboard-boxes">
       <div class="dashboard-box">
-        <h2>Activity Diagram</h2>
+        <h2>Diagrami i Aktivitetit</h2>
         <div class="diagram">
-          <ActivityDiagram/>
+          <canvas id="activityChart"></canvas>
         </div>
       </div>
       <div class="dashboard-box">
-        <h2>Analysis Diagram</h2>
+        <h2>Diagrami i Analizave</h2>
         <div class="diagram">
-          <AnalysisDiagram/>
+          <canvas id="analysisChart"></canvas>
         </div>
       </div>
       <div class="dashboard-box">
-        <h2>Payment Diagram</h2>
+        <h2>Diagrami i Pagesave</h2>
         <div class="diagram">
-          <PaymentDiagram/>
+          <canvas id="paymentChart"></canvas>
         </div>
       </div>
-      <div class="dashboard-box">
-        <h2>Notifications Diagram</h2>
-        <div class="diagram">
-          <NotificationsDiagram/>
-        </div>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
-import ActivityDiagram from './ActivityDiagram.vue';
-import AnalysisDiagram from './AnalysisDiagram.vue';
-import PaymentDiagram from './PaymentDiagram.vue';
-import NotificationsDiagram from './NotificationsDiagram.vue';
+import Chart from 'chart.js/auto';
+import SideBar from '../sideBar.vue';
+import NotificationBar from '../notificationBar.vue';
 
 export default {
-  name: 'SuperDashboard',
-  components: {
-    ActivityDiagram,
-    AnalysisDiagram,
-    PaymentDiagram,
-    NotificationsDiagram
+  components:{
+    SideBar,
+    NotificationBar,
+  },
+  mounted() {
+    // Activity Chart
+    new Chart(document.getElementById('activityChart'), {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Activity',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          data: [65, 59, 80, 81, 56, 55, 40]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Analysis Chart
+    new Chart(document.getElementById('analysisChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: 'Analysis',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Payment Chart
+    new Chart(document.getElementById('paymentChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Kartele Bankare', 'Kesh', 'Stripe'],
+        datasets: [{
+          label: 'Payment',
+          data: [300, 50, 100],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+    });
   }
 }
 </script>
@@ -79,6 +161,6 @@ export default {
 }
 
 .diagram {
-  /* Styling for the diagram container */
+  color:#ddd
 }
 </style>

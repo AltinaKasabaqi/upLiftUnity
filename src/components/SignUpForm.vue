@@ -34,21 +34,27 @@
         </div>
       </div>
     </div> -->
-    <form action="/regjistrohu" method="post">
-        <label for="emri">Emri:</label><br>
-        <input type="text" id="emri" name="emri" required><br>
+    <form action="http://localhost:5051/api/users" method="post">
+        <label for="name">Emri:</label><br>
+        <input type="text" id="name" name="name" required><br>
 
-        <label for="mbiemri">Mbiemri:</label><br>
-        <input type="text" id="mbiemri" name="mbiemri" required><br>
+        <label for="surname">Mbiemri:</label><br>
+        <input type="text" id="surname" name="surname" required><br>
 
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email" required><br>
 
-        <label for="fjalekalimi">Fjalëkalimi:</label><br>
-        <input type="password" id="fjalekalimi" name="fjalekalimi" required><br>
+        <label for="RoleId">RoleId:</label><br>
+        <input type="number" id="RoleId" name="RoleId" required><br>
 
-        <label for="konfirmo_fjalekalimin">Konfirmo Fjalëkalimin:</label><br>
-        <input type="password" id="konfirmo_fjalekalimin" name="konfirmo_fjalekalimin" required><br>
+        <label for="password">Fjalëkalimi:</label><br>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="phoneNumber">Numri:</label><br>
+        <input type="text" id="phoneNumber" name="phoneNumber" required><br>
+
+        <label for="address">Numri:</label><br>
+        <input type="text" id="address" name="address" required><br>
 
         <input type="submit" value="Regjistrohu">
     </form>
@@ -57,13 +63,42 @@
   
   <script>
   import NavBar from './nav.vue';
+  import axios from 'axios';
+
   //import PageFooter from './footer.vue'
  
   export default {
     
     components:{
       NavBar
+    },
+    data() {
+    return {
+      formData: {
+        name: '',
+        surname: '',
+        email: '',
+        RoleId:'',
+        password: '',
+        phoneNumber:'',
+        address:''
+      }
+    };
+  },
+  methods: {
+    submitForm() {
+      axios.post('http://localhost:5051/api/users', this.formData)
+        .then(response => {
+          console.log(response.data);
+          console.log('u regjistru')
+        })
+        .catch(error => {
+          console.error('Gabim në regjistrim:', error);
+          // Optionally, handle error response
+        });
     }
+  }
+
   };
   </script>
   

@@ -6,16 +6,14 @@
   <!-- <AplicationForm></AplicationForm> -->
   <SuperDashboard></SuperDashboard>
   <!-- <SignUpForm></SignUpForm> -->
+  <LoginForm></LoginForm>
 </template>
 
 <script>
 // import HomePage from './components/HomePage.vue'
 // import SideBar from './components/sideBar.vue'
-// import SignUpForm from './components/SignUpForm.vue'
-// import SignUpForm from './components/SignUpForm.vue'
+import SignUpForm from './components/SignUpForm.vue'
 // import AplicationForm from './components/VAplicationForm.vue'
-import SuperDashboard from './components/dashboards/superDashboard.vue'
-
 export default {
   name: 'App',
   components: {
@@ -24,7 +22,7 @@ export default {
     SuperDashboard
     // SignUpForm
     // SuperDashboard
-    // SignUpForm
+    SignUpForm
     
   }
 }

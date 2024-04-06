@@ -62,7 +62,7 @@
   </template>
   
   <script>
-  import NavBar from './nav.vue';
+  import NavBar from '../components/nav.vue';
   import axios from 'axios';
 
   //import PageFooter from './footer.vue'

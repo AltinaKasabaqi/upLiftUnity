@@ -76,7 +76,7 @@ export default {
 /* Styles for sidebar and icons */
 .wrapper {
   display: flex;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 .hamburger {
@@ -96,7 +96,7 @@ export default {
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: #333;
+  background-color: #283d3d;
   color: #fff;
   padding: 20px;
   text-align: left;
@@ -108,14 +108,12 @@ export default {
   transform: translateX(-250px);
 }
 
-.sidebar-content {
-  margin-right: 60px; /* Space for the icons when sidebar is closed */
-}
+
 
 .fixed-icons {
   position: fixed;
   top: 20px; /* Adjust vertical positioning */
-  right: 8px; /* Adjust horizontal positioning */
+  right: 10px; /* Adjust horizontal positioning */
   margin-top: 70px;
   font-size: 25px;
 }

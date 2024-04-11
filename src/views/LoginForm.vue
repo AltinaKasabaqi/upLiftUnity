@@ -29,7 +29,7 @@ export default {
     submitForm() {
       axios.post('http://localhost:5051/login', this.formData)
         .then(() => {
-          alert("u kyc")
+          this.$router.push({ name: 'AdminDashboard' });
        
          
         })

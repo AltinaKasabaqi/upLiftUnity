@@ -19,6 +19,36 @@ const routes = [
         path: "/applicationForm",
         name: "ApplicationForm",
         component: () => import("@/views/VAplicationForm.vue"),
+      },
+      {
+        path: "/chat",
+        name: "LiveChat",
+        component: () => import("@/components/liveChat.vue"),
+      },
+      {
+        path: "/register",
+        name: "SignUpForm",
+        component: () => import("@/views/SignUpForm.vue"),
+      },
+      {
+        path: "/myDashboard",
+        name: "AdminDashboard",
+        component: () => import("@/dashboards/superDashboard.vue"),
+      },
+      {
+        path: "/allUsersView",
+        name: "AllUsers",
+        component: () => import("@/dashboards/allUsersDash.vue"),
+      },
+      {
+        path: "/UpdateUser:id?",
+        name: "UpdateUser",
+        component: () => import("@/dashboards/updateUser.vue"),
+      },
+      {
+        path: "/volunteerDash",
+        name: "VoolunteerDash",
+        component: () => import("@/dashboards/volunteerDash.vue"),
       }
 
  

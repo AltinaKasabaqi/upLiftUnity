@@ -28,8 +28,8 @@
 
 <script>
 import Chart from 'chart.js/auto';
-import SideBar from '../sideBar.vue';
-import NotificationBar from '../notificationBar.vue';
+import SideBar from '../components/sideBar.vue';
+import NotificationBar from '../components/notificationBar.vue';
 
 export default {
   components:{

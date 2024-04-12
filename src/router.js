@@ -49,6 +49,11 @@ const routes = [
         path: "/volunteerDash",
         name: "VoolunteerDash",
         component: () => import("@/dashboards/volunteerDash.vue"),
+      },
+      {
+        path: "/applicationsDash",
+        name: "ApplicationDash",
+        component: () => import("@/dashboards/applicationDash.vue"),
       }
 
  

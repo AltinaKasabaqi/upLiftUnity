@@ -6,7 +6,7 @@
         <thead>
           <tr>
             <!-- <th>Id</th> -->
-            <th>Name</th>
+            <th>Emri & Mbiemri</th>
             <th>Surname</th>
             <th>Email</th>
             <!-- <th>Password</th> -->

@@ -1,5 +1,5 @@
 <template>
-  <HomePage></HomePage>
+  <!-- <HomePage></HomePage> -->
   <!-- <AplicationForm></AplicationForm> -->
   <!-- <SideBar></SideBar> -->
   <!-- <HomePage></HomePage> -->
@@ -7,17 +7,20 @@
   <!-- <SuperDashboard></SuperDashboard> -->
   <!-- <SignUpForm></SignUpForm> -->
   <!-- <LoginForm></LoginForm> -->
+  <DonationForm></DonationForm>
 </template>
 
 <script>
-import HomePage from './views/HomePage'
+// import HomePage from './views/HomePage'
 // import SignUpForm from './components/SignUpForm.vue'
 // import AplicationForm from './components/VAplicationForm.vue'
 // import SuperDashboard from './components/dashboards/superDashboard.vue'
+import DonationForm from './views/donationForm.vue'
 export default {
   name: 'App',
   components: {
-    HomePage
+    // HomePage
+    DonationForm
     // SuperDashboard
     // SignUpForm
     // SuperDashboard

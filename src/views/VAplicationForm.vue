@@ -39,8 +39,8 @@
 
   
   <script>
-  import NavBar from './nav.vue';
-  import PageFooter from './footer.vue'
+  import NavBar from '../components/nav.vue';
+  import PageFooter from '../components/footer.vue'
   export default {
     components:{
         NavBar,

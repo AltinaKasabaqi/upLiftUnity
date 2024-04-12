@@ -4,7 +4,7 @@
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="news.asp">Na kontakto</a></li>
-      <li><a href="../components/VAplicationForm.vue">Bëhu vullnetarë</a></li>
+     <li> <router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
       <li><a href="about.asp">Dhuro</a></li>
     </ul>
   </nav>

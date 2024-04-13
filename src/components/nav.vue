@@ -3,7 +3,7 @@
     <img src="../assets/logo-no-background.png" alt="Logo" class="logo"> <!-- Shto imazhin në anën e majtë -->
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
-      <li><a href="news.asp">Na kontakto</a></li>
+      <li><a href="#" @click="hapModal()">Na kontakto</a></li>
      <li> <router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
       <li><a href="about.asp">Dhuro</a></li>
     </ul>
@@ -12,8 +12,14 @@
 
 <script>
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  methods: {
+    hapModal() {
+      this.$emit('hap-modal');
+    }
+  }
 }
+
 </script>
 
 <style scoped>

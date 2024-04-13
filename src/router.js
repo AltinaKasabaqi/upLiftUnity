@@ -16,7 +16,7 @@ const routes = [
         component: () => import("@/views/LoginForm.vue"),
       },
       {
-        path: "/applicationForm",
+        path: "/applicationForm", 
         name: "ApplicationForm",
         component: () => import("@/views/VAplicationForm.vue"),
       },
@@ -54,9 +54,15 @@ const routes = [
         path: "/applicationsDash",
         name: "ApplicationDash",
         component: () => import("@/dashboards/applicationDash.vue"),
-      }
+      },
 
  
+      
+    { 
+        path: "/FormaEKyqjes",
+        name: "LoginForma",
+        component: () => import("@/views/FormaEKyqjes.vue")  
+    }
 ];
 
 const router = createRouter({

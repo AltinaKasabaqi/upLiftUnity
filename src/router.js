@@ -10,13 +10,13 @@ const routes = [
         name: "HomePage",
         component: () => import("@/views/HomePage.vue"),
       },
+      // {
+      //   path: "/login",
+      //   name: "LoginForm",
+      //   component: () => import("@/views/LoginForm.vue"),
+      // },
       {
-        path: "/login",
-        name: "LoginForm",
-        component: () => import("@/views/LoginForm.vue"),
-      },
-      {
-        path: "/applicationForm",
+        path: "/applicationForm", 
         name: "ApplicationForm",
         component: () => import("@/views/VAplicationForm.vue"),
       },

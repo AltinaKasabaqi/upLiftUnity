@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
       <NavBar @hap-modal="hapModalinEkomponentitTeFoto"></NavBar>
       <ContactUsModal v-model="modalVisible"></ContactUsModal>
@@ -32,4 +32,4 @@
       }
     }
   }
-  </script>
+  </script> -->

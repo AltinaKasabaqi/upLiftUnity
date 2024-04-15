@@ -54,6 +54,16 @@ const routes = [
         path: "/applicationsDash",
         name: "ApplicationDash",
         component: () => import("@/dashboards/applicationDash.vue"),
+      },
+      {
+        path: "/donationForm",
+        name: "DonationForm",
+        component: () => import("@/views/donationForm.vue"),
+      },
+      {
+        path: "/donationDash",
+        name: "DonationDashb",
+        component: () => import("@/dashboards/donationDash.vue"),
       }
 
  

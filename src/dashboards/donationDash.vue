@@ -216,23 +216,24 @@ tr:nth-child(even) {
 .btn-delete {
   border: none;
   padding: 10px 20px;
+  margin:4px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .btn-view {
-  background-color: #2196f3;
+  background-color: #74b976 ;
   color: white;
 }
 
 .btn-edit {
-  background-color: #ffc107;
+  background-color:#ffbd03;
   color: white;
 }
 
 .btn-delete {
-  background-color: #f44336;
+  background-color: #ED0800;
   color: rgb(255, 255, 255);
 }
 

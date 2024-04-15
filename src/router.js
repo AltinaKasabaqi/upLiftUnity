@@ -10,11 +10,11 @@ const routes = [
         name: "HomePage",
         component: () => import("@/views/HomePage.vue"),
       },
-      {
-        path: "/login",
-        name: "LoginForm",
-        component: () => import("@/views/LoginForm.vue"),
-      },
+      // {
+      //   path: "/login",
+      //   name: "LoginForm",
+      //   component: () => import("@/views/LoginForm.vue"),
+      // },
       {
         path: "/applicationForm", 
         name: "ApplicationForm",
@@ -59,9 +59,9 @@ const routes = [
  
       
     { 
-        path: "/FormaEKyqjes",
+        path: "/Login",
         name: "LoginForma",
-        component: () => import("@/views/FormaEKyqjes.vue")  
+        component: () => import("@/views/LogIn.vue")  
     }
 ];
 

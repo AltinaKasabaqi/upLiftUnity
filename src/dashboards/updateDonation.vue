@@ -67,7 +67,7 @@
         <div class="field is-grouped">
           <div class="control">
             <button class="button is-primary is-rounded" type="submit">
-              Update Donation
+              Rifresko të dhënat
             </button>
           </div>
           <div class="control">
@@ -76,7 +76,7 @@
               type="button"
               @click="cancelEdit"
             >
-              Cancel
+              Anulo
             </button>
           </div>
         </div>
@@ -104,20 +104,18 @@ export default {
   methods: {
     async updateDonation() {
         try{
-            const parsedDate = new Date(this.editedDonation.date);
-        const isoDate = parsedDate.toISOString(); // Convert date to ISO format
-        this.editedDonation.date = isoDate.substring(0, 19); // Trim milliseconds and time zone
+            //Used for debuggingf
         console.log(this.editedDonation.nameSurname, this.editedDonation.email, this.editedDonation.date, this.editedDonation.amount);
-            //used for debugging
-
-            // await axios.put('/donationDash/UpdateDonation', this.editedDonation);
+            
             await axios.put('/donations/UpdateDonation', this.editedDonation);
 
             this.$emit("update-donation", this.editedDonation);
-
+            
             this.showSuccessAlert();
+            window.location.reload();
+
         }catch(error){
-            console.error('Error updating donation:', error);
+            console.error('Gabim gjatë rifreskimit të të dhënave:', error);
             
         }
     },

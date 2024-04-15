@@ -137,20 +137,6 @@ export default {
       this.showModal = true; // Set showModal to true to display the modal
       document.body.classList.add('modal-open');
     },
-    async updateDonation(updatedDonation) {
-      try {
-        await axios.put(
-          `/donations/UpdateDonation/${updatedDonation.donationID}`,
-          updatedDonation
-        );
-        this.getDonations();
-        this.editingDonation = null; // Reset editingDonation after update
-        Swal.fire("Success", "Donation updated successfully", "success");
-      } catch (error) {
-        console.error("Error updating donation:", error);
-        Swal.fire("Error", "Failed to update donation", "error");
-      }
-    },
     cancelEdit() {
       this.editingDonation = null; // Reset editingDonation on cancel
       this.showModal = false; // Close the modal
@@ -168,12 +154,12 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await axios.delete(`/donations/DeleteDonation/${donationId}`);
+            await axios.delete(`/donations/DeleteDonation?id=${donationId}`);
             this.getDonations();
-            Swal.fire("Success", "Donation deleted successfully", "success");
+            Swal.fire("Success", "Donacioni u fshi me sukses!", "success");
           } catch (error) {
             console.error("Error deleting donation:", error);
-            Swal.fire("Error", "Failed to delete donation", "error");
+            Swal.fire("Error", "Gabim gjatë fshirjes!", "error");
           }
         }
       });

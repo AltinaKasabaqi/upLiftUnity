@@ -14,8 +14,8 @@
         <thead>
           <tr>
             <!-- <th>Id</th> -->
-            <th>Emri</th>
-            <th>Mbiemri</th>
+            <th>Emri & Mbiemri</th>
+            <th>Surname</th>
             <th>Email</th>
             <!-- <th>Password</th> -->
             <th>Nr_Tel</th>

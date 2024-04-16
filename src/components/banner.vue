@@ -12,11 +12,14 @@
         <p>UpLift Unity është qendër telefonike për parandalim të vetëvrasjes e cila ofron shërbim telefonik konfidencial dhe pa pagesë për të gjithë personat me mendime për vetëvrasje çdo ditë 24h.</p>
    </div>
    <div class="Activities">
-        <h1>Aktivitetet </h1>
-        <img src="../assets/image-4.webp">
-        <img src="../assets/p.png">
-        <img src="../assets/vpydh7mq.png">
-   </div>
+    <h1>Aktivitetet </h1>
+      <div class="activity-images">
+          <img src="../assets/image-4.webp">
+          <img src="../assets/p.png">
+          <img src="../assets/vpydh7mq.png">
+      </div>
+    </div>
+
    <div class="Info">
     <div class="left">
       <img src="../assets/sign.webp" alt="">
@@ -86,14 +89,28 @@ h3{
 .Activities>h1{
     color: rgb(79, 79, 79);
 }
-.Activities>img{
-    display: inline;
-    width: 30%;
-    padding: 3%;
+.Activities {
+  text-align: center; /* Vendos titullin në qendër */
 }
-.Activities>img:hover{
-    filter: brightness(50%); 
+
+.activity-images {
+  display: flex;
+  justify-content: center; /* Vendos elementet në qendër horizontalisht */
+  align-items: center;
+  flex-wrap: wrap; /* Përdor wrap për të bërë elementet të zbrastë (nëse ka më shumë se një rresht) */
 }
+
+.activity-images img {
+  width: 30%;
+  padding: 3%;
+  margin: 0; /* Fshij marginin që mund të ketë ndonjëherë në dispozicion */
+}
+
+.activity-images img:hover {
+  filter: brightness(50%);
+}
+
+
 .Info {
   display: flex;
   align-items: center;

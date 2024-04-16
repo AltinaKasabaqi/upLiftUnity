@@ -9,28 +9,58 @@
           <i class="fas fa-user-circle fa-3x"></i>
         </div>
         <h3 class="sidebar-heading">Profili</h3>
-        <p class="sidebar-item">Emri</p>
-        <p class="sidebar-item">Llogaria e Përdoruesit</p>
-        <p class="sidebar-item">Lajmërime</p>
-
-        <h3 class="sidebar-heading">Paneli i Administratorit</h3>
         <ul class="sidebar-list">
-          <li class="sidebar-item">Faqja Kryesore</li>
-          <li class="sidebar-item">Përdoruesit</li>
-          <li class="sidebar-item">Pagesat</li>
-          <li class="sidebar-item">Analiza</li>
+          <router-link to="/emri" class="sidebar-item">Emri</router-link>
+          <router-link to="/llogaria" class="sidebar-item">Llogaria e Përdoruesit</router-link>
+          <router-link to="/lajmerime" class="sidebar-item">Lajmërime</router-link>
         </ul>
 
-        <h3 class="sidebar-heading">Komente dhe Sygjerime</h3>
-        <p class="sidebar-item">Komente</p>
-        <p class="sidebar-item">Sygjerime</p>
+        <h3 class="sidebar-heading">Paneli i Administratorit</h3>
+        
+        <ul class="sidebar-list">
+          <router-link to="/faqja-kryesore" class="sidebar-item">Statistikat</router-link>
+        </ul>
+        <ul class="sidebar-list">
+          <router-link to="/perdoruesit" class="sidebar-item">Përdoruesit</router-link>
+        </ul>
+        <ul class="sidebar-list">
+          <router-link to="/faqja-kryesore" class="sidebar-item">Shto staf</router-link>
+        </ul>
+        <ul class="sidebar-list">
+          <router-link to="/pagesat" class="sidebar-item">Donacionet</router-link>
+        </ul>
+        <ul class="sidebar-list">
+          <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
+        </ul>
+        <ul class="sidebar-list">
+        <router-link to="/analiza" class="sidebar-item">Shënimet personale</router-link>
+      </ul>
+      <ul class="sidebar-list">
+        <router-link to="/analiza" class="sidebar-item">Aplikimet</router-link>
+      </ul>
+      <ul class="sidebar-list">
+        <router-link to="/analiza" class="sidebar-item">Aktivitetet e Vullnetarëve</router-link>
+      </ul>
+      <ul class="sidebar-list">
+        <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
+      </ul>
+        <h3 class="sidebar-heading">Shërbimet e tjera</h3>
+        <ul class="sidebar-list">
+          <router-link to="/komente" class="sidebar-item">Chat</router-link>  
+         
+        </ul>
+        <ul class="sidebar-list">
+        <router-link to="/sygjerime" class="sidebar-item">Dokumentimi i bisedave</router-link>
+        </ul>
 
-        <h3 class="sidebar-heading">Ndihmë dhe mbështetje</h3>
-        <p class="sidebar-item">Manual përdorimi</p>
-        <p class="sidebar-item">Bisedë në kohë reale</p>
+         <!-- <h3 class="sidebar-heading"></h3>
+        <ul class="sidebar-list">
+          <router-link to="/manual-perdorimi" class="sidebar-item">Rregullat e thirrjeve</router-link>
+          <router-link to="/bisede" class="sidebar-item">Bisedë në kohë reale</router-link>
+        </ul>  -->
 
         <ul class="sidebar-list">
-          <li class="sidebar-item">Çkyqu</li>
+          <li class="sidebar-item"><router-link to="/logout">Çkyqu</router-link></li>
         </ul>
       </div>
       <div class="fixed-icons" v-if="!isSidebarOpen">
@@ -96,19 +126,17 @@ export default {
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: #283d3d;
+  background-color: 	#2F4F4F;
   color: #fff;
   padding: 20px;
   text-align: left;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
   width: 250px;
   overflow-y: auto;
   transition: transform 0.3s ease;
   z-index: 1;
   transform: translateX(-250px);
 }
-
-
 
 .fixed-icons {
   position: fixed;
@@ -148,6 +176,13 @@ export default {
 
 .sidebar-item {
   font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sidebar-item:hover {
+  color: #ccc;
 }
 
 .sidebar-list {

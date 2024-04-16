@@ -18,6 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "stripe": "^14.24.0",
+    "sweetalert2": "^11.10.7",
     "vue": "^3.4.21",
     "vue-chartjs": "^5.3.0",
     "vue-cookies": "^1.8.4",

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 // import Cookies from 'js-cookie';
 // import VueJwtDecode from 'vue-jwt-decode';
-import authorizeMiddleware from './auth';
+import authorizeMiddleware from './authorization/auth';
 
 const routes = [
   {
@@ -14,13 +14,14 @@ const routes = [
       path: "/applicationForm", 
       name: "ApplicationForm",
       component: () => import("@/views/VAplicationForm.vue"),
+      meta: { requiresAuth: false } 
       
     },
     {
       path: "/chat",
       name: "LiveChat",
       component: () => import("@/components/liveChat.vue"),
-      meta: { requiresAuth: true, requiredRole: 'SuperAdmin' }
+      meta: { requiresAuth: true, roles: ['SuperAdmin', 'Volunteer', 'SuperVisor'] }
     },
     {
       path: "/register",
@@ -32,22 +33,26 @@ const routes = [
       path: "/myDashboard",
       name: "AdminDashboard",
       component: () => import("@/dashboards/profilePage.vue"),
+      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor'] }
     },
     {
       path: "/allUsersView",
       name: "AllUsers",
       component: () => import("@/dashboards/allUsersDash.vue"),
+      meta: { requiresAuth: true, requiredRole: 'SuperAdmin'}
     },
     {
       path: "/UpdateUser:id?",
       name: "UpdateUser",
       component: () => import("@/dashboards/updateUser.vue"),
+      meta: { requiresAuth: true, requiredRole: 'SuperAdmin'}
     },
   
     {
       path: "/applicationsDash",
       name: "ApplicationDash",
       component: () => import("@/dashboards/applicationDash.vue"),
+      meta: { requiresAuth: true, requiredRole: 'SuperAdmin'}
     },
 
 
@@ -55,7 +60,8 @@ const routes = [
   { 
       path: "/Login",
       name: "LoginForma",
-      component: () => import("@/views/LogIn.vue")  
+      component: () => import("@/views/LogIn.vue"),
+      meta: { requiresAuth: false } 
   }
 ];
 

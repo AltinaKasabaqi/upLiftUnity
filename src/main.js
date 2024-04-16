@@ -3,7 +3,7 @@ import App from "./App.vue";
 import VueCookies from 'vue-cookies'; // Importoni plugin-in për cookies
 
 import router from "./router"; // Importoni router-in
-import authorizeMiddleware from './auth.js'; // Importoni middleware për autorizim
+import authorizeMiddleware from './authorization/auth.js'; // Importoni middleware për autorizim
 
 // Përdorimi i VueCookies plugin-it
 const app = createApp(App);

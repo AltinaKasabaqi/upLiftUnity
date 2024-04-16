@@ -4,11 +4,11 @@
       <h1 class="form-title">Kyçu</h1>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" class="form-control" required>
+        <input type="email" id="email" v-model="formData.email" class="form-control" required>
       </div>
       <div class="form-group">
         <label for="password">Fjalëkalimi:</label>
-        <input type="password" id="password" v-model="password" class="form-control" required>
+        <input type="password" id="password" v-model="formData.password" class="form-control" required>
       </div>
       <button type="submit" class="btn btn-primary">Kyçu</button>
     </form>
@@ -16,22 +16,41 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+import Cookies from 'js-cookie';
+
+
 export default {
   data() {
     return {
-      email: '',
-      password: ''
+      formData: {
+        email: '',
+        password: ''
+      }
     };
   },
   methods: {
     submitForm() {
-      // Këtu mund të bëni validimin e të dhënave, dërgimin e tyre në server, etc.
-      console.log('Email:', this.email);
-      console.log('Fjalëkalimi:', this.password);
-    }
+  axios.post('http://localhost:5051/login', this.formData)
+    .then(response => {
+      // Marrja e tokenit nga përgjigja
+      const token = response.data.Token;
+
+      
+      Cookies.set('token', token, {expires:1});  
+
+      // Përcaktoni navigimin drejt AdminDashboard duke përdorur router
+      this.$router.push({ name: 'AdminDashboard' });
+    })
+    .catch(error => {
+      console.error('Gabim në kyçje', error);
+    });
+}
   }
 };
 </script>
+
 
 <style>
 .login-container {

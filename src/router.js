@@ -30,7 +30,7 @@ const routes = [
     {
       path: "/myDashboard",
       name: "AdminDashboard",
-      component: () => import("@/dashboards/superDashboard.vue"),
+      component: () => import("@/dashboards/profilePage.vue"),
     },
     {
       path: "/allUsersView",
@@ -42,11 +42,7 @@ const routes = [
       name: "UpdateUser",
       component: () => import("@/dashboards/updateUser.vue"),
     },
-    {
-      path: "/volunteerDash",
-      name: "VoolunteerDash",
-      component: () => import("@/dashboards/volunteerDash.vue"),
-    },
+  
     {
       path: "/applicationsDash",
       name: "ApplicationDash",
@@ -69,23 +65,8 @@ const router = createRouter({
   routes,
 });
 
+
 router.beforeEach((authorizeMiddleware))
-  // const token = Cookies.get('token');
-  // if (to.meta.requiresAuth && !token) {
-  //   next('/login');
-  // } else if (to.meta.requiresAuth && token) {
-  //   const decodedToken = VueJwtDecode.decode(token);
-  //   const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-  //   if (userRole !== to.meta.requiredRole) {
-  //     next('/unauthorized');
-  //   } else {
-  //     next();
-  //   }
-  // } else {
-  //   next();
-  // }
-
-
 
 
 export default router;

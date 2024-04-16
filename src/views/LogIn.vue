@@ -35,10 +35,11 @@ export default {
   axios.post('http://localhost:5051/login', this.formData)
     .then(response => {
       // Marrja e tokenit nga përgjigja
-      const token = response.data.Token;
+      const token = response.data.token;
 
       
-      Cookies.set('token', token, {expires:1});  
+      Cookies.set('token', token, {expires:1}); 
+      console.log("Tokeni i vendosur në cookie:", token); 
 
       // Përcaktoni navigimin drejt AdminDashboard duke përdorur router
       this.$router.push({ name: 'AdminDashboard' });

@@ -1,8 +1,8 @@
 <template>
-  <NotificationBar></NotificationBar>
-  <SideBar></SideBar>
+  <!-- <NotificationBar></NotificationBar>
+  <SideBar></SideBar> -->
   <div class="super-dashboard">
-    <h1>Paneli i Administratorit</h1>
+    <h1>Statistikat e përgjithshme</h1>
     <div class="dashboard-boxes">
       <div class="dashboard-box">
         <h2>Diagrami i Aktivitetit</h2>
@@ -28,14 +28,14 @@
 
 <script>
 import Chart from 'chart.js/auto';
-import SideBar from '../components/sideBar.vue';
-import NotificationBar from '../components/notificationBar.vue';
+// import SideBar from '../components/sideBar.vue';
+// import NotificationBar from '../components/notificationBar.vue';
 
 export default {
-  components:{
-    SideBar,
-    NotificationBar,
-  },
+  // components:{
+  //   SideBar,
+  //   NotificationBar,
+  // },
   mounted() {
     // Activity Chart
     new Chart(document.getElementById('activityChart'), {
@@ -132,7 +132,8 @@ export default {
 <style scoped>
 .super-dashboard {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin-left: 7%;
+  margin-right:5%;
 }
 
 .super-dashboard h1 {

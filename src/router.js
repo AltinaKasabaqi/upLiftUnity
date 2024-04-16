@@ -31,9 +31,9 @@ const routes = [
         component: () => import("@/views/SignUpForm.vue"),
       },
       {
-        path: "/myDashboard",
-        name: "AdminDashboard",
-        component: () => import("@/dashboards/superDashboard.vue"),
+        path: "/statistics",
+        name: "StatisticsPage",
+        component: () => import("@/dashboards/statisticsPage.vue"),
       },
       {
         path: "/allUsersView",
@@ -45,10 +45,11 @@ const routes = [
         name: "UpdateUser",
         component: () => import("@/dashboards/updateUser.vue"),
       },
+     
       {
-        path: "/volunteerDash",
-        name: "VoolunteerDash",
-        component: () => import("@/dashboards/volunteerDash.vue"),
+        path: "/myProfile",
+        name: "ProfilePage",
+        component: () => import("@/dashboards/profilePage.vue"),
       }
 
  

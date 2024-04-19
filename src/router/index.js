@@ -9,16 +9,21 @@ const routes = [
        meta: { requiresAuth: false } 
     },
     {
-      path: "/applicationForm", 
-      name: "ApplicationForm",
-      component: () => import("@/views/VAplicationForm.vue"),
-      
-    },
+    path: '/myDashboard',
+    name: 'AdminDashboard',
+    component: () => import("@/dashboards/profilePage.vue"),
+    meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' },
+    children: [
+      {
+        path: '',
+        name: 'Statistics',
+        component: () => import("@/dashboards/statisticsPage.vue"),
+      },
     {
       path: "/chat",
       name: "LiveChat",
       component: () => import("@/components/liveChat.vue"),
-      meta: { requiresAuth: true, requiredRole: 'SuperAdmin' }
+      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer']}
     },
     {
       path: "/register",
@@ -26,29 +31,39 @@ const routes = [
       component: () => import("@/views/SignUpForm.vue"),
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
-    {
-      path: "/myDashboard",
-      name: "AdminDashboard",
-      component: () => import("@/dashboards/profilePage.vue"),
-      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
-    },
+    // {
+    //   path: "/myDashboard",
+    //   name: "AdminDashboard",
+    //   component: () => import("@/dashboards/profilePage.vue"),
+    //   meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+    // },
     {
       path: "/allUsersView",
       name: "AllUsers",
       component: () => import("@/dashboards/allUsersDash.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     
     },  
     {
       path: "/UpdateUser:id?",
       name: "UpdateUser",
       component: () => import("@/dashboards/updateUser.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
   
     {
-      path: "/applicationsDash",
+      path: "/applications",
       name: "ApplicationDash",
       component: () => import("@/dashboards/applicationDash.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
+    {
+      path: "/donations",
+      name: "DonationsDash",
+      component: () => import("@/dashboards/donationDash.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+    },]
+  },
 
 
     
@@ -56,7 +71,13 @@ const routes = [
       path: "/Login",
       name: "LoginForma",
       component: () => import("@/views/LogIn.vue")  
-  }
+  },
+  {
+    path: "/applicationForm", 
+    name: "ApplicationForm",
+    component: () => import("@/views/VAplicationForm.vue"),
+    
+  },
 ];
 
 

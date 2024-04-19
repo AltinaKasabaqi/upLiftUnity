@@ -51,9 +51,7 @@
 </template>
 
 <script>
-
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import axios from '../api/axios';
 
 export default {
   components: {},
@@ -74,29 +72,25 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const token = Cookies.get('token');
-        const response = await axios.post('http://localhost:5051/api/users', this.formData, {
-          headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
-          }
-        });
+        const response = await axios.post('http://localhost:5051/api/users', this.formData
+        );
         if (response && response.status === 200) {
-          console.log(response.data);
           console.log('u regjistru');
           this.$router.push({ name: 'AdminDashboard' });
         }
       } catch (error) {
+ 
         console.error('Gabim në regjistrim:', error.response.data);
         if (error.response.status === 409) {
           this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
         } else {
-          this.errorMessage = error.response.data;
+          this.errorMessage = error.response.data;;
         }
       }
     }
   }
 };
+
 
 </script>
 
@@ -162,4 +156,3 @@ button:hover {
   color: #721c24;
 }
 </style>
-

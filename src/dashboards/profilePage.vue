@@ -1,18 +1,16 @@
 <template>
+  <div>
     <SideBar></SideBar>
-    <Statistics></Statistics>
-
+    <!-- <router-view></router-view> -->
+  </div>
 </template>
+
 <script>
 import SideBar from '../components/sideBar.vue';
-import Statistics from './statisticsPage.vue';
+
 export default {
-    components: {
-      SideBar,
-      Statistics
-    },
-
+  components: {
+    SideBar
+  }
 }
-
-
 </script>

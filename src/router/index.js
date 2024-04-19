@@ -1,7 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-// import Cookies from 'js-cookie';
-// import VueJwtDecode from 'vue-jwt-decode';
-import authorizeMiddleware from './auth';
+import authorizeMiddleware from '../authorization/auth';
 
 const routes = [
   {
@@ -32,12 +30,14 @@ const routes = [
       path: "/myDashboard",
       name: "AdminDashboard",
       component: () => import("@/dashboards/profilePage.vue"),
+      meta: { requiresAuth: true, requiredRole: 'SuperAdmin' }
     },
     {
       path: "/allUsersView",
       name: "AllUsers",
       component: () => import("@/dashboards/allUsersDash.vue"),
-    },
+    
+    },  
     {
       path: "/UpdateUser:id?",
       name: "UpdateUser",

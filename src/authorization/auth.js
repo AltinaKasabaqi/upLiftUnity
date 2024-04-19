@@ -14,7 +14,7 @@ const authorizeMiddleware = (to, from, next) => {
         const userRole = decodedToken.role;
         
         console.log("roli", userRole); 
-        if (userRole !== to.meta.requiredRole) {
+        if (!to.meta.requiredRoles.includes(userRole)) {
           next('/unauthorized');
         } else {
           next();

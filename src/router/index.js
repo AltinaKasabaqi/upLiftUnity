@@ -24,13 +24,13 @@ const routes = [
       path: "/register",
       name: "SignUpForm",
       component: () => import("@/views/SignUpForm.vue"),
-      meta: { requiresAuth: true, requiredRole: 'SuperAdmin' }
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
     {
       path: "/myDashboard",
       name: "AdminDashboard",
       component: () => import("@/dashboards/profilePage.vue"),
-      meta: { requiresAuth: true, requiredRole: 'SuperAdmin' }
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
     {
       path: "/allUsersView",

@@ -55,7 +55,6 @@ import axios from '../api/axios';
 
 export default {
   components: {},
-  components: {},
   data() {
     return {
       formData: {
@@ -67,7 +66,6 @@ export default {
         phoneNumber: '',
         address: ''
       },
-      errorMessage: ''
       errorMessage: ''
     };
   },

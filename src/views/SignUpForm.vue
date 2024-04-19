@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar></NavBar>
     <div class="container">
       <h2 class="title">Regjistro Stafin</h2>
       <div v-if="errorMessage" class="alert alert-danger">
@@ -47,18 +46,17 @@
         </div>
       </form>
     </div>
-    <PageFooter></PageFooter>
+    
   </div>
 </template>
 
 <script>
-import NavBar from '../components/nav.vue';
+
+import Cookies from 'js-cookie';
 import axios from 'axios';
 
 export default {
-  components: {
-    NavBar
-  },
+  components: {},
   data() {
     return {
       formData: {
@@ -70,98 +68,98 @@ export default {
         phoneNumber: '',
         address: ''
       },
-      errorMessage:''
-      
+      errorMessage: ''
     };
   },
   methods: {
-  submitForm() {
-    axios.post('http://localhost:5051/api/users', this.formData)
-      .then(response => {
+    async submitForm() {
+      try {
+        const token = Cookies.get('token');
+        const response = await axios.post('http://localhost:5051/api/users', this.formData, {
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+          }
+        });
         if (response && response.status === 200) {
           console.log(response.data);
           console.log('u regjistru');
           this.$router.push({ name: 'AdminDashboard' });
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Gabim në regjistrim:', error.response.data);
         if (error.response.status === 409) {
           this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
         } else {
-          this.errorMessage = error.response.data
+          this.errorMessage = error.response.data;
         }
-      });
+      }
+    }
   }
-}
 };
+
 </script>
 
 <style scoped>
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  padding: 3%;
-  box-shadow: 0px 0px 10px rgba(45, 9, 36, 0.2);
-  margin: auto;
+  width: 40%;
+  margin: 10% auto;
 }
+
 .title {
   text-align: center;
-  margin: 20px 0;
-  font-size: 24px;
 }
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 10px;
-  margin: 10px;
-}
+
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
+
 label {
   display: block;
   font-weight: bold;
-  margin-bottom: 10px;
 }
+
 input[type="text"],
 input[type="email"],
-input[type="password"],
 input[type="tel"],
+input[type="password"],
 select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #c3a6ff;
+  width: calc(100% - 22px); /* Bëni inputat të më vogël për të mbështetur butonin */
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  text-align: center;
-  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
 }
+
+select {
+  width: 100%; /* Rregulloni gjatësinë e selektorit */
+}
+
 button {
-  width: calc(100% - 20px);
-  padding: 10px 20px;
+  display: block;
+  width: 100%;
+  padding: 8px;
   background-color: #B8DDBE;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px; /* Shtoni pakëz hapësirë midis butonit dhe inputeve */
 }
+
 button:hover {
   background-color: #52A086;
 }
+
 .alert {
-  padding: 15px;
-  /* border: 1px solid #f44336;  */
+  margin-bottom: 10px;
+  padding: 8px;
   border-radius: 5px;
-  color: white;
-  background-color: #ff6666; 
 }
 
 .alert-danger {
-  background-color: #ff6666;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
 }
 </style>
 

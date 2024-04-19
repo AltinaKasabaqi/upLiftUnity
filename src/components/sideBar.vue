@@ -8,62 +8,32 @@
         <div class="profile-icon">
           <i class="fas fa-user-circle fa-3x"></i>
         </div>
-      
         <ul class="sidebar-list">
           <li class="user-info">{{ user.name }} {{ user.surname }}</li>
-            <li class="user-info">{{ user.email }}</li>
-            <li class="user-role" v-if="user.roleId === 1">Administratorë</li>
-            <li class="user-role" v-else-if="user.roleId === 2">Mbikqyrës</li>
-            <li class="user-role" v-else-if="user.roleId === 3">Vullnetarë</li>
+          <li class="user-info">{{ user.email }}</li>
+          <li class="user-role" v-if="user.roleId === 1">Administratorë</li>
+          <li class="user-role" v-else-if="user.roleId === 2">Mbikqyrës</li>
+          <li class="user-role" v-else-if="user.roleId === 3">Vullnetarë</li>
         </ul>
-
         <h3 class="sidebar-heading">Paneli i Administratorit</h3>
-        
         <ul class="sidebar-list">
-          <router-link to="/allUsersView" class="sidebar-item">Statistikat</router-link>
-        </ul>
-        <ul class="sidebar-list">
-          <router-link to="/perdoruesit" class="sidebar-item">Përdoruesit</router-link>
-        </ul>
-        <ul class="sidebar-list">
-          <router-link to="/faqja-kryesore" class="sidebar-item">Shto staf</router-link>
-        </ul>
-        <ul class="sidebar-list">
-          <router-link to="/pagesat" class="sidebar-item">Donacionet</router-link>
-        </ul>
-        <ul class="sidebar-list">
+          <router-link to="/myDashboard" class="sidebar-item">Statistikat</router-link>
+          <router-link to="/allUsersView" class="sidebar-item">Përdoruesit</router-link>
+          <router-link to="/register" class="sidebar-item">Shto staf</router-link>
+          <router-link to="/donations" class="sidebar-item">Donacionet</router-link>
           <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
+          <router-link to="/myNotes" class="sidebar-item">Shënimet personale</router-link>
+          <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
+          <router-link to="/analiza" class="sidebar-item">Aktivitetet e Vullnetarëve</router-link>
+          <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
         </ul>
-        <ul class="sidebar-list">
-        <router-link to="/analiza" class="sidebar-item">Shënimet personale</router-link>
-      </ul>
-      <ul class="sidebar-list">
-        <router-link to="/analiza" class="sidebar-item">Aplikimet</router-link>
-      </ul>
-      <ul class="sidebar-list">
-        <router-link to="/analiza" class="sidebar-item">Aktivitetet e Vullnetarëve</router-link>
-      </ul>
-      <ul class="sidebar-list">
-        <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
-      </ul>
         <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">
-          <router-link to="/komente" class="sidebar-item">Chat</router-link>  
-         
+          <router-link to="/chat" class="sidebar-item">Chat</router-link>
+          <router-link to="/myDashboard/sygjerime" class="sidebar-item">Dokumentimi i bisedave</router-link>
         </ul>
         <ul class="sidebar-list">
-        <router-link to="/sygjerime" class="sidebar-item">Dokumentimi i bisedave</router-link>
-        </ul>
-
-         <!-- <h3 class="sidebar-heading"></h3>
-        <ul class="sidebar-list">
-          <router-link to="/manual-perdorimi" class="sidebar-item">Rregullat e thirrjeve</router-link>
-          <router-link to="/bisede" class="sidebar-item">Bisedë në kohë reale</router-link>
-        </ul>  -->
-
-        <ul class="sidebar-list">
-          <!-- <li class="sidebar-item"><router-link to="/logout">Çkyqu</router-link></li> -->
-          <button  id="logoutButton"  @click="showLogoutAlert">Çkyçu</button>
+          <button id="logoutButton" @click="showLogoutAlert">Çkyçu</button>
         </ul>
       </div>
       <div class="fixed-icons" v-if="!isSidebarOpen">
@@ -84,8 +54,8 @@
       </div>
     </div>
     <div class="content">
-      <!-- Dashboard content goes here -->
-    </div>
+  <router-view class="router-view-component"></router-view>
+</div>
   </div>
 </template>
 
@@ -96,8 +66,10 @@ import Swal from 'sweetalert2';
 
 
 export default {
+  
   name: 'AdminDashboard',
   data() {
+    
     return {
       isSidebarOpen: false,
       user: {},
@@ -142,13 +114,9 @@ export default {
       text: 'Jeni i sigurt që dëshironi të çkyçeni?',
       icon: 'warning',
       iconColor:'black',
-      titleAttributes: {
-    fontFamily: 'Open Sans, sans-serif',
-},
       showCancelButton: true,
       confirmButtonColor: 'rgba(54, 162, 235, 1)',
       cancelButtonColor: 'rgba(255, 99, 132, 1)',
-      
       confirmButtonText: 'Po, çkyçu!',
       cancelButtonText: 'Anulo'
    
@@ -274,6 +242,8 @@ export default {
   color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
+  display: block; /* Shfaqja e linjave në rresht të vetëm */
+  margin-bottom: 5px; /* Hapësira midis linjave */
 }
 
 .sidebar-item:hover {
@@ -302,10 +272,6 @@ export default {
 #logoutButton:hover {
   background-color: #beacac; 
 }
-
-
-
-
 
 
 

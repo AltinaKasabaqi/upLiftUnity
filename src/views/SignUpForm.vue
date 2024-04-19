@@ -55,6 +55,7 @@ import axios from '../api/axios';
 
 export default {
   components: {},
+  components: {},
   data() {
     return {
       formData: {
@@ -66,6 +67,7 @@ export default {
         phoneNumber: '',
         address: ''
       },
+      errorMessage: ''
       errorMessage: ''
     };
   },
@@ -79,16 +81,18 @@ export default {
           this.$router.push({ name: 'AdminDashboard' });
         }
       } catch (error) {
+ 
         console.error('Gabim në regjistrim:', error.response.data);
         if (error.response.status === 409) {
           this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
         } else {
-          this.errorMessage = error.response.data;
+          this.errorMessage = error.response.data;;
         }
       }
     }
   }
 };
+
 
 </script>
 

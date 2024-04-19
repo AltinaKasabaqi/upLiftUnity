@@ -16,9 +16,9 @@
             <th>Email</th>
             <th>Nr_Tel</th>
             <th>CV</th>
-            <th>Letra Motivuese</th>
-            <th>Statusi</th>
             <th>Pozita</th>
+            <th>Statusi</th>
+            <th>Shqyrtuar</th>
           </tr>
         </thead>
         <tbody>
@@ -27,9 +27,10 @@
             <td>{{ application.email }}</td>
             <td>{{ application.phoneNumber }}</td>
             <td>{{ application.cv }}</td>
-            <td>{{ application.motivationLetter }}</td>
-            <td>{{ application.applicationStatus }}</td>
             <td>{{ application.applicationType }}</td>
+            <td>{{ application.applicationStatus }}</td>
+            <td><button @click="showUpdateAlert(application.applicationId)" class="btn"><i class="fas fa-check"></i></button></td>
+            
           </tr>
         
 
@@ -40,51 +41,81 @@
   </template>
   
   <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        allApplications: [],
-        selectedType: ''
-      };
+import axios from '../api/axios';
+import Swal from 'sweetalert2'; // Importo SweetAlert2
+
+export default {
+  data() {
+    return {
+      allApplications: [],
+      selectedType: ''
+    };
+  },
+  created() {
+    this.fetchApplications();
+  },
+  watch: {
+    selectedType() {
+      this.fetchByType();
+    }
+  },
+  methods: {
+    updateStatus(id) {
+      axios.put(`http://localhost:5051/api/applications/UpdateApplication/${id}`)
+        .then(response => {
+          console.log(response.data); // Afisho përgjigjen nga serveri në konsolë
+          this.fetchApplications();
+        })
+        .catch(error => {
+          console.error('Gabim gjatë kërkesës PUT:', error);
+        });
     },
-    created() {
-      this.fetchApplications();
+    showUpdateAlert(id) {
+      Swal.fire({ // Krijoni modalin e njoftimit me SweetAlert2
+        title: 'Konfirmo',
+        icon: 'question',
+        iconColor: 'gray',
+        titleAttributes: {
+          fontFamily: 'Open Sans, sans-serif',
+        },
+        showCancelButton: true,
+        confirmButtonColor: '#70a090',
+        cancelButtonColor: 'rgba(255, 99, 132, 1)',
+        confirmButtonText: 'Ndrysho!',
+        cancelButtonText: 'Anulo',
+        
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.updateStatus(id);
+        }
+      });
     },
-    watch: {
-      selectedType() {
-        this.fetchByType();
-      }
+    fetchApplications() {
+      axios.get('http://localhost:5051/api/applications/GetApplications')
+        .then(response => {
+          this.allApplications = response.data;
+        })
+        .catch(error => {
+          console.error('Gabim gjatë marrjes së të dhënave:', error);
+        });
     },
-    methods: {
-      fetchApplications() {
-        axios.get('http://localhost:5051/api/applications/GetApplications')
+    fetchByType() {
+      if (this.selectedType === 'vullnetare' || this.selectedType === 'supervisor') {
+        axios.get(`http://localhost:5051/api/applications/GetApplicationByType?type=${this.selectedType}`)
           .then(response => {
             this.allApplications = response.data;
           })
           .catch(error => {
             console.error('Gabim gjatë marrjes së të dhënave:', error);
           });
-      },
-      fetchByType() {
-        // Thirrni API-në për të marrë aplikacionet në bazë të llojit të zgjedhur
-        if (this.selectedType === 'vullnetare' || this.selectedType === 'supervisor') {
-          axios.get(`http://localhost:5051/api/applications/GetApplicationByType?type=${this.selectedType}`)
-            .then(response => {
-              this.allApplications = response.data;
-            })
-            .catch(error => {
-              console.error('Gabim gjatë marrjes së të dhënave:', error);
-            });
-        } else {
-          // Në rast se nuk është zgjedhur asnjë tip, thirrni API-në për të marrë të gjitha aplikacionet
-          this.fetchApplications();
-        }
+      } else {
+        this.fetchApplications();
       }
     }
-  };
-  </script>
+  }
+}
+</script>
+
   
   
   <style scoped>
@@ -107,8 +138,9 @@
   }
   
   table th {
-    background-color: #f2f2f2;
+    background-color: #70a090;
     font-weight: bold;
+    color: white;
   }
   
   .edit-btn,
@@ -134,6 +166,18 @@
   .add-btn {
     background-color: #778899;
     color: white;
+  }
+  .btn{
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    background-color: rgba(75, 192, 192, 0.2);
+    border: solid 1px #70a090;
+    box-shadow:5px 5px 10px rgba(71, 71, 71, 0.2);
+
   }
   </style>
   

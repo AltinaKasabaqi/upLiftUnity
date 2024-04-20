@@ -8,29 +8,32 @@
         <div class="profile-icon">
           <i class="fas fa-user-circle fa-3x"></i>
         </div>
-        <h3 class="sidebar-heading">Profili</h3>
-        <p class="sidebar-item">Emri</p>
-        <p class="sidebar-item">Llogaria e Përdoruesit</p>
-        <p class="sidebar-item">Lajmërime</p>
-
+        <ul class="sidebar-list">
+          <li class="user-info">{{ user.name }} {{ user.surname }}</li>
+          <li class="user-info">{{ user.email }}</li>
+          <li class="user-role" v-if="user.roleId === 1">Administratorë</li>
+          <li class="user-role" v-else-if="user.roleId === 2">Mbikqyrës</li>
+          <li class="user-role" v-else-if="user.roleId === 3">Vullnetarë</li>
+        </ul>
         <h3 class="sidebar-heading">Paneli i Administratorit</h3>
         <ul class="sidebar-list">
-          <li class="sidebar-item">Faqja Kryesore</li>
-          <li class="sidebar-item">Përdoruesit</li>
-          <li class="sidebar-item">Pagesat</li>
-          <li class="sidebar-item">Analiza</li>
+          <router-link to="/myDashboard" class="sidebar-item">Statistikat</router-link>
+          <router-link to="/allUsersView" class="sidebar-item">Përdoruesit</router-link>
+          <router-link to="/register" class="sidebar-item">Shto staf</router-link>
+          <router-link to="/donations" class="sidebar-item">Donacionet</router-link>
+          <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
+          <router-link to="/myNotes" class="sidebar-item">Shënimet personale</router-link>
+          <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
+          <router-link to="/analiza" class="sidebar-item">Aktivitetet e Vullnetarëve</router-link>
+          <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
         </ul>
-
-        <h3 class="sidebar-heading">Komente dhe Sygjerime</h3>
-        <p class="sidebar-item">Komente</p>
-        <p class="sidebar-item">Sygjerime</p>
-
-        <h3 class="sidebar-heading">Ndihmë dhe mbështetje</h3>
-        <p class="sidebar-item">Manual përdorimi</p>
-        <p class="sidebar-item">Bisedë në kohë reale</p>
-
+        <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">
-          <li class="sidebar-item">Çkyqu</li>
+          <router-link to="/chat" class="sidebar-item">Chat</router-link>
+          <router-link to="/myDashboard/sygjerime" class="sidebar-item">Dokumentimi i bisedave</router-link>
+        </ul>
+        <ul class="sidebar-list">
+          <button id="logoutButton" @click="showLogoutAlert">Çkyçu</button>
         </ul>
       </div>
       <div class="fixed-icons" v-if="!isSidebarOpen">
@@ -51,32 +54,122 @@
       </div>
     </div>
     <div class="content">
-      <!-- Dashboard content goes here -->
-    </div>
+  <router-view class="router-view-component"></router-view>
+</div>
   </div>
 </template>
 
 <script>
+import Cookies from 'js-cookie';
+import VueJwtDecode from 'vue-jwt-decode';
+import Swal from 'sweetalert2';
+
+
 export default {
+  
   name: 'AdminDashboard',
   data() {
+    
     return {
-      isSidebarOpen: false
+      isSidebarOpen: false,
+      user: {},
     };
+  },
+  created() {
+    this.fetchPersonalData();
   },
   methods: {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
-    }
+    },
+  
+    fetchPersonalData(){
+      const token = Cookies.get('token');
+      const decodedToken = VueJwtDecode.decode(token);
+      const userId= decodedToken.nameid;
+      fetch(`http://localhost:5051/api/users/GetUserByID/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token 
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+        this.user = data; 
+        // console.log(this.user);
+    })
+  
+     
+    .catch(error => {
+      console.error('Gabim gjatë marrjes së të dhënave personale:', error.message);
+    });
+  },
+  
+    logout() {
+      Cookies.remove('token');
+      this.$router.push('/login');
+    },showLogoutAlert() {
+    Swal.fire({
+      title: 'Konfirmo',
+      text: 'Jeni i sigurt që dëshironi të çkyçeni?',
+      icon: 'warning',
+      iconColor:'black',
+      showCancelButton: true,
+      confirmButtonColor: 'rgba(54, 162, 235, 1)',
+      cancelButtonColor: 'rgba(255, 99, 132, 1)',
+      confirmButtonText: 'Po, çkyçu!',
+      cancelButtonText: 'Anulo'
+   
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.logout(); 
+      }
+    })
+  },
+  
+
+
+
+    
   }
 }
 </script>
 
 <style scoped>
-/* Styles for sidebar and icons */
+
+
+.user-info {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 1.5%;
+ 
+}
+.user-name {
+  font-weight: bold; 
+  margin-bottom: 5px; 
+}
+
+
+.user-email {
+  margin-bottom: 5px; 
+  text-decoration: underline; 
+}
+
+
+.user-role {
+  margin-bottom: 5px; 
+  font-style: italic; 
+  display: flex; /* Përdorimi i Flexbox */
+  justify-content: center; /* Vendosja e tekstit në qendër horizontale */
+  align-items: center; 
+  padding: 1.5%;
+
+}
+
 .wrapper {
   display: flex;
-  /* min-height: 100vh; */
+
 }
 
 .hamburger {
@@ -96,19 +189,17 @@ export default {
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: #283d3d;
+  background-color: 	#2F4F4F;
   color: #fff;
   padding: 20px;
   text-align: left;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
   width: 250px;
   overflow-y: auto;
   transition: transform 0.3s ease;
   z-index: 1;
   transform: translateX(-250px);
 }
-
-
 
 .fixed-icons {
   position: fixed;
@@ -148,6 +239,15 @@ export default {
 
 .sidebar-item {
   font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block; /* Shfaqja e linjave në rresht të vetëm */
+  margin-bottom: 5px; /* Hapësira midis linjave */
+}
+
+.sidebar-item:hover {
+  color: #ccc;
 }
 
 .sidebar-list {
@@ -159,4 +259,21 @@ export default {
   text-align: center;
   margin-bottom: 20px;
 }
+#logoutButton {
+  background-color: #ffffff;
+  color: black; 
+  padding: 3px 20px;
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+  /* transition: background-color 0.3s ease;  */
+}
+
+#logoutButton:hover {
+  background-color: #beacac; 
+}
+
+
+
+
 </style>

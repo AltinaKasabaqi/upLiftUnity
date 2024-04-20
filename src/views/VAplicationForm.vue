@@ -1,46 +1,58 @@
 <template>
-    <NavBar></NavBar>
-    <div class="container">
-      <div class="title">
-        <h1>Apliko për vullnetar</h1>
+  <NavBar></NavBar>
+  <div class="container">
+    <div class="title">
+      <h1>Apliko për vullnetar</h1>
+    </div>
+    <div class="content">
+      <div class="image-container">
+        <img src="../assets/vpydh7mq.png" alt="Image">
       </div>
-      <div class="content">
-        <div class="image-container">
-          <img src="../assets/vpydh7mq.png" alt="Image">
-        </div>
-        <div class="right">
-          <div class="form-container">
-            <form @submit.prevent="submitForm">
-              <div class="form-group">
-                <label for="name">Emri & Mbiemri:</label>
-                <input type="text" id="name" v-model="formData.name" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Emaili:</label>
-                <input type="email" id="email" v-model="formData.email" required>
-              </div>
-              <div class="form-group">
-                <label for="cv">CV:</label>
-                <input type="file" id="cv" @change="handleFileUpload" accept=".pdf,.doc,.docx" required>
-              </div>
-              <div class="form-group">
-                <label for="message">Mesazhi:</label>
-                <textarea id="message" rows="4" v-model="formData.message" required></textarea>
-              </div>
-              <button type="submit">Dërgo</button>
-            </form>
-          </div>
+      <div class="right">
+        <div class="form-container">
+          <form @submit.prevent="submitForm">
+            <div class="form-group">
+              <label for="nameSurname">Emri & Mbiemri:</label>
+              <input type="text" id="nameSurname" v-model="formData.nameSurname" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Emaili:</label>
+              <input type="email" id="email" v-model="formData.email" required>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Numri i Telefonit:</label>
+              <input type="tel" id="phoneNumber" v-model="formData.phoneNumber" required>
+            </div>
+            <div class="form-group">
+              <label for="cv">CV:</label>
+              <input type="file" id="cv" accept=".pdf,.doc,.docx" @change="handleFileUpload" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Mesazhi:</label>
+              <textarea id="description" rows="4" v-model="formData.description" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="applicationType">Lloji i Aplikimit:</label>
+              <select id="applicationType" v-model="formData.applicationType" required>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Vullnetare">Vullnetare</option>
+              </select>
+            </div>
+            <button type="submit">Dërgo</button>
+          </form>
         </div>
       </div>
     </div>
-    <PageFooter></PageFooter>
-  </template>
+  </div>
+  <PageFooter></PageFooter>
+</template>
 
 
   
   <script>
   import NavBar from '../components/nav.vue';
   import PageFooter from '../components/footer.vue'
+import axios from 'axios';
   export default {
     components:{
         NavBar,
@@ -49,15 +61,32 @@
     data() {
       return {
         formData: {
-          name: '',
+          nameSurname: '',
           email: '',
-          message: ''
+          phoneNumber:'',
+          cv:'',
+          description: '',
+          applicationType:''
+
         }
       };
     },
     methods: {
-      submitForm() {
-        console.log('FormData:', this.formData);
+      async submitForm() {
+        try{
+          const response = await axios.post('http://localhost:5051/api/applications/AddApplication', this.formData);
+          if(response && response.status === 200){
+            console.log('u regjistrua');
+            
+          }
+        }catch(error){
+          console.log('Gabim në regjistrim:', error.response.data);
+          if (error.response.status === 409) {
+          this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
+          } else {
+            this.errorMessage = error.response.data;
+          }
+        }
       }
     }
   };

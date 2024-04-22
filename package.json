@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --watch",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^3.2.0",
+    "@stripe/stripe-js": "^3.3.0",
+    "@vue-stripe/vue-stripe": "^4.5.0",
     "@vue/runtime-core": "^3.4.21",
     "@vue/runtime-dom": "^3.4.21",
     "axios": "^1.6.8",

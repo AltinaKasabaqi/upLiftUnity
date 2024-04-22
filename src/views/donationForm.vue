@@ -1,99 +1,88 @@
 <template>
-  <div class="page-background">
-    <div class="donation-form">
-      <h1>Donation Form</h1>
-      <div class="form-group">
-        <label for="amount">Amount ($)</label>
-        <input type="number" v-model.number="amount" id="amount" class="form-control">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">Paguaj Kesh</h2>
+            <form @submit.prevent="handleSubmit">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" v-model="values.email" required>
+                <div class="invalid-feedback" v-if="errors.email">{{ errors.email }}</div>
+              </div>
+              <div class="form-group">
+                <label for="qyteti">Qyteti</label>
+                <input type="text" class="form-control" id="qyteti" v-model="values.qyteti" required>
+                <div class="invalid-feedback" v-if="errors.qyteti">{{ errors.qyteti }}</div>
+              </div>
+              <div class="form-group">
+                <label for="shuma">Shuma</label>
+                <input type="text" class="form-control" id="shuma" v-model="values.shuma" readonly>
+              </div>
+              <br>
+              <button class="btn btn-primary btn-lg btn-block custom-button pb-5 col-3" type="submit">Paguaj</button>
+            </form>
+          </div>
+        </div>
       </div>
-
-      <div class="form-group">
-        <input type="radio" id="cash" value="cash" v-model="paymentMethod">
-        <label for="cash">Cash</label>
-      </div>
-
-      <div class="form-group">
-        <input type="radio" id="stripe" value="stripe" v-model="paymentMethod">
-        <label for="stripe">Credit Card (Stripe)</label>
-      </div>
-
-      <p v-if="paymentMethod">Selected Payment Method: {{ paymentMethod }}</p>
-
-      <button @click="donate" class="btn btn-primary">Donate</button>
     </div>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      amount: 0,
-      paymentMethod: 'cash',
-    };
-  },
-  methods: {
-    donate() {
-      if (this.paymentMethod === 'cash') {
-        // Process cash donation
-        alert(`Thank you for your cash donation of $${this.amount}`);
-      } else if (this.paymentMethod === 'stripe') {
-        // You can add Stripe integration here if needed
-        alert("Stripe integration is not available.");
-      }
-    }
-  }
-};
-</script>
-
-<style scoped>
-.page-background {
-  background-image: url('../assets/donate.jpg'); /* Add your image path here */
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.donation-form {
-  max-width: 900px;
-  padding: 70px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: rgba(193, 190, 190, 0.623); /* Add background color with opacity for better readability */
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  font-weight: bold;
-}
-
-.form-control {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #007bff;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-</style>
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
+    data() {
+      return {
+        values: {
+          qyteti: '',
+          email: '',
+          shuma: '',
+        },
+        errors: {},
+      };
+    },
+    methods: {
+      async handleSubmit() {
+        if (this.values.email === '' || this.values.qyteti === '') {
+          alert('Ju lutem plotësoni fushat!');
+          return;
+        }
+  
+        // Regex validation
+        const regexQyteti = /^[A-Za-z]+$/;
+        const regexEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  
+        if (!regexEmail.test(this.values.email)) {
+          this.errors.email = 'Emaili jo valid!';
+          return;
+        } else {
+          this.errors.email = null;
+        }
+  
+        if (!regexQyteti.test(this.values.qyteti)) {
+          this.errors.qyteti = 'Vlera e qytetit jo valide!';
+          return;
+        } else {
+          this.errors.qyteti = null;
+        }
+  
+        try {
+          const response = await axios.post(`http://localhost:5051/donation/personat/${this.values.email}`, {
+            qyteti: this.values.qyteti,
+            shuma: this.values.shuma,
+          });
+          alert(response.data.message);
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  /* Add your custom styles here */
+  </style>
+  

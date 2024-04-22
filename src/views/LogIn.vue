@@ -34,14 +34,12 @@ export default {
     submitForm() {
   axios.post('http://localhost:5051/login', this.formData)
     .then(response => {
-      // Marrja e tokenit nga përgjigja
       const token = response.data.token;
 
       
       Cookies.set('token', token, {expires:1}); 
       console.log("Tokeni i vendosur në cookie:", token); 
 
-      // Përcaktoni navigimin drejt AdminDashboard duke përdorur router
       this.$router.push({ name: 'AdminDashboard' });
     })
     .catch(error => {
@@ -70,11 +68,11 @@ export default {
   padding: 20px;
   border-radius: 10px;
   width: 35%;
-  text-align: center; /* Qendro tekstin e formës */
+  text-align: center; 
 }
 
 .form-title {
-  margin-bottom: 20px; /* Përcakto një hapësirë midis titullit dhe fushave */
+  margin-bottom: 20px; 
 }
 
 .form-group {

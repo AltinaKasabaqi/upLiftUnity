@@ -9,15 +9,13 @@
             <option value="3">Vullnetarë</option>
           </select>
         </div>
-      <button @click="goToSignUp" class="add-btn">Shto +</button> <!-- Shtuar butonin "Shto +" -->
+      <button @click="goToSignUp" class="add-btn">Shto +</button> 
       <table>
         <thead>
           <tr>
-            <!-- <th>Id</th> -->
             <th>Emri & Mbiemri</th>
             <th>Surname</th>
             <th>Email</th>
-            <!-- <th>Password</th> -->
             <th>Nr_Tel</th>
             <th>Adresa</th>
             <th>Roli</th>
@@ -26,7 +24,6 @@
         </thead>
         <tbody>
           <tr v-for="user in allUsers" :key="user.id">
-            <!-- <td>{{ user.id }}</td> -->
             <td>{{ user.name }}</td>
             <td>{{ user.surname }}</td>
             <td>{{ user.email }}</td>
@@ -35,8 +32,7 @@
             <td>{{ user.address }}</td>
             <td>
                 {{ user.roleId == '2' ? 'Mbikqyrës' : (user.roleId == '3' ? 'Vullnetarë' : 'Admin') }}
-</td>
-
+            </td>
             <td>
               <button @click="editUser(user.id)" class="edit-btn">Edito</button>
               <button @click="deleteUser(user.id)" class="delete-btn">Fshije</button>
@@ -49,7 +45,6 @@
   
 
    <script>
-  //  import axios from 'axios';
    import axios from '../api/axios.js';
    
    export default {
@@ -87,7 +82,6 @@
                console.error('Gabim gjatë marrjes së të dhënave:', error);
              });
          } else {
-           // Në rast se nuk është zgjedhur asnjë tip, thirrni API-në për të marrë të gjitha aplikacionet
            this.fetchUsers();
          }
        },
@@ -124,14 +118,14 @@
     padding: 20px;
   }
   .filter-section {
-  /* margin-bottom: 20px; */
-  text-align:left; /* Vendosja e tekstit në qendër */
+  
+  text-align:left; 
 }
 
 .filter-label {
   font-size: 16px;
   margin-right: 10px;
-  color: #333; /* Ngjyra e tekstit */
+  color: #333; 
 }
 
 .filter-select {
@@ -142,7 +136,7 @@
   background-color: #fff;
   color: #333;
   cursor: pointer;
-  /* Shtoni stilizime të tjera sipas preferencave tuaja */
+  
 }
   
   table {

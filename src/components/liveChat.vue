@@ -58,13 +58,13 @@
         if (this.newMessage.trim() === '') return;
         this.messages.push({
           position: 'right',
-          image: 'https://image.flaticon.com/icons/svg/145/145867.svg', // Assuming user's image remains constant
-          name: 'You', // Assuming user's name remains constant
+          image: 'https://image.flaticon.com/icons/svg/145/145867.svg', 
+          name: 'You', 
           time: new Date().toLocaleTimeString(),
           text: this.newMessage.trim()
         });
-        this.newMessage = ''; // Clear the input field after sending the message
-        this.scrollChatToBottom(); // Scroll chat to the bottom after sending a message
+        this.newMessage = ''; 
+        this.scrollChatToBottom(); 
       },
       scrollChatToBottom() {
         this.$nextTick(() => {
@@ -102,7 +102,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;    
-  /* background-image: var(--body-bg); */
   font-family: Helvetica, sans-serif;
 }
 
@@ -218,14 +217,15 @@ body {
 }
 .msger-send-btn {
   margin-left: 10px;
-  background: rgb(0, 196, 65);
+  background: #52A086;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+  width: 15%;
   transition: background 0.23s;
 }
 .msger-send-btn:hover {
-  background: rgb(0, 180, 50);
+  background: #B8DDBE;
 }
 
 .msger-chat {

@@ -1,35 +1,27 @@
-<!-- <template>
-    <div>
-      <NavBar @hap-modal="hapModalinEkomponentitTeFoto"></NavBar>
-      <ContactUsModal v-model="modalVisible"></ContactUsModal>
-      <BannerT></BannerT>
-      <PageFooter></PageFooter>
-    </div>
-  </template>
-  
-  <script>
-  import NavBar from '../components/nav.vue';
-  import ContactUsModal from '../components/ContactUsModal.vue';
-  import BannerT from '../components/banner.vue';
-  import PageFooter from '../components/footer.vue';
-  
-  export default {
-    name: 'ContactUs',
-    components: {
-      NavBar,
-      ContactUsModal,
-      BannerT,
-      PageFooter,
-    },
-    data() {
-      return {
-        modalVisible: false
-      };
-    },
-    methods: {
-      hapModalinEkomponentitTeFoto() {
-        // Logjika për modalin e fotove
+<!-- 
+<template>
+  <h1>HI</h1>
+</template>
+
+<script>
+
+export default {
+  name:"EditWorkPlacePopup",
+  methods: {
+    closePopup(event) {
+      if (event.target.classList.contains("EditWorkPlaceContainer")) {
+        this.$emit("close");
       }
-    }
-  }
-  </script> -->
+    },
+    saveChanges() {
+      // TODO Implement saving changes logic here
+      this.$emit("close");
+    },
+    deleteWorkPlace() {
+      // TODO Implement deleting workplace logic here
+      this.$emit("close");
+    },
+  },
+};
+</script>
+ -->

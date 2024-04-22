@@ -1,20 +1,29 @@
 <template>
   <nav class="navbar">
     <img src="../assets/logo-no-background.png" alt="Logo" class="logo" />
-    <!-- Shto imazhin në anën e majtë -->
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>
       <li><router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
-      <li><a href="#" @click="redirectToStripe">Dhuro</a></li> <!-- Call redirectToStripe method when clicked -->
+      <li><a href="#" @click="redirectToStripe">Dhuro</a></li> 
     </ul>
   </nav>
+  <modal
+      v-if="showModal"
+      :show-modal="showModal"
+      :editing-donation="editingDonation"
+      @update-donation="updateDonation"
+      @cancel-edit="cancelEdit"
+    ></modal>
 </template>
 
 <script>
-
+import Modal from "../dashboards/updateDonation.vue"; 
 export default {
   name: "NavBar",
+  components:{
+    Modal
+  },
 
   methods: {
     async redirectToStripe() {
@@ -50,7 +59,7 @@ export default {
 </script>
 
 <style scoped>
-/* Resetimi i margin-it dhe padding-ut për të eliminuar hapësirat e panevojshme */
+
 * {
   margin: 0;
   padding: 0;
@@ -69,9 +78,9 @@ body {
 }
 
 .logo {
-  float: left; /* Shto imazhin në anën e majtë */
-  height: 11vh; /* Përshtatja e lartësisë së imazhit */
-  margin: 2%; /* Margini i djathtë i imazhit */
+  float: left; 
+  height: 11vh; 
+  margin: 2%; 
 }
 
 .navbar ul {

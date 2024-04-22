@@ -20,10 +20,6 @@
               <label for="email">Email:</label>
               <input type="email" id="email" v-model="formData.email" >
             </div>
-            <!-- <div class="form-group">
-              <label for="fjalekalimi">Fjalëkalimi:</label>
-              <input type="password" id="fjalekalimi" v-model="formData.password">
-            </div> -->
             <div class="form-group">
               <label for="phoneNumber">Numri i telefonit:</label>
               <input type="tel" id="phoneNumber" v-model="formData.phoneNumber">
@@ -40,7 +36,7 @@
                 <option value="3">Vullnetarë</option>
               </select>
             </div>
-            <button type="submit">Përditëso</button> <!-- Ndryshimi i etiketës së butonit -->
+            <button type="submit">Përditëso</button> 
           </div>
           <div class="right">
          

@@ -31,12 +31,6 @@ const routes = [
       component: () => import("@/views/SignUpForm.vue"),
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
-    // {
-    //   path: "/myDashboard",
-    //   name: "AdminDashboard",
-    //   component: () => import("@/dashboards/profilePage.vue"),
-    //   meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
-    // },
     {
       path: "/allUsersView",
       name: "AllUsers",

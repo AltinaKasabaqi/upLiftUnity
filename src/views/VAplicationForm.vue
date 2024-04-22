@@ -34,7 +34,7 @@
             <div class="form-group">
               <label for="applicationType">Lloji i Aplikimit:</label>
               <select id="applicationType" v-model="formData.applicationType" required>
-                <option value="Supervisor">Supervisor</option>
+                <option value="Supervisor">Mbikqyrës</option>
                 <option value="Vullnetare">Vullnetare</option>
               </select>
             </div>

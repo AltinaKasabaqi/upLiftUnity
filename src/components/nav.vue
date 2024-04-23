@@ -4,12 +4,10 @@
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>
-      <li><router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
+      <li><router-link to="/applicationForm">Bëhu pjesë</router-link></li>
       <li><router-link to="/donationPackages">Dhuro</router-link></li>
-      <li><a href="default.asp">Rreth Nesh</a></li>
-      <li><a href="#">Na Kontakto</a></li>
-      <li><router-link to="/applicationForm">Bëhu Pjesë</router-link></li>
-      <li><a href="#" @click="redirectToStripe">Dhuro</a></li> 
+    
+      
     </ul>
   </nav>
  

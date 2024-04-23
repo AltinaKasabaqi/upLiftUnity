@@ -11,26 +11,10 @@
 </template>
 
 <script>
-import Modal from "../dashboards/updateDonation.vue"; // import axios from 'axios'; // Import axios library
+
 
 export default {
   name: "NavBar",
-
-//   methods: {
-//     async redirectToStripe() {
-//   console.log("HI");
-//   try {
-//     const response = await axios.post('http://localhost:5051/api/donations/CreateCheckoutSession', {
-//       items: [{ id: 1, quantity: 1 }],
-//     });
-
-//     const { url } = response.data;
-//     window.location = url;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
   }
 </script>
 

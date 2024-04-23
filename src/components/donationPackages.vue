@@ -23,9 +23,9 @@
           { id: 3, name: 'Package 3', price: 300 }
         ],
         imageUrls: {
-          1: "../assets/donation1.gif",
-          2: "../assets/donation2.gif",
-          3: "../assets/donation3.gif"
+          1: "./assets/3 1.png",
+          2: "./assets/donation2.gif",
+          3: "./assets/donation3.gif"
         }
       };
     },
@@ -33,7 +33,11 @@
     async redirectToStripe(selectedPackage) {
       try {
         const response = await axios.post('http://localhost:5051/api/donations/CreateCheckoutSession/' + selectedPackage.id);
-        const { url } = response.data;
+        const { url,sessionId } = response.data;
+
+        localStorage.setItem('sessionId', sessionId);
+
+
         window.location = url;
       } catch (error) {
         console.error(error);
@@ -42,7 +46,37 @@
       getImageUrl(packageId) {
         return this.imageUrls[packageId] || '';
       }
-    }
+    },
+    created() {
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const successParam = urlParams.get('success');
+  
+  if (successParam === 'true') {
+    // Retrieve the session ID from localStorage
+    const sessionId = localStorage.getItem('sessionId');
+    
+    // Make a POST request to webhook endpoint using fetch cause it has to be "POST" method so stripe can work.Webhook-u e kerkon! 
+    fetch(`http://localhost:5051/api/donations/webhook?session_id=${sessionId}&success=true`, {
+      method: 'POST'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // Handle successful response
+      })
+      .catch(error => {
+        console.error('Error calling webhook:', error);
+      });
+    
+    // Redirect to homepage
+    window.location.href = 'http://localhost:8080/#/';
+  }
+}
+
+
+
   };
   </script>
   
@@ -51,10 +85,11 @@
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 10px;
-    padding: 10px;
-    width: 200px;
+    margin: 80px;
+    padding: 50px;
+    width: 300px;
     cursor: pointer;
+  
   }
   
   .package-card img {
@@ -64,15 +99,23 @@
   }
   
   .package-details {
-    padding: 10px;
+    padding: 20px;
+  
   }
   
   .package-details h3 {
-    margin-top: 0;
+    margin-top: 10px;
   }
   
   .package-details p {
     margin: 5px 0;
   }
+
+  h1{
+    display: flex;
+    justify-content: center;
+    color: rgb(9, 105, 105);
+  }
+
   </style>
   

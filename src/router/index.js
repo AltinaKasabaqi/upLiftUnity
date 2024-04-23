@@ -56,7 +56,9 @@ const routes = [
       name: "DonationsDash",
       component: () => import("@/dashboards/donationDash.vue"),
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
-    },]
+    },
+  
+  ]
   },
 
 
@@ -71,6 +73,12 @@ const routes = [
     name: "ApplicationForm",
     component: () => import("@/views/VAplicationForm.vue"),
     
+  },
+  {
+    path: "/donationPackages",
+    name: "DonationPackages",
+    component: () => import("@/components/donationPackages.vue"),
+   
   },
 ];
 

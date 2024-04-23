@@ -6,47 +6,33 @@
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>
       <li><router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
-      <li><a href="#" @click="redirectToStripe">Dhuro</a></li> <!-- Call redirectToStripe method when clicked -->
+      <li><router-link to="/donationPackages">Dhuro</router-link></li>
     </ul>
   </nav>
 </template>
 
 <script>
+// import axios from 'axios'; // Import axios library
 
 export default {
   name: "NavBar",
 
-  methods: {
-    async redirectToStripe() {
-  console.log("HI");
-    fetch('http://localhost:8080/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        items: [
-          { id: 1, quantity: 1 }, 
-        ],
-      }),
-    })
-      .then(res => {
-     
-        if (res.ok) return res.json();
-        return res.json().then(json => Promise.reject(json));
-        
-      })
-      .then(({ url }) => {
-        console.log("Hi");
-      
-        window.location = url;
-      })
-      .catch(e => {
-        console.error(e.error);
-      });
+//   methods: {
+//     async redirectToStripe() {
+//   console.log("HI");
+//   try {
+//     const response = await axios.post('http://localhost:5051/api/donations/CreateCheckoutSession', {
+//       items: [{ id: 1, quantity: 1 }],
+//     });
+
+//     const { url } = response.data;
+//     window.location = url;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+
   }
-  }
-};
 </script>
 
 <style scoped>

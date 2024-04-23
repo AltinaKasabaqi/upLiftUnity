@@ -1,6 +1,6 @@
 <template>
     <div>
-      <NavBar></NavBar>
+      
       <div class="container">
         <h2 class="title">Përditëso të dhënat</h2>
         <div v-if="errorMessage" class="alert alert-danger">
@@ -43,17 +43,17 @@
           </div>
         </form>
       </div>
-      <PageFooter></PageFooter>
+      
     </div>
   </template>
   
   <script>
-  import NavBar from '../components/nav.vue';
+ 
   import axios from 'axios';
   
   export default {
     components: {
-      NavBar
+     
     },
     data() {
       return {

@@ -4,13 +4,17 @@
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>
-      <li><router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
+      <li><router-link to="/applicationForm">Bëhu pjesë</router-link></li>
       <li><router-link to="/donationPackages">Dhuro</router-link></li>
+    
+      
     </ul>
   </nav>
+ 
 </template>
 
 <script>
+
 
 
 export default {

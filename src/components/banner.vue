@@ -62,7 +62,7 @@ h3{
 }
 .left>p{
     width: 70%;
-    font-size: 14px;
+    font-size: 16px;
     color: rgb(73, 73, 73);
 }
 .container> img{

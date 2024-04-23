@@ -2,7 +2,7 @@
   <NavBar></NavBar>
   <div class="container">
     <div class="title">
-      <h1>Apliko për vullnetar</h1>
+      <h1>Bëju pjesë e UpLiftUnity</h1>
     </div>
     <div class="content">
       <div class="image-container">
@@ -38,7 +38,7 @@
                 <option value="Vullnetare">Vullnetare</option>
               </select>
             </div>
-            <button type="submit">Dërgo</button>
+            <button type="submit">Apliko</button>
           </form>
         </div>
       </div>
@@ -52,7 +52,10 @@
   <script>
   import NavBar from '../components/nav.vue';
   import PageFooter from '../components/footer.vue'
-import axios from 'axios';
+  import axios from 'axios';
+  import Swal from 'sweetalert2';
+
+
   export default {
     components:{
         NavBar,
@@ -77,7 +80,11 @@ import axios from 'axios';
           const response = await axios.post('http://localhost:5051/api/applications/AddApplication', this.formData);
           if(response && response.status === 200){
             console.log('u regjistrua');
-            
+            Swal.fire({
+            icon: 'success',
+            title: 'Suksese!',
+            text: 'Aplikimi juaj u pranua me sukses.'
+          });
           }
         }catch(error){
           console.log('Gabim në regjistrim:', error.response.data);
@@ -103,7 +110,7 @@ import axios from 'axios';
     border-radius: 30px;
     margin: 10%;
     padding: 3%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 10px #436060;
   }
   
   .title {
@@ -169,6 +176,9 @@ import axios from 'axios';
   text-align: center;
   background-color: #f9f9f9; 
 }
+select{
+  width: 108%;
+}
   button {
     padding: 10px 20px;
     background-color: #B8DDBE;
@@ -176,6 +186,8 @@ import axios from 'axios';
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 108%;
+   
   }
   
   button:hover {

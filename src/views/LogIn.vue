@@ -19,7 +19,7 @@
 import axios from 'axios';
 
 import Cookies from 'js-cookie';
-
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -43,8 +43,13 @@ export default {
       this.$router.push({ name: 'AdminDashboard' });
     })
     .catch(error => {
-      console.error('Gabim në kyçje', error);
-    });
+        console.error('Gabim në kyçje', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Kredenciale te gabuar',
+          text: 'Emaili ose fjalëkalimi është i gabuar. Ju lutem provoni përsëri.'
+        });
+      });
 }
   }
 };

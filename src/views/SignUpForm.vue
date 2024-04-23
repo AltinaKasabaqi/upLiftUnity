@@ -118,14 +118,14 @@ input[type="email"],
 input[type="tel"],
 input[type="password"],
 select {
-  width: calc(100% - 22px); /* Bëni inputat të më vogël për të mbështetur butonin */
+  width: calc(100% - 22px); 
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 select {
-  width: 100%; /* Rregulloni gjatësinë e selektorit */
+  width: 100%; 
 }
 
 button {
@@ -137,7 +137,7 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px; /* Shtoni pakëz hapësirë midis butonit dhe inputeve */
+  margin-top: 10px; 
 }
 
 button:hover {

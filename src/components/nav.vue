@@ -1,7 +1,6 @@
 <template>
   <nav class="navbar">
     <img src="../assets/logo-no-background.png" alt="Logo" class="logo" />
-    <!-- Shto imazhin në anën e majtë -->
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-// import axios from 'axios'; // Import axios library
+import Modal from "../dashboards/updateDonation.vue"; // import axios from 'axios'; // Import axios library
 
 export default {
   name: "NavBar",
@@ -36,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-/* Resetimi i margin-it dhe padding-ut për të eliminuar hapësirat e panevojshme */
+
 * {
   margin: 0;
   padding: 0;
@@ -55,9 +54,9 @@ body {
 }
 
 .logo {
-  float: left; /* Shto imazhin në anën e majtë */
-  height: 11vh; /* Përshtatja e lartësisë së imazhit */
-  margin: 2%; /* Margini i djathtë i imazhit */
+  float: left; 
+  height: 11vh; 
+  margin: 2%; 
 }
 
 .navbar ul {

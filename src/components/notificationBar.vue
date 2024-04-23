@@ -7,7 +7,6 @@
       <div class="sidebar" v-if="showSidebar" ref="sidebar">
         <i @click="closeSidebar" class="close-icon fas fa-times"></i>
         <div class="notification-content">
-          <!-- Notification content goes here -->
           {{ notificationContent }}
         </div>
       </div>
@@ -20,7 +19,7 @@
       return {
         unreadNotifications: 3,
         showSidebar: false,
-        notificationContent: '' // Initialize as empty
+        notificationContent: '' 
       };
     },
     methods: {
@@ -31,7 +30,6 @@
         }
       },
       generateContent() {
-        // Generate some example content for notification
         this.notificationContent = "Example notification content...";
       },
       closeSidebar() {
@@ -76,7 +74,7 @@
     top: 0;
     right: 0;
     height: 100%;
-    width: 300px; /* Adjust sidebar width as needed */
+    width: 300px; 
     background-color: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 999;

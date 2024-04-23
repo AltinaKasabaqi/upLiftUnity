@@ -37,7 +37,6 @@
         </ul>
       </div>
       <div class="fixed-icons" v-if="!isSidebarOpen">
-        <!-- Icons -->
         <div class="icon"><i class="fas fa-user"></i></div>
         <div class="icon"><i class="fas fa-bell"></i></div>
         <div class="icon"><i class="fas fa-cogs"></i></div>
@@ -96,7 +95,6 @@ export default {
     .then(response => response.json())
     .then(data => {
         this.user = data; 
-        // console.log(this.user);
     })
   
      
@@ -160,8 +158,8 @@ export default {
 .user-role {
   margin-bottom: 5px; 
   font-style: italic; 
-  display: flex; /* Përdorimi i Flexbox */
-  justify-content: center; /* Vendosja e tekstit në qendër horizontale */
+  display: flex; 
+  justify-content: center; 
   align-items: center; 
   padding: 1.5%;
 
@@ -203,8 +201,8 @@ export default {
 
 .fixed-icons {
   position: fixed;
-  top: 20px; /* Adjust vertical positioning */
-  right: 10px; /* Adjust horizontal positioning */
+  top: 20px; 
+  right: 10px;
   margin-top: 70px;
   font-size: 25px;
 }
@@ -214,7 +212,7 @@ export default {
 }
 
 .icon i {
-  font-size: 18px; /* Adjust icon size */
+  font-size: 18px;
 }
 
 .content {
@@ -228,10 +226,9 @@ export default {
 }
 
 .sidebar-open .fixed-icons {
-  right: 270px; /* Adjust to accommodate open sidebar */
+  right: 270px; 
 }
 
-/* Custom styles for sidebar items */
 .sidebar-heading {
   font-size: 18px;
   margin-top: 20px;
@@ -242,8 +239,8 @@ export default {
   color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
-  display: block; /* Shfaqja e linjave në rresht të vetëm */
-  margin-bottom: 5px; /* Hapësira midis linjave */
+  display: block; 
+  margin-bottom: 5px; 
 }
 
 .sidebar-item:hover {
@@ -266,7 +263,7 @@ export default {
   border: none; 
   border-radius: 5px;
   cursor: pointer; 
-  /* transition: background-color 0.3s ease;  */
+ 
 }
 
 #logoutButton:hover {

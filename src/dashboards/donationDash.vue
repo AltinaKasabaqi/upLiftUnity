@@ -81,7 +81,7 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
-import Modal from "./updateDonation.vue"; // Import the modal component
+import Modal from "./updateDonation.vue"; 
 
 axios.defaults.baseURL = "http://localhost:5051/api";
 
@@ -133,13 +133,13 @@ export default {
       console.log("Viewing donation:", donationId);
     },
     editDonation(donation) {
-      this.editingDonation = { ...donation }; // Create a copy of donation to avoid directly mutating it
-      this.showModal = true; // Set showModal to true to display the modal
+      this.editingDonation = { ...donation }; 
+      this.showModal = true; 
       document.body.classList.add('modal-open');
     },
     cancelEdit() {
-      this.editingDonation = null; // Reset editingDonation on cancel
-      this.showModal = false; // Close the modal
+      this.editingDonation = null; 
+      this.showModal = false; 
        document.body.classList.remove('modal-open');
     },
     async deleteDonation(donationId) {

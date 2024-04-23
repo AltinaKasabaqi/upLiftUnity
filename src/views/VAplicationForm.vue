@@ -6,7 +6,7 @@
     </div>
     <div class="content">
       <div class="image-container">
-        <img src="../assets/vpydh7mq.png" alt="Image">
+        <img src="../assets/gif.gif" alt="Image">
       </div>
       <div class="right">
         <div class="form-container">
@@ -33,8 +33,8 @@
             </div>
             <div class="form-group">
               <label for="applicationType">Lloji i Aplikimit:</label>
-              <select id="applicationType" v-model="formData.applicationType" required>
-                <option value="Supervisor">Supervisor</option>
+              <select id="applicationType" v-model="formData.applicationType" required class="dropdown-menu">
+                <option value="Supervisor">Mbikqyrës</option>
                 <option value="Vullnetare">Vullnetare</option>
               </select>
             </div>
@@ -94,6 +94,7 @@ import axios from 'axios';
   
   <style scoped>
   /* Stili i vendeve për të ruajtur input-et dhe textarea */
+ 
   .container {
     display: flex;
     flex-direction: column;
@@ -127,10 +128,14 @@ import axios from 'axios';
   .image-container {
     padding: 20px;
     width: 50%;
+    
   }
   
   .image-container>img{
     width: 100%;
+    margin-left: -15%;
+   
+    
   }
   .form-container {
     padding: 20px;
@@ -147,8 +152,10 @@ import axios from 'axios';
   
   input[type="text"],
   input[type="email"],
+  input[type="tel"],
+  select,
   textarea {
-    width: 100%; /* Ndërro width-in sipas preferencave tuaja */
+    width: 100%; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -160,7 +167,7 @@ import axios from 'axios';
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
-  background-color: #f9f9f9; /* Ngjyra e fushës së inputit */
+  background-color: #f9f9f9; 
 }
   button {
     padding: 10px 20px;
@@ -174,5 +181,8 @@ import axios from 'axios';
   button:hover {
     background-color: #52A086;
   }
+
+
+
   </style>
   

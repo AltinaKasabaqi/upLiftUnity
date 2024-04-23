@@ -1,6 +1,4 @@
 <template>
-  <!-- <NotificationBar></NotificationBar>
-  <SideBar></SideBar> -->
   <div class="super-dashboard">
     <h1>Statistikat e përgjithshme</h1>
     <div class="dashboard-boxes">
@@ -28,16 +26,12 @@
 
 <script>
 import Chart from 'chart.js/auto';
-// import SideBar from '../components/sideBar.vue';
-// import NotificationBar from '../components/notificationBar.vue';
+
 
 export default {
-  // components:{
-  //   SideBar,
-  //   NotificationBar,
-  // },
+  
   mounted() {
-    // Activity Chart
+    
     new Chart(document.getElementById('activityChart'), {
       type: 'line',
       data: {
@@ -60,7 +54,7 @@ export default {
       }
     });
 
-    // Analysis Chart
+    
     new Chart(document.getElementById('analysisChart'), {
       type: 'bar',
       data: {
@@ -99,7 +93,7 @@ export default {
       }
     });
 
-    // Payment Chart
+    
     new Chart(document.getElementById('paymentChart'), {
       type: 'pie',
       data: {

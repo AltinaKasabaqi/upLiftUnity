@@ -42,7 +42,7 @@
   
   <script>
 import axios from '../api/axios';
-import Swal from 'sweetalert2'; // Importo SweetAlert2
+import Swal from 'sweetalert2'; 
 
 export default {
   data() {
@@ -63,7 +63,7 @@ export default {
     updateStatus(id) {
       axios.put(`http://localhost:5051/api/applications/UpdateApplication/${id}`)
         .then(response => {
-          console.log(response.data); // Afisho përgjigjen nga serveri në konsolë
+          console.log(response.data);
           this.fetchApplications();
         })
         .catch(error => {
@@ -71,7 +71,7 @@ export default {
         });
     },
     showUpdateAlert(id) {
-      Swal.fire({ // Krijoni modalin e njoftimit me SweetAlert2
+      Swal.fire({ 
         title: 'Konfirmo',
         icon: 'question',
         iconColor: 'gray',

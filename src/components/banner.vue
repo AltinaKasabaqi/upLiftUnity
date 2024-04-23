@@ -14,9 +14,11 @@
    <div class="Activities">
     <h1>Aktivitetet </h1>
       <div class="activity-images">
-          <img src="../assets/image-4.webp">
-          <img src="../assets/p.png">
-          <img src="../assets/vpydh7mq.png">
+          <img src="../assets/3 1.png">
+          <img src="../assets/image 5.png">
+          <img src="../assets/image 6.png">
+          <img src="../assets/image 7.png">
+
       </div>
     </div>
 
@@ -90,20 +92,22 @@ h3{
     color: rgb(79, 79, 79);
 }
 .Activities {
-  text-align: center; /* Vendos titullin në qendër */
+  text-align: center; 
 }
 
 .activity-images {
   display: flex;
-  justify-content: center; /* Vendos elementet në qendër horizontalisht */
+  justify-content: center; 
   align-items: center;
-  flex-wrap: wrap; /* Përdor wrap për të bërë elementet të zbrastë (nëse ka më shumë se një rresht) */
+  flex-wrap: wrap;
 }
 
 .activity-images img {
   width: 30%;
   padding: 3%;
-  margin: 0; /* Fshij marginin që mund të ketë ndonjëherë në dispozicion */
+
+  margin: 0; 
+  
 }
 
 .activity-images img:hover {
@@ -118,14 +122,14 @@ h3{
 }
 
 .left {
-  flex-shrink: 0; /* Mos lejo foto-n të zgjerohet përtej madhësisë së saj origjinale */
-  margin-right: 5%; /* Rregullo distancën midis fotos dhe tekstit */
+  flex-shrink: 0;
+  margin-right: 5%; 
 }
 
 .right {
   flex-grow: 1;
-  width: 100%; /* Vendos paragrafin të zënë gjithë hapësirën e disponueshme */
-  margin-top: 0; /* Fshij marginin e sipërm që mund të ketë paragrafi */
+  width: 100%; 
+  margin-top: 0; 
   font-size: 20px;
 }
 

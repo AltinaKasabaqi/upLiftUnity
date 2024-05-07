@@ -68,6 +68,13 @@ const routes = [
       component: () => import("@/components/Calls/callRiskRating.vue"),
       meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer']}
     },
+    {
+      path: "/calendar",
+      name: "CalendarV",
+      component: () => import("@/Calendar/calendar.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+    
+    }
   
   ]
   },

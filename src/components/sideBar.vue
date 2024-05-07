@@ -26,6 +26,7 @@
           <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
           <router-link to="/userActivities" class="sidebar-item">Monitorimi i aktiviteteve</router-link>
           <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
+          <router-link to="/Calendar" class="sidebar-item">Kalendari</router-link>
         </ul>
         <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">

@@ -24,7 +24,7 @@
           <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
           <router-link to="/myNotes" class="sidebar-item">Shënimet personale</router-link>
           <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
-          <router-link to="/analiza" class="sidebar-item">Aktivitetet e Vullnetarëve</router-link>
+          <router-link to="/userActivities" class="sidebar-item">Monitorimi i aktiviteteve</router-link>
           <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
           <router-link to="/Calendar" class="sidebar-item">Kalendari</router-link>
         </ul>

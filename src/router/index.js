@@ -12,7 +12,7 @@ const routes = [
     path: '/myDashboard',
     name: 'AdminDashboard',
     component: () => import("@/dashboards/profilePage.vue"),
-    meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' },
+    meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] },
     children: [
       {
         path: '',
@@ -58,11 +58,23 @@ const routes = [
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
     {
+      path: "/userActivities",
+      name: "UserActivities",
+      component: () => import("@/dashboards/userActivities.vue"),
+     
+    },{
       path: "/callRate",
       name: "CallRiskRate",
       component: () => import("@/components/Calls/callRiskRating.vue"),
       meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer']}
     },
+    {
+      path: "/calendar",
+      name: "CalendarV",
+      component: () => import("@/Calendar/calendar.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+    
+    }
   
   ]
   },
@@ -85,6 +97,7 @@ const routes = [
     name: "DonationPackages",
     component: () => import("@/components/donationPackages.vue"),
   },
+ 
 ];
 
 

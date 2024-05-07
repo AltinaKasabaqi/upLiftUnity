@@ -17,7 +17,7 @@ const routes = [
       {
         path: '',
         name: 'Statistics',
-        component: () => import("@/dashboards/statisticsPage.vue"),
+        component: () => import("@/dashboards/statistics/statisticsPage.vue"),
       },
     {
       path: "/chat",
@@ -57,6 +57,12 @@ const routes = [
       component: () => import("@/dashboards/donationDash.vue"),
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
+    {
+      path: "/callRate",
+      name: "CallRiskRate",
+      component: () => import("@/components/Calls/callRiskRating.vue"),
+      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer']}
+    },
   
   ]
   },
@@ -78,7 +84,6 @@ const routes = [
     path: "/donationPackages",
     name: "DonationPackages",
     component: () => import("@/components/donationPackages.vue"),
-   
   },
 ];
 

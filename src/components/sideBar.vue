@@ -21,7 +21,7 @@
           <router-link to="/allUsersView" class="sidebar-item">Përdoruesit</router-link>
           <router-link to="/register" class="sidebar-item">Shto staf</router-link>
           <router-link to="/donations" class="sidebar-item">Donacionet</router-link>
-          <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
+          <router-link to="/callsHistory" class="sidebar-item">Historiku i thirrjeve</router-link>
           <router-link to="/addNotes" class="sidebar-item">Shenime</router-link>
           <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
           <router-link to="/userActivities" class="sidebar-item">Monitorimi i aktiviteteve</router-link>
@@ -31,7 +31,6 @@
         <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">
           <router-link to="/chat" class="sidebar-item">Chat</router-link>
-          <router-link to="/myDashboard/sygjerime" class="sidebar-item">Dokumentimi i bisedave</router-link>
         </ul>
         <ul class="sidebar-list">
           <button id="logoutButton" @click="showLogoutAlert">Çkyçu</button>
@@ -260,10 +259,12 @@ export default {
 #logoutButton {
   background-color: #ffffff;
   color: black; 
-  padding: 3px 20px;
+  padding: 3%;
   border: none; 
   border-radius: 5px;
   cursor: pointer; 
+  width: 40%;
+  font-weight: bold;
  
 }
 

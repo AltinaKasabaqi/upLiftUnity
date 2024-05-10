@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="form-container">
       <h2 class="title">Regjistro Stafin</h2>
       <div v-if="errorMessage" class="alert alert-danger">
         {{ errorMessage }}
@@ -157,13 +157,17 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.form-container {
   width: 40%;
-  margin: 10% auto;
+  margin: 5% auto;
+  border: solid 1px rgb(219, 219, 219);
+  border-radius: 5%;
+  padding: 5%;
 }
 
 .title {
   text-align: center;
+  font-size: 30px;
 }
 
 .form-group {
@@ -173,6 +177,8 @@ export default {
 label {
   display: block;
   font-weight: bold;
+  font-size: 18px;
+  color: #4c4c4c;
 }
 
 input[type="text"],
@@ -180,26 +186,27 @@ input[type="email"],
 input[type="tel"],
 input[type="password"],
 select {
-  width: calc(100% - 22px);
-  padding: 8px;
+  width: 100% ;
+  padding: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 select {
-  width: 100%;
+  width: 105%;
 }
 
 button {
   display: block;
-  width: 100%;
-  padding: 8px;
+  width: 105%;
+  padding: 12px;
   background-color: #b8ddbe;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 16px;
 }
 
 button:hover {

@@ -58,9 +58,16 @@ const routes = [
         meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
       },
       {
+      path: "/callsHistory",
+      name: "callsHistory",
+      component: () => import("@/dashboards/callsHistory.vue"),
+      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] }
+    },
+    {
         path: "/userActivities",
         name: "UserActivities",
         component: () => import("@/dashboards/userActivities.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
 
       }, {
         path: "/callRate",
@@ -72,7 +79,14 @@ const routes = [
         path: "/calendar",
         name: "CalendarV",
         component: () => import("@/Calendar/calendar.vue"),
-        meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+        meta: { requiresAuth: true }
+    
+    },
+    {
+      path: "/mySchedule",
+      name: "MySchedule",
+      component: () => import("@/dashboards/mySchedule.vue"),
+      meta: { requiresAuth: true }
 
       },
       {

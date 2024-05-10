@@ -202,7 +202,7 @@ td {
 }
 
 th {
-  background-color: #e0f8e1;
+  background-color: #f2f2f2;
   color: rgb(0, 0, 0);
 }
 
@@ -238,12 +238,14 @@ tr:nth-child(even) {
 
 .btn-prev,
 .btn-next {
-  background-color: #74b976;
+  /* background-color: #74b976; */
   color: rgb(0, 0, 0);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border:solid 1px #000000;
+  background-color: white;
 }
 
 .btn-prev:disabled,

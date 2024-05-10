@@ -44,13 +44,13 @@
           <td>
             <button
               @click="acceptApplication(application)"
-              class="btn accept-btn"
+              class="btn2 accept-btn"
             >
               Pranuar
             </button>
             <button
               @click="rejectApplication(application)"
-              class="btn reject-btn"
+              class="btn2 reject-btn"
             >
               Refuzuar
             </button>
@@ -178,13 +178,13 @@ table {
 table th,
 table td {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #828282;
 }
 
 table th {
-  background-color: #70a090;
+  background-color: #e9e9e9;
   font-weight: bold;
-  color: white;
+  color: black;
 }
 
 .edit-btn,
@@ -218,18 +218,37 @@ table th {
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
-  background-color: rgba(75, 192, 192, 0.2);
-  border: solid 1px #70a090;
+  /* background-color: rgba(75, 192, 192, 0.2); */
+  border: solid 1px rgb(43, 43, 43);
   box-shadow: 5px 5px 10px rgba(71, 71, 71, 0.2);
 }
 
+.btn2{
+  width: 100%;
+  margin: 2%;
+  padding: 5%;
+  border-radius: 4px;
+  cursor: pointer;
+  border: solid 1px rgb(43, 43, 43);
+  box-shadow: 5px 5px 10px rgba(71, 71, 71, 0.2);
+}
 .accept-btn {
   background-color: #52a086;
   color: white;
+  
 }
 
 .reject-btn {
   background-color: #f7f6f2;
   color: black;
+}
+
+#filterType{
+  width: 11%; 
+  padding: 8px; 
+  border-radius: 4px; 
+  border: 1px solid #ccc; 
+  font-size: 14px;
+  
 }
 </style>

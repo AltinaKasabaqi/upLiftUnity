@@ -66,8 +66,8 @@
   }
   
   table th {
-    background-color: #768781;
-    color: white;
+    background-color: #f2f2f2;
+    font-weight: bold;
   }
   .btn{
     width: 80%;

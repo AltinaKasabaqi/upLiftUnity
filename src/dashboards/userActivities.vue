@@ -117,13 +117,13 @@
   table th,
   table td {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #919191;
   }
   
   table th {
-    background-color: #70a090;
+    background-color: #dbdbdb;
     font-weight: bold;
-    color: white;
+    color: black;
   }
   h1{
     margin-left: 30%;

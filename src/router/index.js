@@ -72,7 +72,14 @@ const routes = [
       path: "/calendar",
       name: "CalendarV",
       component: () => import("@/Calendar/calendar.vue"),
-      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+      meta: { requiresAuth: true }
+    
+    },
+    {
+      path: "/mySchedule",
+      name: "MySchedule",
+      component: () => import("@/dashboards/mySchedule.vue"),
+      meta: { requiresAuth: true }
     
     }
   

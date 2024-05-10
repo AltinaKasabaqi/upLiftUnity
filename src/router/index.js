@@ -58,9 +58,16 @@ const routes = [
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },
     {
+      path: "/callsHistory",
+      name: "callsHistory",
+      component: () => import("@/dashboards/callsHistory.vue"),
+      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] }
+    },
+    {
       path: "/userActivities",
       name: "UserActivities",
       component: () => import("@/dashboards/userActivities.vue"),
+      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
      
     },{
       path: "/callRate",

@@ -21,7 +21,7 @@
           <router-link to="/allUsersView" class="sidebar-item">Përdoruesit</router-link>
           <router-link to="/register" class="sidebar-item">Shto staf</router-link>
           <router-link to="/donations" class="sidebar-item">Donacionet</router-link>
-          <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
+          <router-link to="/callsHistory" class="sidebar-item">Historiku i thirrjeve</router-link>
           <router-link to="/myNotes" class="sidebar-item">Shënimet personale</router-link>
           <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
           <router-link to="/userActivities" class="sidebar-item">Monitorimi i aktiviteteve</router-link>

@@ -167,6 +167,7 @@ export default {
 
 .title {
   text-align: center;
+  font-size: 30px;
 }
 
 .form-group {

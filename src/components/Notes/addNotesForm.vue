@@ -3,10 +3,9 @@
     <div class="notes-chat msger">
       <header class="msger-header">
         <div class="msger-header-title">
-          <i class="fas fa-comment-alt"></i> Notes Chat
+          <i class="fas fa-comment-alt"></i> Notes
         </div>
-        <div class="msger-header-options">
-        </div>
+        <div class="msger-header-options"></div>
       </header>
 
       <main class="msger-chat notes-window">
@@ -16,8 +15,7 @@
           class="msg note-message"
         >
           <div class="msg-bubble">
-            <div class="msg-info">
-            </div>
+            <div class="msg-info"></div>
             <div class="msg-text">
               <div
                 v-if="!note.editingTitle"
@@ -46,6 +44,13 @@
                 @blur="stopEditingContent(note)"
                 class="edit-mode"
               ></textarea>
+            </div>
+            <div class="msg-actions">
+              <i
+                id="icon-bin"
+                class="fas fa-trash-alt delete-icon"
+                @click="deleteNoteConfirm(note)"
+              ></i>
             </div>
           </div>
         </div>
@@ -88,6 +93,47 @@ export default {
     this.fetchUserNotes();
   },
   methods: {
+    async deleteNoteConfirm(note) {
+      const confirmResult = await Swal.fire({
+        icon: "warning",
+        title: "Are you sure?",
+        text: "This note will be permanently deleted.",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+      });
+
+      if (confirmResult.isConfirmed) {
+        await this.deleteNoteFromDatabase(note);
+      }
+    },
+
+    async deleteNoteFromDatabase(note) {
+      try {
+        const noteID = note.noteId;
+        const response = await axios.delete(
+          `http://localhost:5051/notes/Delete/${noteID}`
+        );
+        if (response.status === 200) {
+          await this.fetchUserNotes();
+
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Note deleted successfully.",
+          });
+        } else {
+          throw new Error("Delete operation failed.");
+        }
+      } catch (error) {
+        console.error("Error deleting note:", error.response.data);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Failed to delete note. Please try again.",
+        });
+      }
+    },
     async fetchUserNotes() {
       const userId = getUserIdFromToken();
 
@@ -215,10 +261,6 @@ export default {
   font-size: 1.2em;
 }
 
-.msger-header-options {
-  display: flex;
-}
-
 .msger-chat {
   flex: 1;
   overflow-y: auto;
@@ -235,17 +277,19 @@ export default {
 
 .input-field {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   margin-top: 20px;
 }
 
 .input-field input,
 .input-field textarea,
 .input-field button {
-  margin-right: 10px;
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  font-size: 1em;
 }
 
 .input-field button {
@@ -256,40 +300,16 @@ export default {
 }
 
 .input-btn {
-  width: auto;
+  width: 100%;
 }
 
 .msger-inputarea {
   display: flex;
   justify-content: space-between;
+  align-items: stretch;
   padding: 15px;
   border-top: 2px solid #eee;
   background: #f8f9fa;
-}
-
-.msger-inputarea * {
-  padding: 10px;
-  border: none;
-  border-radius: 3px;
-  font-size: 1em;
-}
-
-.msger-input {
-  flex: 1;
-  background: #ffffff;
-}
-
-.msger-send-btn {
-  margin-left: 10px;
-  background: #93bfed;
-  color: #ffffff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.23s;
-}
-
-.msger-send-btn:hover {
-  background: #6096d0;
 }
 
 .editable {
@@ -299,5 +319,9 @@ export default {
 .edit-mode {
   width: 100%;
   min-height: 100px;
+}
+
+#icon-bin {
+  margin-left: auto;
 }
 </style>

@@ -17,7 +17,7 @@
         </ul>
         <h3 class="sidebar-heading">Paneli i Administratorit</h3>
         <ul class="sidebar-list">
-          <router-link to="/myDashboard" class="sidebar-item">Statistikat</router-link>
+          <router-link to="/statistics" class="sidebar-item">Statistikat</router-link>
           <router-link to="/allUsersView" class="sidebar-item">Përdoruesit</router-link>
           <router-link to="/register" class="sidebar-item">Shto staf</router-link>
           <router-link to="/donations" class="sidebar-item">Donacionet</router-link>
@@ -25,7 +25,7 @@
           <router-link to="/addNotes" class="sidebar-item">Shenime</router-link>
           <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
           <router-link to="/userActivities" class="sidebar-item">Monitorimi i aktiviteteve</router-link>
-          <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
+          <router-link to="/mySchedule" class="sidebar-item">Orari i punës</router-link>
           <router-link to="/Calendar" class="sidebar-item">Kalendari</router-link>
         </ul>
         <h3 class="sidebar-heading">Shërbimet e tjera</h3>

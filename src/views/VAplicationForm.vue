@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
               <label for="cv">CV:</label>
-              <input type="file" id="cv" accept=".pdf,.doc,.docx" @change="handleFileUpload" required>
+              <input type="text" id="cv" required>
             </div>
             <div class="form-group">
               <label for="description">Mesazhi:</label>
@@ -85,11 +85,20 @@
             title: 'Suksese!',
             text: 'Aplikimi juaj u pranua me sukses.'
           });
+          this.formData = {
+          nameSurname: '',
+          email: '',
+          phoneNumber: '',
+          cv: '',
+          description: '',
+          applicationType: ''
+        };
           }
         }catch(error){
           console.log('Gabim në regjistrim:', error.response.data);
           if (error.response.status === 409) {
           this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
+          
           } else {
             this.errorMessage = error.response.data;
           }
@@ -100,8 +109,6 @@
   </script>
   
   <style scoped>
-  /* Stili i vendeve për të ruajtur input-et dhe textarea */
- 
   .container {
     display: flex;
     flex-direction: column;
@@ -193,8 +200,5 @@ select{
   button:hover {
     background-color: #52A086;
   }
-
-
-
   </style>
   

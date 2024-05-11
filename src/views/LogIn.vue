@@ -40,7 +40,7 @@ export default {
       Cookies.set('token', token, {expires:1}); 
       console.log("Tokeni i vendosur në cookie:", token); 
 
-      this.$router.push({ name: 'AdminDashboard' });
+      this.$router.push({ name: 'Statistics' });
     })
     .catch(error => {
         console.error('Gabim në kyçje', error);

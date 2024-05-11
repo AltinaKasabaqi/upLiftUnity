@@ -93,17 +93,6 @@
     flex: 1;
   }
   
-  /* .search-bar button {
-    padding: 10px 15px;
-    margin-left: 10px;
-    border-radius: 4px;
-    border: none;
-    background-color: #70a090;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  } */
-  
   .search-bar button:hover {
     background-color: #58826e;
   }

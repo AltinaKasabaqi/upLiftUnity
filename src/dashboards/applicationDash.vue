@@ -105,10 +105,10 @@ export default {
       this.showUpdateAlert(application.applicationId, "Shqyrtuar");
     },
     acceptApplication(application) {
-      this.showUpdateAlert(application.applicationId, "Pranuar");
+      this.showUpdateAlert(application.applicationId, "pranohet");
     },
     rejectApplication(application) {
-      this.showUpdateAlert(application.applicationId, "Refuzuar");
+      this.showUpdateAlert(application.applicationId, "refuzohet");
     },
     showUpdateAlert(id, status) {
       Swal.fire({
@@ -218,7 +218,6 @@ table th {
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
-  /* background-color: rgba(75, 192, 192, 0.2); */
   border: solid 1px rgb(43, 43, 43);
   box-shadow: 5px 5px 10px rgba(71, 71, 71, 0.2);
 }

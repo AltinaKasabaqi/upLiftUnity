@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    <img src="../assets/logo-no-background.png" alt="Logo" class="logo" />
+    <a href="/"><img src="../assets/logo-no-background.png" alt="Logo" class="logo" /></a>
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>

@@ -15,7 +15,7 @@ const routes = [
     meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] },
     children: [
       {
-        path: '',
+        path: '/statistics',
         name: 'Statistics',
         component: () => import("@/dashboards/statistics/statisticsPage.vue"),
       },

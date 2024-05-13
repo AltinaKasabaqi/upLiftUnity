@@ -64,9 +64,7 @@ const routes = [
       meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
     },]
   },
-
-
-    
+ 
   { 
       path: "/Login",
       name: "LoginForma",
@@ -76,8 +74,26 @@ const routes = [
     path: "/applicationForm", 
     name: "ApplicationForm",
     component: () => import("@/views/VAplicationForm.vue"),
-    
   },
+  {
+    path: "/RulesForma", 
+    name: "RulesForma",
+    component: () => import("@/dashboards/RulesForma.vue"),
+  },
+  {
+    path: "/CallForm", 
+    name: "CallForm",
+    component: () => import("@/dashboards/CallForm.vue"),
+  },
+  {
+    path: '/AboutUs',
+    name: 'AboutUs',
+    component: () => import('@/views/AboutUs.vue'),
+    meta: { requiresAuth: false }
+  }
+  
+
+
 ];
 
 

@@ -84,7 +84,7 @@ export default {
         if (error.response.status === 409) {
           this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
         } else {
-          this.errorMessage = error.response.data;;
+          this.errorMessage = error.response.data;
         }
       }
     }

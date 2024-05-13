@@ -1,56 +1,24 @@
 <template>
   <nav class="navbar">
-    <img src="../assets/logo-no-background.png" alt="Logo" class="logo" />
-    <!-- Shto imazhin në anën e majtë -->
+    <a href="/"><img src="../assets/logo-no-background.png" alt="Logo" class="logo" /></a>
     <ul>
       <li><a href="default.asp">Rreth nesh</a></li>
       <li><a href="#">Na kontakto</a></li>
-      <li><router-link to="/applicationForm">Bëhu vullnetarë</router-link></li>
-      <li><a href="#" @click="redirectToStripe">Dhuro</a></li> <!-- Call redirectToStripe method when clicked -->
+      <li><router-link to="/applicationForm">Bëhu pjesë</router-link></li>
+      <li><router-link to="/donationPackages">Dhuro</router-link></li>
     </ul>
   </nav>
 </template>
 
-<script>
 
+<script>
 export default {
   name: "NavBar",
-
-  methods: {
-    async redirectToStripe() {
-  console.log("HI");
-    fetch('http://localhost:8080/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        items: [
-          { id: 1, quantity: 1 }, 
-        ],
-      }),
-    })
-      .then(res => {
-     
-        if (res.ok) return res.json();
-        return res.json().then(json => Promise.reject(json));
-        
-      })
-      .then(({ url }) => {
-        console.log("Hi");
-      
-        window.location = url;
-      })
-      .catch(e => {
-        console.error(e.error);
-      });
   }
-  }
-};
 </script>
 
 <style scoped>
-/* Resetimi i margin-it dhe padding-ut për të eliminuar hapësirat e panevojshme */
+
 * {
   margin: 0;
   padding: 0;
@@ -69,9 +37,9 @@ body {
 }
 
 .logo {
-  float: left; /* Shto imazhin në anën e majtë */
-  height: 11vh; /* Përshtatja e lartësisë së imazhit */
-  margin: 2%; /* Margini i djathtë i imazhit */
+  float: left; 
+  height: 11vh; 
+  margin: 2%; 
 }
 
 .navbar ul {

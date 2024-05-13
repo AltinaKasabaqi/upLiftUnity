@@ -79,11 +79,10 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../api/axios.js";
 import Swal from "sweetalert2";
-import Modal from "./updateDonation.vue"; // Import the modal component
+import Modal from "./updateDonation.vue"; 
 
-axios.defaults.baseURL = "http://localhost:5051/api";
 
 export default {
   components: {
@@ -117,7 +116,7 @@ export default {
     },
     async getDonations() {
       try {
-        const response = await axios.get("/donations/GetDonations");
+        const response = await axios.get("http://localhost:5051/api/donations/GetDonations");
         this.donations = response.data;
       } catch (error) {
         console.error("Error fetching donations:", error);
@@ -133,19 +132,19 @@ export default {
       console.log("Viewing donation:", donationId);
     },
     editDonation(donation) {
-      this.editingDonation = { ...donation }; // Create a copy of donation to avoid directly mutating it
-      this.showModal = true; // Set showModal to true to display the modal
+      this.editingDonation = { ...donation }; 
+      this.showModal = true; 
       document.body.classList.add('modal-open');
     },
     cancelEdit() {
-      this.editingDonation = null; // Reset editingDonation on cancel
-      this.showModal = false; // Close the modal
+      this.editingDonation = null; 
+      this.showModal = false; 
        document.body.classList.remove('modal-open');
     },
     async deleteDonation(donationId) {
       Swal.fire({
         title: "Delete Donation",
-        text: "Are you sure you want to delete this donation?",
+        text: "A je i sigurt që dëshiron të fshish këtë donacion?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -203,7 +202,7 @@ td {
 }
 
 th {
-  background-color: #e0f8e1;
+  background-color: #f2f2f2;
   color: rgb(0, 0, 0);
 }
 
@@ -239,12 +238,14 @@ tr:nth-child(even) {
 
 .btn-prev,
 .btn-next {
-  background-color: #74b976;
+  /* background-color: #74b976; */
   color: rgb(0, 0, 0);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border:solid 1px #000000;
+  background-color: white;
 }
 
 .btn-prev:disabled,

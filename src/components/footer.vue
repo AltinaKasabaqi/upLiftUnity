@@ -32,12 +32,12 @@
   
   .left img {
     height: 15vh;
-    margin-left: 10%; /* Përshtat logo-n sipas dëshirës */
+    margin-left: 10%; 
   }
   
   .right p {
-    margin: 2% 0; /* Rregullon distancën midis teksteve */
-    text-align: right; /* Vendos tekstin ne te djathte */
+    margin: 2% 0; 
+    text-align: right; 
   }
   </style>
   

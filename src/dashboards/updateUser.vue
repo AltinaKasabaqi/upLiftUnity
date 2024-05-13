@@ -1,6 +1,6 @@
 <template>
     <div>
-      <NavBar></NavBar>
+      
       <div class="container">
         <h2 class="title">Përditëso të dhënat</h2>
         <div v-if="errorMessage" class="alert alert-danger">
@@ -20,10 +20,6 @@
               <label for="email">Email:</label>
               <input type="email" id="email" v-model="formData.email" >
             </div>
-            <!-- <div class="form-group">
-              <label for="fjalekalimi">Fjalëkalimi:</label>
-              <input type="password" id="fjalekalimi" v-model="formData.password">
-            </div> -->
             <div class="form-group">
               <label for="phoneNumber">Numri i telefonit:</label>
               <input type="tel" id="phoneNumber" v-model="formData.phoneNumber">
@@ -40,24 +36,24 @@
                 <option value="3">Vullnetarë</option>
               </select>
             </div>
-            <button type="submit">Përditëso</button> <!-- Ndryshimi i etiketës së butonit -->
+            <button type="submit">Përditëso</button> 
           </div>
           <div class="right">
          
           </div>
         </form>
       </div>
-      <PageFooter></PageFooter>
+      
     </div>
   </template>
   
   <script>
-  import NavBar from '../components/nav.vue';
+ 
   import axios from 'axios';
   
   export default {
     components: {
-      NavBar
+     
     },
     data() {
       return {

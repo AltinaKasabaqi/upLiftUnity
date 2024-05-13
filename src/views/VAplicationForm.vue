@@ -2,11 +2,11 @@
   <NavBar></NavBar>
   <div class="container">
     <div class="title">
-      <h1>Apliko për vullnetar</h1>
+      <h1>Bëju pjesë e UpLiftUnity</h1>
     </div>
     <div class="content">
       <div class="image-container">
-        <img src="../assets/vpydh7mq.png" alt="Image">
+        <img src="../assets/gif.gif" alt="Image">
       </div>
       <div class="right">
         <div class="form-container">
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
               <label for="cv">CV:</label>
-              <input type="file" id="cv" accept=".pdf,.doc,.docx" @change="handleFileUpload" required>
+              <input type="text" id="cv" required>
             </div>
             <div class="form-group">
               <label for="description">Mesazhi:</label>
@@ -33,12 +33,12 @@
             </div>
             <div class="form-group">
               <label for="applicationType">Lloji i Aplikimit:</label>
-              <select id="applicationType" v-model="formData.applicationType" required>
-                <option value="Supervisor">Supervisor</option>
+              <select id="applicationType" v-model="formData.applicationType" required class="dropdown-menu">
+                <option value="Supervisor">Mbikqyrës</option>
                 <option value="Vullnetare">Vullnetare</option>
               </select>
             </div>
-            <button type="submit">Dërgo</button>
+            <button type="submit">Apliko</button>
           </form>
         </div>
       </div>
@@ -52,7 +52,10 @@
   <script>
   import NavBar from '../components/nav.vue';
   import PageFooter from '../components/footer.vue'
-import axios from 'axios';
+  import axios from 'axios';
+  import Swal from 'sweetalert2';
+
+
   export default {
     components:{
         NavBar,
@@ -77,12 +80,25 @@ import axios from 'axios';
           const response = await axios.post('http://localhost:5051/api/applications/AddApplication', this.formData);
           if(response && response.status === 200){
             console.log('u regjistrua');
-            
+            Swal.fire({
+            icon: 'success',
+            title: 'Suksese!',
+            text: 'Aplikimi juaj u pranua me sukses.'
+          });
+          this.formData = {
+          nameSurname: '',
+          email: '',
+          phoneNumber: '',
+          cv: '',
+          description: '',
+          applicationType: ''
+        };
           }
         }catch(error){
           console.log('Gabim në regjistrim:', error.response.data);
           if (error.response.status === 409) {
           this.errorMessage = 'Gabime gjatë regjistrimit: ' + error.response.data;
+          
           } else {
             this.errorMessage = error.response.data;
           }
@@ -93,7 +109,6 @@ import axios from 'axios';
   </script>
   
   <style scoped>
-  /* Stili i vendeve për të ruajtur input-et dhe textarea */
   .container {
     display: flex;
     flex-direction: column;
@@ -102,7 +117,7 @@ import axios from 'axios';
     border-radius: 30px;
     margin: 10%;
     padding: 3%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 10px #436060;
   }
   
   .title {
@@ -127,10 +142,14 @@ import axios from 'axios';
   .image-container {
     padding: 20px;
     width: 50%;
+    
   }
   
   .image-container>img{
     width: 100%;
+    margin-left: -15%;
+   
+    
   }
   .form-container {
     padding: 20px;
@@ -147,8 +166,10 @@ import axios from 'axios';
   
   input[type="text"],
   input[type="email"],
+  input[type="tel"],
+  select,
   textarea {
-    width: 100%; /* Ndërro width-in sipas preferencave tuaja */
+    width: 100%; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -160,7 +181,10 @@ import axios from 'axios';
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
-  background-color: #f9f9f9; /* Ngjyra e fushës së inputit */
+  background-color: #f9f9f9; 
+}
+select{
+  width: 108%;
 }
   button {
     padding: 10px 20px;
@@ -169,6 +193,8 @@ import axios from 'axios';
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 108%;
+   
   }
   
   button:hover {

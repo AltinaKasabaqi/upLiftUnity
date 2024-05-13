@@ -17,27 +17,26 @@
         </ul>
         <h3 class="sidebar-heading">Paneli i Administratorit</h3>
         <ul class="sidebar-list">
-          <router-link to="/myDashboard" class="sidebar-item">Statistikat</router-link>
+          <router-link to="/statistics" class="sidebar-item">Statistikat</router-link>
           <router-link to="/allUsersView" class="sidebar-item">Përdoruesit</router-link>
           <router-link to="/register" class="sidebar-item">Shto staf</router-link>
           <router-link to="/donations" class="sidebar-item">Donacionet</router-link>
-          <router-link to="/analiza" class="sidebar-item">Historiku i thirrjeve</router-link>
-          <router-link to="/myNotes" class="sidebar-item">Shënimet personale</router-link>
+          <router-link to="/callsHistory" class="sidebar-item">Historiku i thirrjeve</router-link>
+          <router-link to="/addNotes" class="sidebar-item">Shenime</router-link>
           <router-link to="/applications" class="sidebar-item">Aplikimet</router-link>
-          <router-link to="/analiza" class="sidebar-item">Aktivitetet e Vullnetarëve</router-link>
-          <router-link to="/analiza" class="sidebar-item">Orari i punës</router-link>
+          <router-link to="/userActivities" class="sidebar-item">Monitorimi i aktiviteteve</router-link>
+          <router-link to="/mySchedule" class="sidebar-item">Orari i punës</router-link>
+          <router-link to="/Calendar" class="sidebar-item">Kalendari</router-link>
         </ul>
         <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">
           <router-link to="/chat" class="sidebar-item">Chat</router-link>
-          <router-link to="/myDashboard/sygjerime" class="sidebar-item">Dokumentimi i bisedave</router-link>
         </ul>
         <ul class="sidebar-list">
           <button id="logoutButton" @click="showLogoutAlert">Çkyçu</button>
         </ul>
       </div>
       <div class="fixed-icons" v-if="!isSidebarOpen">
-        <!-- Icons -->
         <div class="icon"><i class="fas fa-user"></i></div>
         <div class="icon"><i class="fas fa-bell"></i></div>
         <div class="icon"><i class="fas fa-cogs"></i></div>
@@ -96,7 +95,6 @@ export default {
     .then(response => response.json())
     .then(data => {
         this.user = data; 
-        // console.log(this.user);
     })
   
      
@@ -160,8 +158,8 @@ export default {
 .user-role {
   margin-bottom: 5px; 
   font-style: italic; 
-  display: flex; /* Përdorimi i Flexbox */
-  justify-content: center; /* Vendosja e tekstit në qendër horizontale */
+  display: flex; 
+  justify-content: center; 
   align-items: center; 
   padding: 1.5%;
 
@@ -203,8 +201,8 @@ export default {
 
 .fixed-icons {
   position: fixed;
-  top: 20px; /* Adjust vertical positioning */
-  right: 10px; /* Adjust horizontal positioning */
+  top: 20px; 
+  right: 10px;
   margin-top: 70px;
   font-size: 25px;
 }
@@ -214,7 +212,7 @@ export default {
 }
 
 .icon i {
-  font-size: 18px; /* Adjust icon size */
+  font-size: 18px;
 }
 
 .content {
@@ -228,10 +226,9 @@ export default {
 }
 
 .sidebar-open .fixed-icons {
-  right: 270px; /* Adjust to accommodate open sidebar */
+  right: 270px; 
 }
 
-/* Custom styles for sidebar items */
 .sidebar-heading {
   font-size: 18px;
   margin-top: 20px;
@@ -242,8 +239,8 @@ export default {
   color: #fff;
   text-decoration: none;
   transition: color 0.3s ease;
-  display: block; /* Shfaqja e linjave në rresht të vetëm */
-  margin-bottom: 5px; /* Hapësira midis linjave */
+  display: block; 
+  margin-bottom: 5px; 
 }
 
 .sidebar-item:hover {
@@ -262,11 +259,13 @@ export default {
 #logoutButton {
   background-color: #ffffff;
   color: black; 
-  padding: 3px 20px;
+  padding: 3%;
   border: none; 
   border-radius: 5px;
   cursor: pointer; 
-  /* transition: background-color 0.3s ease;  */
+  width: 40%;
+  font-weight: bold;
+ 
 }
 
 #logoutButton:hover {

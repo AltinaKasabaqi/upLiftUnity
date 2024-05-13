@@ -19,7 +19,7 @@
 import axios from 'axios';
 
 import Cookies from 'js-cookie';
-
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -34,19 +34,22 @@ export default {
     submitForm() {
   axios.post('http://localhost:5051/login', this.formData)
     .then(response => {
-      // Marrja e tokenit nga përgjigja
       const token = response.data.token;
 
       
       Cookies.set('token', token, {expires:1}); 
       console.log("Tokeni i vendosur në cookie:", token); 
 
-      // Përcaktoni navigimin drejt AdminDashboard duke përdorur router
-      this.$router.push({ name: 'AdminDashboard' });
+      this.$router.push({ name: 'Statistics' });
     })
     .catch(error => {
-      console.error('Gabim në kyçje', error);
-    });
+        console.error('Gabim në kyçje', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Kredenciale te gabuar',
+          text: 'Emaili ose fjalëkalimi është i gabuar. Ju lutem provoni përsëri.'
+        });
+      });
 }
   }
 };
@@ -70,11 +73,11 @@ export default {
   padding: 20px;
   border-radius: 10px;
   width: 35%;
-  text-align: center; /* Qendro tekstin e formës */
+  text-align: center; 
 }
 
 .form-title {
-  margin-bottom: 20px; /* Përcakto një hapësirë midis titullit dhe fushave */
+  margin-bottom: 20px; 
 }
 
 .form-group {

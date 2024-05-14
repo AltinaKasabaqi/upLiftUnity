@@ -93,7 +93,7 @@ const routes = [
         path: "/addNotes",
         name: "MyNotes",
         component: () => import("@/components/Notes/addNotesForm.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer']}
+        meta: { requiresAuth: true, requiredRoles: 'Volunteer' }
       },
       {
         path: "/callsForm",
@@ -102,11 +102,12 @@ const routes = [
         meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
       {
-        path: "/updateCall/:id?",
-        name: "updateCall",
-        component: () => import("@/dashboards/updateCall.vue"),
+        path: "/RulesForma",
+        name: "RulesForma",
+        component: () => import("@/dashboards/RulesForma.vue"),
         meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
-      },
+      }
+
     ]
   },
 
@@ -132,6 +133,11 @@ const routes = [
     path: "/aboutUs",
     name: "AboutUs",
     component: () => import("@/views/AboutUs.vue"),
+  },
+  {
+  path: "/UnauthorizedPage",
+  name: "UnauthorizedPage",
+  component: () => import("@/views/UnauthorizedPage.vue"),
   },
 
 ];

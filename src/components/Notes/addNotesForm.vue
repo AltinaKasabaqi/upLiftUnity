@@ -208,6 +208,7 @@ export default {
     async updateNoteInDatabase(note) {
       try {
         const noteID = note.noteId;
+        console.log('id'+ noteID);
         const response = await axios.put(
           `http://localhost:5051/notes/Update/${noteID}`,
           note

@@ -51,7 +51,7 @@
     const response = await axios.post('http://localhost:5051/calls', this.formData);
     if (response && response.status === 200) {
       console.log('u shtua');
-      this.$router.push({ name: 'AdminDashboard' });
+      this.$router.push({ name: 'callsHistory' });
     }
   } catch (error) {
     console.error('Gabim në shtimin e thirrjes:', error.response.data);

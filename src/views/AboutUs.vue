@@ -151,7 +151,7 @@ export default {
 .mission-image img {
     max-width: 90%;
     height: auto;
-    margin-right: 60px;
+    margin-right: 30%;
 }
 
 .leadership-image img {

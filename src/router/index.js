@@ -125,6 +125,11 @@ const routes = [
 
   },
   {
+    path: "/unauth",
+    name: "unAuthPage",
+    component: () => import("@/views/unAuthPage.vue"),
+    },
+  {
     path: "/donationPackages",
     name: "DonationPackages",
     component: () => import("@/components/donationPackages.vue"),
@@ -134,11 +139,7 @@ const routes = [
     name: "AboutUs",
     component: () => import("@/views/AboutUs.vue"),
   },
-  {
-  path: "/UnauthorizedPage",
-  name: "UnauthorizedPage",
-  component: () => import("@/views/UnauthorizedPage.vue"),
-  },
+  
 
 ];
 

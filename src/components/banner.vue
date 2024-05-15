@@ -12,15 +12,15 @@
         <p>UpLift Unity është qendër telefonike për parandalim të vetëvrasjes e cila ofron shërbim telefonik konfidencial dhe pa pagesë për të gjithë personat me mendime për vetëvrasje çdo ditë 24h.</p>
    </div>
    <div class="Activities">
-    <h1>Aktivitetet </h1>
-      <div class="activity-images">
-          <img src="../assets/3 1.png">
-          <img src="../assets/image 5.png">
-          <img src="../assets/image 6.png">
-          <img src="../assets/image 7.png">
-
-      </div>
+    <h1>Aktivitetet</h1>
+    <div class="activity-images">
+        <router-link to='AboutUs'><img src="../assets/3 1.png" class="photo"></router-link>
+        <router-link to='AboutUs'><img src="../assets/image 5.png" class="photo"></router-link>
+        <router-link to='AboutUs'><img src="../assets/image 6.png" class="photo"></router-link>
+        <router-link to='AboutUs'><img src="../assets/image 7.png" class="photo"></router-link>
     </div>
+</div>
+
 
    <div class="Info">
     <div class="left">
@@ -102,10 +102,9 @@ h3{
   flex-wrap: wrap;
 }
 
-.activity-images img {
-  width: 30%;
+.photo {
+  width: 80%;
   padding: 3%;
-
   margin: 0; 
   
 }

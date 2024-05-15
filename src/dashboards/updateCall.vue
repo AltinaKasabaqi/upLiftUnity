@@ -1,23 +1,23 @@
 <template>
     <div>
       <div class="container">
-        <h2 class="title">Regjistro një thirrje</h2>
+        <h2 class="title">Modifiko thirrjen</h2>
         <div v-if="errorMessage" class="alert alert-danger">
           {{ errorMessage }}
         </div>
-        <form @submit.prevent="submitForm" class="content">
+        <form @submit.prevent="updateCall" class="content">
           <div class="left">
             <div class="form-group">
               <label for="CallerNickname">Nickname</label>
-              <input type="text" id="CallerNickname" v-model="formData.callerNickname" required>
+              <input type="text" id="CallerNickname" v-model="formData.CallerNickname" required>
             </div>
             <div class="form-group">
               <label for="Description">Tema e Bisedës:</label>
-              <input type="text" id="Description" v-model="formData.description" required>
+              <input type="text" id="Description" v-model="formData.Description" required>
             </div>
             <div class="form-group">
               <label for="RiskLevel">Shkalla e rrezikut:</label>
-              <input type="int" id="RiskLevel" v-model="formData.riskLevel" required>
+              <input type="int" id="RiskLevel" v-model="formData.RiskLevel" required>
             </div>
             <button type="submit">Shto</button>
           </div>
@@ -32,38 +32,40 @@
   export default {
     components: {},
     data() {
-      return {
-        formData: {
-        callerNickname: '',
-          description: '',
-          riskLevel:''
-        },
-        errorMessage: ''
-      };
-    },
+    return {
+      formData: {
+        CallerNickname: '',
+        Description: '',
+        RiskLevel: 0
+      },
+      errorMessage: '',
+      callId:''
+    };
+  },
+   created(){
+        const callId = this.$route.params.id;
+        console.log(callId);
+    
+   },
     methods: {
-        async submitForm() {
-  if (!this.formData.callerNickname || !this.formData.description) {
-    this.errorMessage = 'Ju lutem plotësoni të gjitha fushat.';
-    return;
-  }
-  try {
-    const response = await axios.post('http://localhost:5051/calls', this.formData);
-    if (response && response.status === 200) {
-      console.log('u shtua');
-      this.$router.push({ name: 'callsHistory' });
-    }
-  } catch (error) {
-    console.error('Gabim në shtimin e thirrjes:', error.response.data);
-    if (error.response.status === 409) {
-      this.errorMessage = 'Gabime gjatë shtimit te thirrjeve: ' + error.response.data;
-    } else {
-      this.errorMessage = error.response.data;
-    }
+     
+       async updateCall() {
+        const callId = this.$route.params.id;
+            console.log(callId);
+            
+            axios.put(`http://localhost:5051/calls/Update/${callId}`,this.formData)
+            .then( response => {
+                console.log(response);
+                this.$router.push('/callsHistory');
+            })
+            .catch(error =>{
+                console.error('error',error);
+            })
+  
   }
 }
-    }
-  };
+};
+    
   </script>
   
   

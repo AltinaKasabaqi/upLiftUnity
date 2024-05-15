@@ -14,10 +14,10 @@
    <div class="Activities">
     <h1>Aktivitetet</h1>
     <div class="activity-images">
-        <router-link to='AboutUs'><img src="../assets/3 1.png" class="photo"></router-link>
-        <router-link to='AboutUs'><img src="../assets/image 5.png" class="photo"></router-link>
-        <router-link to='AboutUs'><img src="../assets/image 6.png" class="photo"></router-link>
-        <router-link to='AboutUs'><img src="../assets/image 7.png" class="photo"></router-link>
+        <router-link to='/AboutUs'><img src="../assets/3 1.png" class="photo"></router-link>
+        <router-link to='/AboutUs'><img src="../assets/image 5.png" class="photo"></router-link>
+        <router-link to='/AboutUs'><img src="../assets/image 6.png" class="photo"></router-link>
+        <router-link to='/AboutUs'><img src="../assets/image 7.png" class="photo"></router-link>
     </div>
 </div>
 
@@ -100,10 +100,11 @@ h3{
   justify-content: center; 
   align-items: center;
   flex-wrap: wrap;
+  padding: 3% 15%;
 }
 
 .photo {
-  width: 80%;
+  width: 90%;
   padding: 3%;
   margin: 0; 
   

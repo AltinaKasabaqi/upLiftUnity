@@ -9,15 +9,15 @@
           <div class="left">
             <div class="form-group">
               <label for="CallerNickname">Nickname</label>
-              <input type="text" id="CallerNickname" v-model="formData.CallerNickname" required>
+              <input type="text" id="CallerNickname" v-model="formData.callerNickname" required>
             </div>
             <div class="form-group">
               <label for="Description">Tema e Bisedës:</label>
-              <input type="text" id="Description" v-model="formData.Description" required>
+              <input type="text" id="Description" v-model="formData.description" required>
             </div>
             <div class="form-group">
               <label for="RiskLevel">Shkalla e rrezikut:</label>
-              <input type="int" id="RiskLevel" v-model="formData.RiskLevel" required>
+              <input type="int" id="RiskLevel" v-model="formData.riskLevel" required>
             </div>
             <button type="submit">Shto</button>
           </div>
@@ -34,9 +34,9 @@
     data() {
     return {
       formData: {
-        CallerNickname: '',
-        Description: '',
-        RiskLevel: 0
+        callerNickname: '',
+        description: '',
+        riskLevel: 0
       },
       errorMessage: '',
       callId:''
@@ -44,11 +44,21 @@
   },
    created(){
         const callId = this.$route.params.id;
-        console.log(callId);
+        this.fetchCall(callId);
+        console.log(callId + "aksdkajs");
     
    },
     methods: {
-     
+      fetchCall(callId){
+        axios.get(`http://localhost:5051/calls/${callId}`)
+          .then(response => {
+            this.formData = response.data;
+          
+          })
+          .catch(error => {
+            console.error('Gabim gjatë marrjes së të dhënave:', error);
+          });
+      },
        async updateCall() {
         const callId = this.$route.params.id;
             console.log(callId);

@@ -40,7 +40,6 @@
         try {
           const response = await axios.get('http://localhost:5051/calls');
           this.items = response.data;
-          console.log(response) 
         } catch (error) {
           console.error('Gabim gjatë marrjes së të dhënave:', error);
         }
@@ -48,7 +47,7 @@
       editCall(callId) {
             const Id = callId
             this.$router.push({ path: `updateCall/${Id}` }); 
-            console.log(callId);
+            
         
           
         },

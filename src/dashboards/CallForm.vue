@@ -41,6 +41,7 @@
         errorMessage: ''
       };
     },
+
     methods: {
         async submitForm() {
   if (!this.formData.callerNickname || !this.formData.description) {
@@ -50,7 +51,6 @@
   try {
     const response = await axios.post('http://localhost:5051/calls', this.formData);
     if (response && response.status === 200) {
-      console.log('u shtua');
       this.$router.push({ name: 'callsHistory' });
     }
   } catch (error) {

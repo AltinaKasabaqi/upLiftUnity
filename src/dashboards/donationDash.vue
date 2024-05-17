@@ -1,6 +1,6 @@
 <template>
+   <notification-bar></notification-bar>
   <div>
-    <nav></nav>
     <div class="dashboard">
       <div class="header">
         <h1>Donacionet</h1>
@@ -82,11 +82,14 @@
 import axios from "../api/axios.js";
 import Swal from "sweetalert2";
 import Modal from "./updateDonation.vue"; 
+import NotificationBar from '../components/notificationBar.vue'; 
+
 
 
 export default {
   components: {
     Modal,
+    NotificationBar,
   },
   data() {
     return {
@@ -143,17 +146,17 @@ export default {
     },
     async deleteDonation(donationId) {
       Swal.fire({
-        title: "Delete Donation",
+        title: "Fshije Donacionin",
         text: "A je i sigurt që dëshiron të fshish këtë donacion?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it",
+        confirmButtonText: "Po, fshije!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await axios.delete(`/donations/DeleteDonation?id=${donationId}`);
+            await axios.delete(`http://localhost:5051/api/donations/DeleteDonation?id=${donationId}`);
             this.getDonations();
             Swal.fire("Success", "Donacioni u fshi me sukses!", "success");
           } catch (error) {
@@ -202,7 +205,7 @@ td {
 }
 
 th {
-  background-color: #e0f8e1;
+  background-color: #f2f2f2;
   color: rgb(0, 0, 0);
 }
 
@@ -238,12 +241,14 @@ tr:nth-child(even) {
 
 .btn-prev,
 .btn-next {
-  background-color: #74b976;
+  /* background-color: #74b976; */
   color: rgb(0, 0, 0);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border:solid 1px #000000;
+  background-color: white;
 }
 
 .btn-prev:disabled,

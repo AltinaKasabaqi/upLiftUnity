@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar">
-    <img src="../assets/logo-no-background.png" alt="Logo" class="logo" />
+    <a href="/"><img src="../assets/logo-no-background.png" alt="Logo" class="logo" /></a>
     <ul>
-      <li><a href="default.asp">Rreth nesh</a></li>
+      <li><router-link to="/AboutUs">Rreth nesh</router-link></li>
       <li><a href="#">Na kontakto</a></li>
       <li><router-link to="/applicationForm">Bëhu pjesë</router-link></li>
       <li><router-link to="/donationPackages">Dhuro</router-link></li>

@@ -130,12 +130,13 @@
 
 .filter-select {
   padding: 8px 20px;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
   color: #333;
   cursor: pointer;
+  width: 12%;
   
 }
   
@@ -167,17 +168,21 @@
   }
   
   .edit-btn {
-    background-color: 	#87CEFA;
-    color: white;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    border:solid 1px #87CEFA;
   }
   
   .delete-btn {
-    background-color: #f44336;
-    color: white;
+    border:solid 1px #f44336;
+    color: black;
+    font-size: 14px;
+    background-color: white;
   }
   
   .add-btn {
-    background-color: #778899;
+    background-color: #9ab59a;
     color: white;
     
     

@@ -56,7 +56,6 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Rreshtat e kalendarit -->
           <tr v-for="week in calendar" :key="week[0].date">
             <td v-for="day in week" :key="day.date" class="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
               <div class="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
@@ -64,19 +63,16 @@
                   <span class="text-gray-500">{{ day.date }}</span>
                 </div>
              
-                  <!-- Shfaq ngjarjet në kalendar nëse ka -->
                   <div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
                       <div v-if="day.events.length === 0" class="text-gray-500"></div>
                       <div v-else>
                         <div v-for="event in day.events" :key="event.id" class="event-slot">
-                          <div class="event bg-blue-400 text-white rounded p-1 text-sm mb-1">
-                          <!-- <span class="event-name">{{ event.Id }}</span> -->
+                          <div class="event bg-blue-400 text-white rounded p-1 text-sm mb-1" style="background-color: #52a086;">
                           <span class="time">{{ event.time }} </span>
                         </div>
                         </div>
                       </div>
                   
-                  <!-- Butoni Plus -->
                   <div class="plus-icon">
                     <button class="text-gray-500 hover:text-gray-800 focus:outline-none" @click="showAddEventModal(day.date, currentDate.month(), currentDate.year())">
                       <svg width="1.5em" fill="currentColor" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus-circle" xmlns="http://www.w3.org/2000/svg">
@@ -93,16 +89,33 @@
       </table>
     </div>
   </div>
-  <!-- Modal for adding event -->
   <div v-show="showModal" class="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
-    <div class="bg-white p-4 rounded shadow">
-      <!-- Add event form -->
-      <form @submit.prevent="addEvent()">
-        <input type="text" v-model="eventTime" placeholder="Time" class="border rounded p-2 mb-2">
-        <button type="submit" class="bg-blue-500 text-white rounded px-4 py-2">Add Event</button>
-      </form>
+  <div class="bg-white p-4 rounded shadow relative">
+    <button @click="closeModal" class="absolute top-0 right-0 m-2 text-gray-600 hover:text-gray-800 focus:outline-none">
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="mb-4">
+     
+      <p v-if="selectedEventDates.length === 0"><b> Orari i parë :</b></p>
+      <p v-if="selectedEventDates.length === 1"><b> Orari i dytë :</b></p>
+      <p v-if="selectedEventDates.length === 2"><b> Orari i tretë :</b></p>
+      <p v-if="selectedEventDates.length === 3"><b> Orari i katërt :</b></p>
     </div>
+    <form @submit.prevent="addEvent()">
+      <div class="flex items-center">
+        <select v-model="eventTime" class="border rounded p-2 mb-2" style="width: 250px; padding: 10px; font-size: 16px;">
+          <option disabled selected>Zgjedh Slotin</option>
+          <option v-for="slot in slots" :key="slot" :value="slot">{{ slot }}</option>
+        </select>
+
+      </div>
+      <button type="submit" class="bg-blue-500 text-white rounded px-5 py-2" style="background-color: #52a086;">  Ruaj  </button>
+    </form>
   </div>
+</div>
+
 </template>
 
 <script>
@@ -123,7 +136,9 @@ export default {
       eventTime:'',
       selectedEventDates: [], 
       maxEventDates: 4,
-      userId:''
+      userId:'',
+      slots: ['02:00','08:00', '14:00', '20:00'] 
+
    
  
     };
@@ -210,11 +225,23 @@ addEventToCalendar(id, date) {
       this.calendar = calendar;
     },
 
+ 
     showAddEventModal(date, month, year) {
-    const formattedDate = moment(`${year}-${month + 1}-${date}`, 'YYYY-MM-DD');
+  const formattedDate = moment(`${year}-${month + 1}-${date}`, 'YYYY-MM-DD');
+  
+    if (formattedDate.date() < 27 || formattedDate.date() > 30) {
+      Swal.fire({
+        title: "Afati i përzgjedhjes së orarit",
+        text: "Nuk është hapur ende afati për përzgjedhjen e orarit.",
+        icon: "error"
+      });
+      return; 
+    }
     this.eventDate = formattedDate.format('YYYY-MM-DD HH:mm:ss');
     this.showModal = true;
-}, 
+}, closeModal(){
+  this.showModal=false;
+},
 
 
 

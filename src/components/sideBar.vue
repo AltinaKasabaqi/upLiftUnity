@@ -36,6 +36,12 @@
         <ul class="sidebar-list">
           <button id="logoutButton" @click="showLogoutAlert">Çkyçu</button>
         </ul>
+        <ul class="sidebar-list">
+            <li class ="settings"  @click="goToSettingsPage">
+              <i class="fas fa-key"></i>
+              <span> Ndrysho fjalëkalimin</span>
+            </li>
+          </ul>
       </div>
       <div class="fixed-icons" v-if="!isSidebarOpen">
         <div class="icon"><i class="fas fa-user"></i></div>
@@ -81,6 +87,9 @@ export default {
   methods: {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
+    },
+    goToSettingsPage() {
+      this.$router.push('/settings');
     },
   
     fetchPersonalData(){
@@ -269,6 +278,11 @@ export default {
 
 #logoutButton:hover {
   background-color: #beacac; 
+}
+.settings{
+  margin-top:20%;
+  cursor: pointer;
+
 }
 
 

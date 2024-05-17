@@ -81,6 +81,20 @@ const routes = [
       component: () => import("@/dashboards/mySchedule.vue"),
       meta: { requiresAuth: true }
     
+    },
+    {
+      path: "/schedules",
+      name: "Schedule",
+      component: () => import("@/dashboards/schedulesDashboard.vue"),
+      meta: { requiresAuth: true }
+    
+    },
+    {
+      path: "/settings",
+      name: "SettingsPage",
+      component: () => import("@/dashboards/settingsPage.vue"),
+      meta: { requiresAuth: true }
+    
     }
   
   ]

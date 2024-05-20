@@ -95,6 +95,13 @@ const routes = [
         component: () => import("@/components/Notes/addNotesForm.vue"),
         meta: { requiresAuth: true, requiredRoles: 'Volunteer' }
       },
+      {
+        path: "/notifications",
+        name: "Notifications",
+        component: () => import("@/components/Notifications/notificationsBase.vue"),
+        meta: { requiresAuth: true,requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer']}
+  
+        },
     ]
   },
 

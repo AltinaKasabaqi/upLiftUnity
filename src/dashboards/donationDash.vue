@@ -1,5 +1,5 @@
 <template>
-   <notification-bar></notification-bar>
+   <!-- <notification-bar></notification-bar> -->
   <div>
     <div class="dashboard">
       <div class="header">
@@ -82,14 +82,14 @@
 import axios from "../api/axios.js";
 import Swal from "sweetalert2";
 import Modal from "./updateDonation.vue"; 
-import NotificationBar from '../components/notificationBar.vue'; 
+// import NotificationBar from '../components/notificationBar.vue'; 
 
 
 
 export default {
   components: {
     Modal,
-    NotificationBar,
+    // NotificationBar,
   },
   data() {
     return {

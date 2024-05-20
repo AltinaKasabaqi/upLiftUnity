@@ -64,6 +64,12 @@ const routes = [
       meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] }
     },
     {
+      path: "/updateCall/:id?",
+      name: "updateCall",
+      component: () => import("@/dashboards/updateCall.vue"),
+      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] }
+    },
+    {
         path: "/userActivities",
         name: "UserActivities",
         component: () => import("@/dashboards/userActivities.vue"),
@@ -93,7 +99,7 @@ const routes = [
         path: "/addNotes",
         name: "MyNotes",
         component: () => import("@/components/Notes/addNotesForm.vue"),
-        meta: { requiresAuth: true, requiredRoles: 'Volunteer' }
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
       {
         path: "/notifications",
@@ -102,6 +108,33 @@ const routes = [
         meta: { requiresAuth: true,requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer']}
   
         },
+      {
+        path: "/callsForm",
+        name: "CallForm",
+        component: () => import("@/dashboards/CallForm.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+      {
+        path: "/RulesForma",
+        name: "RulesForma",
+        component: () => import("@/dashboards/RulesForma.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+    {
+      path: "/schedules",
+      name: "Schedule",
+      component: () => import("@/dashboards/schedulesDashboard.vue"),
+      meta: { requiresAuth: true }
+    
+    },
+    {
+      path: "/settings",
+      name: "SettingsPage",
+      component: () => import("@/dashboards/settingsPage.vue"),
+      meta: { requiresAuth: true }
+    
+    }
+
     ]
   },
 
@@ -119,10 +152,21 @@ const routes = [
 
   },
   {
+    path: "/unauth",
+    name: "unAuthPage",
+    component: () => import("@/views/unAuthPage.vue"),
+    },
+  {
     path: "/donationPackages",
     name: "DonationPackages",
     component: () => import("@/components/donationPackages.vue"),
   },
+  {
+    path: "/aboutUs",
+    name: "AboutUs",
+    component: () => import("@/views/AboutUs.vue"),
+  },
+  
 
 ];
 

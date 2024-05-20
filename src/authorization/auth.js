@@ -13,7 +13,7 @@ const authorizeMiddleware = (to, from, next) => {
     const userRole = decodedToken.role;
     
     if (!to.meta.requiredRoles.includes(userRole)) {
-      next('/unauthorized');
+      next('/unAuth');
     } else {
       next();
     }

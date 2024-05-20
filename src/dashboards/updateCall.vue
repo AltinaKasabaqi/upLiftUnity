@@ -1,11 +1,11 @@
 <template>
     <div>
       <div class="container">
-        <h2 class="title">Regjistro një thirrje</h2>
+        <h2 class="title">Modifiko thirrjen</h2>
         <div v-if="errorMessage" class="alert alert-danger">
           {{ errorMessage }}
         </div>
-        <form @submit.prevent="submitForm" class="content">
+        <form @submit.prevent="updateCall" class="content">
           <div class="left">
             <div class="form-group">
               <label for="CallerNickname">Nickname</label>
@@ -32,38 +32,50 @@
   export default {
     components: {},
     data() {
-      return {
-        formData: {
+    return {
+      formData: {
         callerNickname: '',
-          description: '',
-          riskLevel:''
-        },
-        errorMessage: ''
-      };
-    },
-
+        description: '',
+        riskLevel: 0
+      },
+      errorMessage: '',
+      callId:''
+    };
+  },
+   created(){
+        const callId = this.$route.params.id;
+        this.fetchCall(callId);
+        console.log(callId + "aksdkajs");
+    
+   },
     methods: {
-        async submitForm() {
-  if (!this.formData.callerNickname || !this.formData.description) {
-    this.errorMessage = 'Ju lutem plotësoni të gjitha fushat.';
-    return;
-  }
-  try {
-    const response = await axios.post('http://localhost:5051/calls', this.formData);
-    if (response && response.status === 200) {
-      this.$router.push({ name: 'callsHistory' });
-    }
-  } catch (error) {
-    console.error('Gabim në shtimin e thirrjes:', error.response.data);
-    if (error.response.status === 409) {
-      this.errorMessage = 'Gabime gjatë shtimit te thirrjeve: ' + error.response.data;
-    } else {
-      this.errorMessage = error.response.data;
-    }
+      fetchCall(callId){
+        axios.get(`http://localhost:5051/calls/${callId}`)
+          .then(response => {
+            this.formData = response.data;
+          
+          })
+          .catch(error => {
+            console.error('Gabim gjatë marrjes së të dhënave:', error);
+          });
+      },
+       async updateCall() {
+        const callId = this.$route.params.id;
+            console.log(callId);
+            
+            axios.put(`http://localhost:5051/calls/Update/${callId}`,this.formData)
+            .then( response => {
+                console.log(response);
+                this.$router.push('/callsHistory');
+            })
+            .catch(error =>{
+                console.error('error',error);
+            })
+  
   }
 }
-    }
-  };
+};
+    
   </script>
   
   

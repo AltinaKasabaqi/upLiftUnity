@@ -1,6 +1,7 @@
 <template>
     <div id="app">
       <h1>Historiku i thirrjeve</h1>
+      <RouterLink to="/callsForm"><button class="addBtn">Shto <i class="fas fa-plus"></i></button></RouterLink>
       <table>
         <thead>
           <tr>
@@ -15,7 +16,7 @@
             <td>{{ item.callerNickname }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.riskLevel }}</td>
-            <td><button class="btn"> <i class="fas fa-pen"></i> </button></td>
+            <td><button class="btn" @click="editCall(item.callId)"> <i class="fas fa-pen"></i> </button></td>
           </tr>
         </tbody>
       </table>
@@ -39,11 +40,17 @@
         try {
           const response = await axios.get('http://localhost:5051/calls');
           this.items = response.data;
-          console.log(response) 
         } catch (error) {
           console.error('Gabim gjatë marrjes së të dhënave:', error);
         }
-      }
+      },
+      editCall(callId) {
+            const Id = callId
+            this.$router.push({ path: `updateCall/${Id}` }); 
+            
+        
+          
+        },
     }
   };
   </script>
@@ -51,6 +58,18 @@
   <style scoped>
     #app>h1{
     margin-left:10%;
+  }
+  .addBtn{
+   border-radius: 5px;
+    margin: 1% 10%;
+    padding: 5px;
+    width: auto;
+    background-color: #9ab59a;
+    border: solid 1px rgb(148, 147, 147);
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+
   }
   table {
     margin: auto;

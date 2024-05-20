@@ -3,7 +3,7 @@
       <i @click="$emit('close')" class="close-icon fas fa-times"></i>
       <div class="notification-content">
         <div v-if="notifications.length > 0" class="notification-list">
-          <NotificationItem v-for="notification in notifications" :key="notification.id" :notification="notification" />
+          <NotificationItem v-for="notification in notifications" :key="notification" :notification="notification" />
         </div>
         <p v-else class="no-notifications-text">No notifications</p>
       </div>

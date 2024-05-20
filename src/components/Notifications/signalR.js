@@ -11,10 +11,10 @@ export function connectToSignalR(userId, onReceiveNotification) {
     .then(() => {
       console.log("SignalR connected");
       registerForWebNotifications(connection, userId);
-      connection.on("ClientReceiveNotification", (notification) => {
-        console.log("Received notification: ", notification);
+      connection.on("SendNotificationToClient", (notification) => { 
         onReceiveNotification(notification);
       });
+      connection.on("SendWelcomeMessageToNewClients", onWelcomeMessage)
     })
     .catch((error) => {
       console.error("SignalR connection error:", error);
@@ -23,11 +23,25 @@ export function connectToSignalR(userId, onReceiveNotification) {
   return connection;
 }
 
-export function disconnectFromSignalR(connection, userId) {
+function onWelcomeMessage(notification){
+  console.log("Message:", notification)
+}
+
+export async function disconnectFromSignalR(connection, userId) {
   if (connection) {
-    deregisterFromWebNotifications(connection, userId);
-    connection.stop();
-    console.log("SignalR disconnected");
+    try {
+      await deregisterFromWebNotifications(connection, userId);
+    } catch (error) {
+      console.error("Error during deregistration:", error);
+    }
+
+    connection.stop()
+      .then(() => {
+        console.log("SignalR disconnected");
+      })
+      .catch((error) => {
+        console.error("Error during disconnection:", error);
+      });
   }
 }
 
@@ -41,12 +55,13 @@ function registerForWebNotifications(connection, userId) {
     });
 }
 
-function deregisterFromWebNotifications(connection, userId) {
-  connection.invoke("DeregisterFromWebNotifications", parseInt(userId))
-    .then(() => {
-      console.log("Successfully deregistered from web notifications.");
-    })
-    .catch((error) => {
-      console.error("Failed to deregister from web notifications:", error);
-    });
+async function deregisterFromWebNotifications(connection, userId) {
+  try {
+    await connection.invoke("DeregisterFromWebNotifications", parseInt(userId));
+    console.log("Successfully deregistered from web notifications.");
+  } catch (error) {
+    console.error("Failed to deregister from web notifications:", error);
+    throw error;
+  }
 }
+

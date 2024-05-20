@@ -6,11 +6,15 @@ export function connectToSignalR(userId, onReceiveNotification) {
     .withAutomaticReconnect()
     .build();
 
+
   connection.start()
     .then(() => {
       console.log("SignalR connected");
       registerForWebNotifications(connection, userId);
-      connection.on("ReceiveNotification", onReceiveNotification);
+      connection.on("ClientReceiveNotification", (notification) => {
+        console.log("Received notification: ", notification);
+        onReceiveNotification(notification);
+      });
     })
     .catch((error) => {
       console.error("SignalR connection error:", error);
@@ -23,6 +27,7 @@ export function disconnectFromSignalR(connection, userId) {
   if (connection) {
     deregisterFromWebNotifications(connection, userId);
     connection.stop();
+    console.log("SignalR disconnected");
   }
 }
 

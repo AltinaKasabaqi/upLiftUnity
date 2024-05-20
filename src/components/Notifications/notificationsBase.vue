@@ -4,11 +4,16 @@
       <i class="fas fa-bell" style="font-size: 24px"></i>
       <span v-if="unreadNotifications > 0" class="notification-badge">{{ unreadNotifications }}</span>
     </button>
-    <NotificationList v-if="showSidebar" :notifications="notifications" @close="closeSidebar" />
+    <NotificationList
+      v-if="showSidebar"
+      :notifications="notifications"
+      @close="closeSidebar"
+    />
   </div>
 </template>
 
 <script>
+
 import { connectToSignalR, disconnectFromSignalR } from "./signalR.js";
 import { fetchUserNotifications } from "./api.js";
 import { getUserIdFromToken } from "../../authorization/authUserId.js";
@@ -28,11 +33,13 @@ export default {
     };
   },
   mounted() {
-    this.connectToSignalR();
+    this.connection = connectToSignalR(this.userId, this.receiveNotification);
   },
+
   beforeUnmount() {
-    this.disconnectFromSignalR();
+    disconnectFromSignalR(this.connection, this.userId);
   },
+
   methods: {
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;
@@ -40,16 +47,24 @@ export default {
         this.unreadNotifications = 0;
         fetchUserNotifications(this.userId).then((notifications) => {
           this.notifications = notifications;
+          console.log("Fetched notifications: ", notifications);
         });
       }
     },
     closeSidebar() {
       this.showSidebar = false;
     },
+    receiveNotification(notification) {
+      this.notifications.unshift(notification);
+      this.unreadNotifications++;
+      console.log("Received notification: ", notification);
+    },
+
     connectToSignalR() {
-      this.connection = connectToSignalR(this.userId, (message) => {
-        this.notifications.unshift(message);
+      this.connection = connectToSignalR(this.userId, (notification) => {
+        this.notifications.unshift(notification);
         this.unreadNotifications++;
+        console.log("Received notification: ", notification);
       });
     },
     disconnectFromSignalR() {

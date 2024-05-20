@@ -1,82 +1,99 @@
 <template>
-    <section class="msger">
-      <header class="msger-header">
-        <div class="msger-header-title">
-          <i class="fas fa-comment-alt"></i> Live Chat
-        </div>
-        <div class="msger-header-options">
-          <span><i class="fas fa-cog"></i></span>
-        </div>
-      </header>
-  
-      <main class="msger-chat" ref="chat">
-        <div v-for="(message, index) in messages" :key="index" :class="message.position === 'left' ? 'msg left-msg' : 'msg right-msg'">
-          <div class="msg-img" :style="{ backgroundImage: 'url(' + message.image + ')' }"></div>
-  
-          <div class="msg-bubble">
-            <div class="msg-info">
-              <div class="msg-info-name">{{ message.name }}</div>
-              <div class="msg-info-time">{{ message.time }}</div>
-            </div>
-            <div class="msg-text">{{ message.text }}</div>
+  <section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+        <i class="fas fa-comment-alt"></i> Live Chat
+      </div>
+      <div class="msger-header-options">
+        <span><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+
+    <main class="msger-chat" ref="chat">
+      <div v-for="(message, index) in messages" :key="index" :class="message.position === 'left' ? 'msg left-msg' : 'msg right-msg'">
+        <div class="msg-img" :style="{ backgroundImage: 'url(' + message.image + ')' }"></div>
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">{{ message.name }}</div>
+            <div class="msg-info-time">{{ message.time }}</div>
           </div>
+          <div class="msg-text">{{ message.text }}</div>
         </div>
-      </main>
+      </div>
+    </main>
+
+    <form class="msger-inputarea" @submit.prevent="sendMessage">
+      <input type="text" class="msger-input" placeholder="Enter your message..." v-model="newMessage" />
+      <input type="text" class="msger-input" placeholder="Recipient's name..." v-model="recipient" />
+      <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+  </section>
+</template>
+
+<script>
+import * as signalR from "@microsoft/signalr";
+
+export default {
+  data() {
+    return {
+      messages: [],
+      newMessage: '',
+      recipient: '',
+      connection: null
+    };
+  },
+  mounted() {
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl("http://localhost:5051/Chat")
+      .build();
+
+    this.connection.on("broadcastMessage", (user, message) => {
+      this.messages.push({
+        position: user === 'You' ? 'right' : 'left',
+        image: user === 'You' ? 'https://image.flaticon.com/icons/svg/145/145867.svg' : 'https://image.flaticon.com/icons/svg/327/327779.svg',
+        name: user,
+        time: new Date().toLocaleTimeString(),
+        text: message
+      });
+      this.scrollChatToBottom();
+    });
+
+    this.connection.start()
+      .catch(err => console.error(err.toString()));
+  },
+  methods: {
+    sendMessage() {
+  if (this.newMessage.trim() === '') return;
+  if (this.recipient.trim() === '') {
+    alert("Please specify a recipient.");
+    return;
+  }
+
+  // Add the message to the messages array immediately
+  this.messages.push({
+    position: 'right',
+    image: 'https://image.flaticon.com/icons/svg/145/145867.svg',
+    name: 'You',
+    time: new Date().toLocaleTimeString(),
+    text: this.newMessage.trim()
+  });
+
+  // Send the message to the server
+  this.connection.invoke("SendToSpecific", 'You', this.newMessage.trim(), this.recipient.trim())
+    .catch(err => console.error(err.toString()));
+
+  // Clear input fields
+  this.newMessage = '';
+  this.recipient = '';
+
+  // Scroll to the bottom of the chat
   
-      <form class="msger-inputarea" @submit.prevent="sendMessage">
-        <input type="text" class="msger-input" placeholder="Enter your message..." v-model="newMessage" />
-        <button type="submit" class="msger-send-btn">Send</button>
-      </form>
-    </section>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        messages: [
-          {
-            position: 'left',
-            image: 'https://image.flaticon.com/icons/svg/327/327779.svg',
-            name: 'JOE',
-            time: '12:45',
-            text: 'Hi, welcome to SimpleChat! Go ahead and send me a message. 😄'
-          },
-          {
-            position: 'right',
-            image: 'https://image.flaticon.com/icons/svg/145/145867.svg',
-            name: 'DOE',
-            time: '12:46',
-            text: 'You can change your name in JS section!'
-          }
-        ],
-        newMessage: ''
-      };
-    },
-    methods: {
-      sendMessage() {
-        if (this.newMessage.trim() === '') return;
-        this.messages.push({
-          position: 'right',
-          image: 'https://image.flaticon.com/icons/svg/145/145867.svg', 
-          name: 'You', 
-          time: new Date().toLocaleTimeString(),
-          text: this.newMessage.trim()
-        });
-        this.newMessage = ''; 
-        this.scrollChatToBottom(); 
-      },
-      scrollChatToBottom() {
-        this.$nextTick(() => {
-          const chat = this.$refs.chat;
-          chat.scrollTop = chat.scrollHeight;
-        });
-      }
-    }
-  };
-  </script>
-  
-  <style>
+}
+  }
+};
+</script>
+
+<style>
 :root {
   --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   --msger-bg: #fff;
@@ -230,5 +247,4 @@ body {
 
 .msger-chat {
   background-color: #fcfcfe;}
-  </style>
-  
+</style>

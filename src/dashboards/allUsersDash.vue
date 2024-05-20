@@ -34,7 +34,6 @@
                 {{ user.roleId == '2' ? 'Mbikqyrës' : (user.roleId == '3' ? 'Vullnetarë' : 'Admin') }}
             </td>
             <td>
-              <button @click="editUser(user.id)" class="edit-btn">Edito</button>
               <button @click="deleteUser(user.id)" class="delete-btn">Fshije</button>
             </td>
           </tr>
@@ -85,13 +84,6 @@
            this.fetchUsers();
          }
        },
-        editUser(userId) {
-        if (userId) {
-          this.$router.push({ name: 'UpdateUser', params: { id: userId } });
-        } else {
-          console.error('ID e përdoruesit është e pavlefshme.');
-        }
-      },
        deleteUser(userId) {
       axios.delete(`http://localhost:5051/api/users/DeleteUser?id=${userId}`)
         .then(() => {
@@ -157,7 +149,7 @@
     font-weight: bold;
   }
   
-  .edit-btn,
+  
   .delete-btn,
   .add-btn {
     padding: 8px 12px;
@@ -165,13 +157,6 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .edit-btn {
-    background-color: white;
-    color: black;
-    font-size: 14px;
-    border:solid 1px #87CEFA;
   }
   
   .delete-btn {

@@ -85,9 +85,6 @@ export default {
     this.fetchUsers();
   },
   methods: {
-    toggleChat() {
-      this.isChatOn = !this.isChatOn;
-    },
     sendMessage() {
       if (this.newMessage.trim() === '') return;
       if (this.recipient.trim() === '') {

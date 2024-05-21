@@ -2,7 +2,9 @@
   <div>
     <button @click="toggleSidebar" class="notification-icon">
       <i class="fas fa-bell" style="font-size: 24px"></i>
-      <span v-if="unreadNotifications > 0" class="notification-badge">{{ unreadNotifications }}</span>
+      <span v-if="unreadNotifications > 0" class="notification-badge">{{
+        unreadNotifications
+      }}</span>
     </button>
     <NotificationList
       v-if="showSidebar"
@@ -13,7 +15,6 @@
 </template>
 
 <script>
-
 import { connectToSignalR, disconnectFromSignalR } from "./signalR.js";
 import { fetchUserNotifications } from "./api.js";
 import { getUserIdFromToken } from "../../authorization/authUserId.js";
@@ -55,8 +56,11 @@ export default {
       this.showSidebar = false;
     },
     receiveNotification(notification) {
+      console.log(" A notification has been received!")
       this.notifications.unshift(notification);
-      this.unreadNotifications++;
+      if (!this.showSidebar) {
+        this.unreadNotifications++;
+      }
       console.log("Received notification: ", notification);
     },
 

@@ -1,21 +1,20 @@
 <template>
   <div class="main">
-    <section class="msger">
-      <header class="msger-header">
+    <section :class="['msger', { 'box-shadow': isChatOn }]">
+      <header class="msger-header" @click="toggleChat">
         <div class="msger-header-title">
-          <i class="fas fa-comment-alt"></i> Live Chat
+          <i class="fas fa-comment-alt"></i> {{ recipient ? recipient : 'Live Chat' }}
         </div>
         <div class="msger-header-options">
           <span><i class="fas fa-cog"></i></span>
         </div>
       </header>
 
-      <main class="msger-chat" ref="chat">
+      <main v-show="isChatOn" class="msger-chat" ref="chat">
         <div v-for="(message, index) in messages" :key="index" :class="message.position === 'left' ? 'msg left-msg' : 'msg right-msg'">
-          <div class="msg-img" :style="{ backgroundImage: 'url(' + message.image + ')' }"></div>
           <div class="msg-bubble">
             <div class="msg-info">
-              <div class="msg-info-name">{{ message.name }}</div>
+              <div class="msg-info-name">{{ message.name == this.email ? 'You' : message.name }}</div>
               <div class="msg-info-time">{{ message.time }}</div>
             </div>
             <div class="msg-text">{{ message.text }}</div>
@@ -23,9 +22,8 @@
         </div>
       </main>
 
-      <form class="msger-inputarea" @submit.prevent="sendMessage">
+      <form v-show="isChatOn" class="msger-inputarea" @submit.prevent="sendMessage">
         <input type="text" class="msger-input" placeholder="Enter your message..." v-model="newMessage" />
-        <input type="text" class="msger-input" placeholder="Recipient's name..." v-model="recipient" />
         <button type="submit" class="msger-send-btn">Send</button>
       </form>
     </section>
@@ -37,8 +35,8 @@
         </div>
       </header>
       <div class="user-list">
-        <div v-for="(user, index) in users" :key="index" class="user">
-          {{ user }}
+        <div v-for="(user, index) in users" :key="index" class="user" @click="changeRecipient(user.email)">
+          {{ user.email }}
         </div>
       </div>
     </section>
@@ -49,6 +47,8 @@
 
 <script>
 import * as signalR from "@microsoft/signalr";
+import axios from '../api/axios.js';
+import { getUserEmailFromToken } from "@/authorization/userEmail.js";
 
 export default {
   data() {
@@ -56,59 +56,84 @@ export default {
       messages: [],
       newMessage: '',
       recipient: '',
-      connection: null
+      connection: null,
+      users: [],
+      email: '',
+      isChatOn: false, // State to manage chat toggle
     };
   },
   mounted() {
+    this.email = getUserEmailFromToken();
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5051/Chat")
+      .withUrl(`http://localhost:5051/chat?email=${this.email}`)
       .build();
 
-    this.connection.on("broadcastMessage", (user, message) => {
+    this.connection.on("broadcastMessage", (user, newMessage) => {
+      console.log(`Message received from ${user}: ${newMessage}`);
+
       this.messages.push({
-        position: user === 'You' ? 'right' : 'left',
-        image: user === 'You' ? 'https://image.flaticon.com/icons/svg/145/145867.svg' : 'https://image.flaticon.com/icons/svg/327/327779.svg',
+        position: user === this.email ? 'right' : 'left',
         name: user,
         time: new Date().toLocaleTimeString(),
-        text: message
+        text: newMessage
       });
-      this.scrollChatToBottom();
     });
 
     this.connection.start()
       .catch(err => console.error(err.toString()));
+    
+    this.fetchUsers();
   },
   methods: {
+    toggleChat() {
+      this.isChatOn = !this.isChatOn;
+    },
     sendMessage() {
-  if (this.newMessage.trim() === '') return;
-  if (this.recipient.trim() === '') {
-    alert("Please specify a recipient.");
-    return;
-  }
+      if (this.newMessage.trim() === '') return;
+      if (this.recipient.trim() === '') {
+        alert("Please specify a recipient.");
+        return;
+      }
+      const email = getUserEmailFromToken();
+      let selectedUser = this.users.find(user => user.email === this.recipient.trim());
+      if (!selectedUser) {
+        alert("Recipient not found.");
+        return;
+      }
 
-  // Add the message to the messages array immediately
-  this.messages.push({
-    position: 'right',
-    image: 'https://image.flaticon.com/icons/svg/145/145867.svg',
-    name: 'You',
-    time: new Date().toLocaleTimeString(),
-    text: this.newMessage.trim()
-  });
+      this.messages.push({
+        position: 'right',
+        name: email,
+        time: new Date().toLocaleTimeString(),
+        text: this.newMessage.trim()
+      });
 
-  // Send the message to the server
-  this.connection.invoke("SendToSpecific", 'You', this.newMessage.trim(), this.recipient.trim())
-    .catch(err => console.error(err.toString()));
+      this.connection.invoke("SendToSpecific", email, this.newMessage.trim(), this.recipient.trim())
+        .catch(err => console.error(err.toString()));
 
-  // Clear input fields
-  this.newMessage = '';
-  this.recipient = '';
-
-  // Scroll to the bottom of the chat
-  
-}
+      this.newMessage = '';
+    },
+    changeRecipient(email) {
+      this.recipient = email;
+      this.messages = [];
+      this.isChatOn = true; // Automatically toggle chat on when selecting a recipient
+    },
+    fetchUsers() {
+      const email = getUserEmailFromToken();
+      axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=2`)
+        .then(response => {
+          this.users = response.data.filter(user => user.email !== email);
+          console.log(this.users);
+        })
+        .catch(error => {
+          console.error('Error fetching users:', error);
+        });
+    }
   }
 };
 </script>
+
+
 
 <style>
 .main {
@@ -121,22 +146,35 @@ export default {
   display: flex;
   flex-direction: column;
   width: 50%;
-  margin: 25px 10px 25px 120px; /* Adjusted margin to move chat to the left */
+  justify-content: flex-end; /* Ensure the header stays at the bottom */
+  margin-left: 20%;
+  padding-right: 2%;
   height: calc(100% - 50px);
   border: var(--border);
   border-radius: 5px;
   background: var(--msger-bg);
-  box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+}
+
+.box-shadow {
+  box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.3); /* Apply box shadow only when chat is on */
+}
+
+.msger-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: var(--border);
+  background: #eee;
+  color: #666;
 }
 
 .user-sidebar {
   width: 30%;
-  margin: 25px 25px 25px 10px; /* Adjusted margin to move sidebar to the right */
   height: calc(100% - 50px);
   border: var(--border);
   border-radius: 5px;
   background: var(--msger-bg);
-  box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
 }
 
 .user-sidebar-header {
@@ -159,20 +197,12 @@ export default {
   padding: 10px;
   overflow-y: auto;
   height: calc(100% - 50px);
+  cursor: pointer;
 }
 
 .user {
   padding: 10px;
   border-bottom: 1px solid #ddd;
-}
-
-.msger-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-bottom: var(--border);
-  background: #eee;
-  color: #666;
 }
 
 .msger-chat {
@@ -203,17 +233,6 @@ export default {
   margin: 0;
 }
 
-.msg-img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  background: #ddd;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 50%;
-}
-
 .msg-bubble {
   max-width: 450px;
   padding: 15px;
@@ -226,6 +245,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  color: black;
 }
 
 .msg-info-name {
@@ -239,6 +259,7 @@ export default {
 
 .left-msg .msg-bubble {
   border-bottom-left-radius: 0;
+  background-color: #e5f1e7;
 }
 
 .right-msg {
@@ -247,7 +268,8 @@ export default {
 
 .right-msg .msg-bubble {
   background: var(--right-msg-bg);
-  color: #fff;
+  color: black;
+  background-color: #eee;
   border-bottom-right-radius: 0;
 }
 
@@ -291,5 +313,4 @@ export default {
 .msger-chat {
   background-color: #fcfcfe;
 }
-
 </style>

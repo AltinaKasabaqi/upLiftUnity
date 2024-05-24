@@ -1,6 +1,6 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
-export function connectToSignalR(userId, onReceiveNotification) {
+export function connectToSignalR(userId, roleName, onReceiveNotification) {
   const connection = new HubConnectionBuilder()
     .withUrl("http://localhost:5051/notificationHub")
     .withAutomaticReconnect()
@@ -8,16 +8,16 @@ export function connectToSignalR(userId, onReceiveNotification) {
 
 
   connection.start()
-    .then(() => {
+    .then(function(){
       console.log("SignalR connected");
-      registerForWebNotifications(connection, userId);
+      registerForWebNotifications(connection, userId, roleName );
       connection.on("SendNotificationToClient", (notification) => { 
         onReceiveNotification(notification);
       });
       connection.on("SendWelcomeMessageToNewClients", onWelcomeMessage)
     })
-    .catch((error) => {
-      console.error("SignalR connection error:", error);
+    .catch(function(error){
+      console.error("SignalR connection error:", error.toString());
     });
 
   return connection;
@@ -45,9 +45,11 @@ export async function disconnectFromSignalR(connection, userId) {
   }
 }
 
-function registerForWebNotifications(connection, userId) {
-  connection.invoke("RegisterForWebNotifications", parseInt(userId))
+function registerForWebNotifications(connection, userId, roleName) {
+  console.log(`UserID: ${userId}, RoleName: ${roleName}`)
+  connection.invoke("RegisterForWebNotifications", parseInt(userId), roleName)
     .then(() => {
+      console.log(`UserID: ${userId}, RoleName: ${roleName}`)
       console.log("Successfully registered for web notifications.");
     })
     .catch((error) => {

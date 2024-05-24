@@ -18,6 +18,7 @@
 import { connectToSignalR, disconnectFromSignalR } from "./signalR.js";
 import { fetchUserNotifications } from "./api.js";
 import { getUserIdFromToken } from "../../authorization/authUserId.js";
+import { geRoleFromToken  } from '../../authorization/authRoleId.js'
 import NotificationList from "./notificationList.vue";
 
 export default {
@@ -31,10 +32,11 @@ export default {
       showSidebar: true,
       connection: null,
       userId: getUserIdFromToken(),
+      roleName: geRoleFromToken(),
     };
   },
   mounted() {
-    this.connection = connectToSignalR(this.userId, this.receiveNotification);
+    this.connection = connectToSignalR(this.userId, this.roleName, this.receiveNotification);
   },
 
   beforeUnmount() {
@@ -65,7 +67,7 @@ export default {
     },
 
     connectToSignalR() {
-      this.connection = connectToSignalR(this.userId, (notification) => {
+      this.connection = connectToSignalR(this.userId, this.roleName, (notification) => {
         this.notifications.unshift(notification);
         this.unreadNotifications++;
         console.log("Received notification: ", notification);

@@ -11,7 +11,7 @@
       </header>
 
       <main v-show="isChatOn" class="msger-chat" ref="chat">
-        <div v-for="(message, index) in messages" :key="index" :class="message.position === 'left' ? 'msg left-msg' : 'msg right-msg'">
+        <div v-for="(message, index) in messages" :key="index" :class="{'msg right-msg': message.position === 'right', 'msg left-msg': message.position === 'left'}">
           <div class="msg-bubble">
             <div class="msg-info">
               <div class="msg-info-name">{{ message.name == this.email ? 'You' : message.name }}</div>
@@ -69,7 +69,7 @@ export default {
       .build();
 
     this.connection.on("broadcastMessage", (user, newMessage) => {
-      console.log(`Message received from ${user}: ${newMessage}`);
+      console.log("Message received from ${user} ${newMessage}");
 
       this.messages.push({
         position: user === this.email ? 'right' : 'left',
@@ -112,8 +112,9 @@ export default {
     },
     changeRecipient(email) {
       this.recipient = email;
-      this.messages = [];
-      this.isChatOn = true; // Automatically toggle chat on when selecting a recipient
+      this.isChatOn = true; 
+      this.fetchConversationHistory(this.email,email); 
+      console.log('emails' + this.email + email);
     },
     fetchUsers() {
       const email = getUserEmailFromToken();
@@ -124,6 +125,22 @@ export default {
         })
         .catch(error => {
           console.error('Error fetching users:', error);
+        });
+    },
+    fetchConversationHistory(myEmail,otherEmail) {
+      axios.get(`http://localhost:5051/api/Chat/conversation?senderEmail=${myEmail}&receiverEmail=${otherEmail}`)
+ 
+        .then(response => {
+          this.messages = response.data.map(message => ({
+            position: message.conversation.senderEmail === myEmail ? 'right' : 'left',
+            name: message.conversation.senderEmail,
+            time: new Date(message.createdAt).toLocaleTimeString(),
+            text: message.content
+          }));
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching conversation history:', error);
         });
     }
   }

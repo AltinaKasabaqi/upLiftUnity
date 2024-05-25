@@ -18,8 +18,10 @@
 import { connectToSignalR, disconnectFromSignalR } from "./signalR.js";
 import { fetchUserNotifications } from "./api.js";
 import { getUserIdFromToken } from "../../authorization/authUserId.js";
-import { geRoleFromToken  } from '../../authorization/authRoleId.js'
+import { geRoleFromToken } from "../../authorization/authRoleId.js";
 import NotificationList from "./notificationList.vue";
+
+
 
 export default {
   components: {
@@ -36,11 +38,15 @@ export default {
     };
   },
   mounted() {
-    this.connection = connectToSignalR(this.userId, this.roleName, this.receiveNotification);
+    this.connection = connectToSignalR(
+      this.userId,
+      this.roleName,
+      this.receiveNotification
+    );
   },
 
   beforeUnmount() {
-    disconnectFromSignalR(this.connection, this.userId);
+    disconnectFromSignalR(this.connection, this.userId,this.roleName);
   },
 
   methods: {
@@ -58,7 +64,7 @@ export default {
       this.showSidebar = false;
     },
     receiveNotification(notification) {
-      console.log(" A notification has been received!")
+      console.log(" A notification has been received!");
       this.notifications.unshift(notification);
       if (!this.showSidebar) {
         this.unreadNotifications++;
@@ -67,14 +73,20 @@ export default {
     },
 
     connectToSignalR() {
-      this.connection = connectToSignalR(this.userId, this.roleName, (notification) => {
-        this.notifications.unshift(notification);
-        this.unreadNotifications++;
-        console.log("Received notification: ", notification);
-      });
+      this.connection = connectToSignalR(
+        this.userId,
+        this.roleName,
+        (notification) => {
+          this.notifications.unshift(notification);
+          if (!notification.isRead && !this.showSidebar) {
+            this.unreadNotifications++;
+          }
+          console.log("Received notification: ", notification);
+        }
+      );
     },
     disconnectFromSignalR() {
-      disconnectFromSignalR(this.connection, this.userId);
+      disconnectFromSignalR(this.connection, this.userId,this.roleName);
     },
   },
 };

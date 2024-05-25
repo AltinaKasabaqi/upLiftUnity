@@ -1,5 +1,5 @@
 <template>
-    <div class="notification-item" :class="notification.variant">
+    <div class="notification-item" :class="notification.variant" @click="markAsRead">
       <h5 class="alert-heading">{{ notification.title }}</h5>
       <p>{{ notification.text }}</p>
       <hr />

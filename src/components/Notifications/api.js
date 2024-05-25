@@ -13,3 +13,17 @@ export function fetchUserNotifications(userId) {
       throw error;
     });
 }
+
+ export function updateReadStatus(notificationId, isRead) {
+  return axios.post('http://localhost:5051/notifications/updateReadStatus', {
+    notificationId: notificationId,
+    isRead: isRead
+  })
+  .then(response => {
+    console.log("Read status updated successfully",response);
+  })
+  .catch(error => {
+    console.error("Failed to update read status:", error);
+  });
+}
+

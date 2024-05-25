@@ -5,8 +5,6 @@ export function connectToSignalR(userId, roleName, onReceiveNotification) {
     .withUrl("http://localhost:5051/notificationHub")
     .withAutomaticReconnect()
     .build();
-
-
   connection.start()
     .then(function(){
       console.log("SignalR connected");
@@ -27,10 +25,10 @@ function onWelcomeMessage(notification){
   console.log("Message:", notification)
 }
 
-export async function disconnectFromSignalR(connection, userId) {
+export async function disconnectFromSignalR(connection, userId,roleName) {
   if (connection) {
     try {
-      await deregisterFromWebNotifications(connection, userId);
+      await deregisterFromWebNotifications(connection, userId,roleName);
     } catch (error) {
       console.error("Error during deregistration:", error);
     }
@@ -57,9 +55,9 @@ function registerForWebNotifications(connection, userId, roleName) {
     });
 }
 
-async function deregisterFromWebNotifications(connection, userId) {
+async function deregisterFromWebNotifications(connection, userId,roleName) {
   try {
-    await connection.invoke("DeregisterFromWebNotifications", parseInt(userId));
+    await connection.invoke("DeregisterFromWebNotifications", parseInt(userId),roleName);
     console.log("Successfully deregistered from web notifications.");
   } catch (error) {
     console.error("Failed to deregister from web notifications:", error);

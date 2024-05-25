@@ -37,13 +37,12 @@
       <div class="user-list">
         <div v-for="(user, index) in users" :key="index" class="user" @click="changeRecipient(user.email)">
           {{ user.email }}
+          <span v-if="user.hasNewMessage" class="notification-badge">{{ user.newMessagesCount }}</span>
         </div>
       </div>
     </section>
   </div>
 </template>
-
-
 
 <script>
 import * as signalR from "@microsoft/signalr";
@@ -61,7 +60,9 @@ export default {
       users: [],
       email: '',
       isChatOn: false,
-      role:''
+      role:'',
+      showNotification: false,
+      sender: ''
     };
   },
   mounted() {
@@ -71,8 +72,8 @@ export default {
       .build();
 
     this.connection.on("broadcastMessage", (user, newMessage) => {
-      console.log("Message received from ${user} ${newMessage}");
-
+      console.log(`Message received from ${user} ${newMessage}`);
+      user.hasNewMessage=true;
       this.messages.push({
         position: user === this.email ? 'right' : 'left',
         name: user,
@@ -87,6 +88,13 @@ export default {
     this.fetchUsers();
   },
   methods: {
+    showNewMessageNotification(sender) {
+      this.sender = sender;
+      this.showNotification = true;
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 5000); // Hide notification after 5 seconds
+    },
     sendMessage() {
       if (this.newMessage.trim() === '') return;
       if (this.recipient.trim() === '') {
@@ -142,7 +150,7 @@ export default {
 
     axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=${users}`)
       .then(response => {
-        this.users = response.data.filter(user => user.email !== email);
+        this.users = response.data.filter(user => user.email !== email).map(user => ({ ...user, newMessagesCount: 0 }));
         console.log('Fetched users:', this.users);
       })
       .catch(error => {
@@ -349,5 +357,15 @@ export default {
 
 .msger-chat {
   background-color: #fcfcfe;
+}
+.notification-badge {
+  background-color: #ff4136;
+  color: #fff;
+  font-size: 0.8em;
+  padding: 5px 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 </style>

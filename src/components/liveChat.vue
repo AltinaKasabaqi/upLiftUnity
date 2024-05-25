@@ -109,7 +109,7 @@ export default {
 
       this.connection.invoke("SendToSpecific", email, this.newMessage.trim(), this.recipient.trim())
         .catch(err => console.error(err.toString()));
-
+      console.log("ne back pi qon "+email + this.newMessage.trim()+ this.recipient.trim());
       this.newMessage = '';
     },
     changeRecipient(email) {
@@ -151,12 +151,12 @@ export default {
   }
 ,
     fetchConversationHistory(myEmail,otherEmail) {
-      axios.get(`http://localhost:5051/api/Chat/conversation?senderEmail=${myEmail}&receiverEmail=${otherEmail}`)
+      axios.get(`http://localhost:5051/api/Chat/conversation?user1=${myEmail}&user2=${otherEmail}`)
  
         .then(response => {
           this.messages = response.data.map(message => ({
-            position: message.conversation.senderEmail === myEmail ? 'right' : 'left',
-            name: message.conversation.senderEmail,
+            position: message.sender === myEmail ? 'right' : 'left',
+            name: message.sender,
             time: new Date(message.createdAt).toLocaleTimeString(),
             text: message.content
           }));

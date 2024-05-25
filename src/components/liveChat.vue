@@ -36,13 +36,14 @@
       </header>
       <div class="user-list">
         <div v-for="(user, index) in users" :key="index" class="user" @click="changeRecipient(user.email)">
-          {{ user.email }}
-          <span v-if="user.hasNewMessage" class="notification-badge">{{ user.newMessagesCount }}</span>
+          <span class="user-email">{{ user.email }}</span>
+          <span v-if="user.newMessagesCount > 0" class="notification-badge">{{ user.newMessagesCount }}</span>
         </div>
       </div>
     </section>
   </div>
 </template>
+
 
 <script>
 import * as signalR from "@microsoft/signalr";
@@ -60,7 +61,7 @@ export default {
       users: [],
       email: '',
       isChatOn: false,
-      role:'',
+      role: '',
       showNotification: false,
       sender: ''
     };
@@ -72,28 +73,27 @@ export default {
       .build();
 
     this.connection.on("broadcastMessage", (user, newMessage) => {
-      console.log(`Message received from ${user} ${newMessage}`);
-      user.hasNewMessage=true;
+      console.log(`Message received from ${user}: ${newMessage}`);
+      this.handleNewMessage(user, newMessage);
+    });
+
+    this.connection.start().catch(err => console.error(err.toString()));
+    this.fetchUsers();
+  },
+  methods: {
+    handleNewMessage(user, newMessage) {
+      if (user !== this.email) {
+        const recipientUser = this.users.find(u => u.email === user);
+        if (recipientUser) {
+          recipientUser.newMessagesCount++;
+        }
+      }
       this.messages.push({
         position: user === this.email ? 'right' : 'left',
         name: user,
         time: new Date().toLocaleTimeString(),
         text: newMessage
       });
-    });
-
-    this.connection.start()
-      .catch(err => console.error(err.toString()));
-    
-    this.fetchUsers();
-  },
-  methods: {
-    showNewMessageNotification(sender) {
-      this.sender = sender;
-      this.showNotification = true;
-      setTimeout(() => {
-        this.showNotification = false;
-      }, 5000); // Hide notification after 5 seconds
     },
     sendMessage() {
       if (this.newMessage.trim() === '') return;
@@ -101,7 +101,7 @@ export default {
         alert("Please specify a recipient.");
         return;
       }
-      const email = getUserEmailFromToken();
+      const email = this.email;
       let selectedUser = this.users.find(user => user.email === this.recipient.trim());
       if (!selectedUser) {
         alert("Recipient not found.");
@@ -117,50 +117,49 @@ export default {
 
       this.connection.invoke("SendToSpecific", email, this.newMessage.trim(), this.recipient.trim())
         .catch(err => console.error(err.toString()));
-      console.log("ne back pi qon "+email + this.newMessage.trim()+ this.recipient.trim());
       this.newMessage = '';
     },
     changeRecipient(email) {
       this.recipient = email;
       this.isChatOn = true; 
-      this.fetchConversationHistory(this.email,email); 
-      console.log('emails' + this.email + email);
+      this.fetchConversationHistory(this.email, email);
+      const selectedUser = this.users.find(user => user.email === email);
+      if (selectedUser) {
+        selectedUser.newMessagesCount = 0;
+      }
     },
     fetchUsers() {
-    this.role = geRoleFromToken();
-    console.log('Role from token:', this.role);
-    
-    let users = 0; 
+      this.role = geRoleFromToken();
+      console.log('Role from token:', this.role);
 
-    const normalizedRole = this.role.toLowerCase();
+      let roleID = 0;
+      const normalizedRole = this.role.toLowerCase();
+      if (normalizedRole === 'supervisor') {
+        roleID = 3;
+      } else if (normalizedRole === 'volunteer') {
+        roleID = 2;
+      } else {
+        console.error('Unexpected role:', this.role);
+        return;
+      }
 
-    if (normalizedRole === 'supervisor') {
-      users = 3;
-    } else if (normalizedRole === 'volunteer') {
-      users = 2;
-    } else {
-      console.error('Unexpected role:', this.role);
-      return; 
-    }
+      console.log('Role ID:', roleID);
+      const email = this.email;
 
-    console.log('Role ID (users):', users);
-
-    const email = getUserEmailFromToken();
-    console.log('Email from token:', email);
-
-    axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=${users}`)
-      .then(response => {
-        this.users = response.data.filter(user => user.email !== email).map(user => ({ ...user, newMessagesCount: 0 }));
-        console.log('Fetched users:', this.users);
-      })
-      .catch(error => {
-        console.error('Error fetching users:', error);
-      });
-  }
-,
-    fetchConversationHistory(myEmail,otherEmail) {
+      axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=${roleID}`)
+        .then(response => {
+          this.users = response.data.filter(user => user.email !== email).map(user => ({
+            ...user,
+            newMessagesCount: 0
+          }));
+          console.log('Fetched users:', this.users);
+        })
+        .catch(error => {
+          console.error('Error fetching users:', error);
+        });
+    },
+    fetchConversationHistory(myEmail, otherEmail) {
       axios.get(`http://localhost:5051/api/Chat/conversation?user1=${myEmail}&user2=${otherEmail}`)
- 
         .then(response => {
           this.messages = response.data.map(message => ({
             position: message.sender === myEmail ? 'right' : 'left',
@@ -176,9 +175,8 @@ export default {
     }
   }
 };
+
 </script>
-
-
 
 <style>
 .main {
@@ -245,10 +243,10 @@ export default {
   cursor: pointer;
 }
 
-.user {
+/* .user {
   padding: 10px;
   border-bottom: 1px solid #ddd;
-}
+} */
 
 .msger-chat {
   flex: 1;
@@ -358,14 +356,27 @@ export default {
 .msger-chat {
   background-color: #fcfcfe;
 }
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.user-email {
+  flex-grow: 1;
+}
+
 .notification-badge {
   background-color: #ff4136;
   color: #fff;
   font-size: 0.8em;
   padding: 5px 8px;
   border-radius: 50%;
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  margin-left: 10px;
 }
+
+
 </style>

@@ -49,6 +49,7 @@
 import * as signalR from "@microsoft/signalr";
 import axios from '../api/axios.js';
 import { getUserEmailFromToken } from "@/authorization/userEmail.js";
+import { geRoleFromToken } from "@/authorization/authRoleId.js";
 
 export default {
   data() {
@@ -59,7 +60,8 @@ export default {
       connection: null,
       users: [],
       email: '',
-      isChatOn: false, // State to manage chat toggle
+      isChatOn: false,
+      role:''
     };
   },
   mounted() {
@@ -117,16 +119,37 @@ export default {
       console.log('emails' + this.email + email);
     },
     fetchUsers() {
-      const email = getUserEmailFromToken();
-      axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=2`)
-        .then(response => {
-          this.users = response.data.filter(user => user.email !== email);
-          console.log(this.users);
-        })
-        .catch(error => {
-          console.error('Error fetching users:', error);
-        });
-    },
+    this.role = geRoleFromToken();
+    console.log('Role from token:', this.role);
+    
+    let users = 0; 
+
+    const normalizedRole = this.role.toLowerCase();
+
+    if (normalizedRole === 'supervisor') {
+      users = 3;
+    } else if (normalizedRole === 'volunteer') {
+      users = 2;
+    } else {
+      console.error('Unexpected role:', this.role);
+      return; 
+    }
+
+    console.log('Role ID (users):', users);
+
+    const email = getUserEmailFromToken();
+    console.log('Email from token:', email);
+
+    axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=${users}`)
+      .then(response => {
+        this.users = response.data.filter(user => user.email !== email);
+        console.log('Fetched users:', this.users);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+      });
+  }
+,
     fetchConversationHistory(myEmail,otherEmail) {
       axios.get(`http://localhost:5051/api/Chat/conversation?senderEmail=${myEmail}&receiverEmail=${otherEmail}`)
  

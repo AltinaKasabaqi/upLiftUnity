@@ -212,30 +212,20 @@ addEventToCalendar(id, date) {
  
     showAddEventModal(date, month, year) {
   const formattedDate = moment(`${year}-${month + 1}-${date}`, 'YYYY-MM-DD');
-  
-    if (formattedDate.date() < 27 || formattedDate.date() > 30) {
+  const currentDate=moment();
+    if (currentDate.date() < 27 || currentDate.date() > 31) {
       Swal.fire({
         title: "Afati i përzgjedhjes së orarit",
         text: "Nuk është hapur ende afati për përzgjedhjen e orarit.",
         icon: "error"
       });
       return; 
-    }else{
-      fetch('/api/email/sendEmailToUsers', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      
-    })
     }
     this.eventDate = formattedDate.format('YYYY-MM-DD HH:mm:ss');
     this.showModal = true;
 }, closeModal(){
   this.showModal=false;
 },
-
-
 
 addEvent() {
     const eventTimeMoment = moment(this.eventTime, 'HH:mm');

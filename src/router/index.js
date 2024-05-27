@@ -58,22 +58,22 @@ const routes = [
         meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
       },
       {
-      path: "/callsHistory",
-      name: "callsHistory",
-      component: () => import("@/dashboards/callsHistory.vue"),
-      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] }
-    },
-    {
-      path: "/updateCall/:id?",
-      name: "updateCall",
-      component: () => import("@/dashboards/updateCall.vue"),
-      meta: { requiresAuth: true, requiredRoles: ['SuperAdmin','SuperVisor','Volunteer'] }
-    },
-    {
+        path: "/callsHistory",
+        name: "callsHistory",
+        component: () => import("@/dashboards/callsHistory.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+      {
+        path: "/updateCall/:id?",
+        name: "updateCall",
+        component: () => import("@/dashboards/updateCall.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+      {
         path: "/userActivities",
         name: "UserActivities",
         component: () => import("@/dashboards/userActivities.vue"),
-      meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
+        meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
 
       }, {
         path: "/callRate",
@@ -86,19 +86,25 @@ const routes = [
         name: "CalendarV",
         component: () => import("@/Calendar/calendar.vue"),
         meta: { requiresAuth: true }
-    
-    },
-    {
-      path: "/mySchedule",
-      name: "MySchedule",
-      component: () => import("@/dashboards/mySchedule.vue"),
-      meta: { requiresAuth: true }
+
+      },
+      {
+        path: "/mySchedule",
+        name: "MySchedule",
+        component: () => import("@/dashboards/mySchedule.vue"),
+        meta: { requiresAuth: true }
 
       },
       {
         path: "/addNotes",
         name: "MyNotes",
         component: () => import("@/components/Notes/addNotesForm.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+      {
+        path: "/notifications",
+        name: "Notifications",
+        component: () => import("@/components/Notifications/notificationsBase.vue"),
         meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
       {
@@ -113,25 +119,28 @@ const routes = [
         component: () => import("@/dashboards/RulesForma.vue"),
         meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
-    {
-      path: "/schedules",
-      name: "Schedule",
-      component: () => import("@/dashboards/schedulesDashboard.vue"),
-      meta: { requiresAuth: true }
-    
-    },
-    {
-      path: "/settings",
-      name: "SettingsPage",
-      component: () => import("@/dashboards/settingsPage.vue"),
-      meta: { requiresAuth: true }
-    
-    }
+      {
+        path: "/schedules",
+        name: "Schedule",
+        component: () => import("@/dashboards/schedulesDashboard.vue"),
+        meta: { requiresAuth: true }
 
+      },
+      {
+        path: "/settings",
+        name: "SettingsPage",
+        component: () => import("@/dashboards/settingsPage.vue"),
+        meta: { requiresAuth: true }
+
+      },
+      {
+        path: "/unauth",
+        name: "unAuthPage",
+        component: () => import("@/views/unAuthPage.vue"),
+      },
+     
     ]
   },
-
-
 
   {
     path: "/Login",
@@ -144,11 +153,7 @@ const routes = [
     component: () => import("@/views/VAplicationForm.vue"),
 
   },
-  {
-    path: "/unauth",
-    name: "unAuthPage",
-    component: () => import("@/views/unAuthPage.vue"),
-    },
+
   {
     path: "/donationPackages",
     name: "DonationPackages",

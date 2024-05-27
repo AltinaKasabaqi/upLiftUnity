@@ -3,7 +3,7 @@
     <section :class="['msger', { 'box-shadow': isChatOn }]">
       <header class="msger-header" @click="toggleChat">
         <div class="msger-header-title">
-          <i class="fas fa-comment-alt"></i> {{ recipient ? recipient : 'Live Chat' }}
+          <i class="fas fa-comment-alt"></i> {{ recipient ? recipientName : 'Live Chat' }}
         </div>
         <div class="msger-header-options">
           <span><i class="fas fa-cog"></i></span>
@@ -14,7 +14,7 @@
         <div v-for="(message, index) in messages" :key="index" :class="{'msg right-msg': message.position === 'right', 'msg left-msg': message.position === 'left'}">
           <div class="msg-bubble">
             <div class="msg-info">
-              <div class="msg-info-name">{{ message.name == this.email ? 'You' : message.name }}</div>
+              <div class="msg-info-name">{{ message.senderEmail === email ? 'You' : getUserName(message.senderEmail) }}</div>
               <div class="msg-info-time">{{ message.time }}</div>
             </div>
             <div class="msg-text">{{ message.text }}</div>
@@ -31,24 +31,28 @@
     <section class="user-sidebar">
       <header class="user-sidebar-header">
         <div class="user-sidebar-title">
-          <i class="fas fa-users"></i> Users
+          <i class="fas fa-users"></i> 
+          <span v-if="this.role === 'Volunteer'"><b>Mbikqyrësit</b></span>
+          <span v-else-if="this.role === 'SuperVisor'"><b>Vullnetarët</b></span>
+          <span v-else>Users</span>
         </div>
       </header>
       <div class="user-list">
         <div v-for="(user, index) in users" :key="index" class="user" @click="changeRecipient(user.email)">
-          {{ user.email }}
+          <span class="user-name">{{ user.name }} {{ user.surname }}</span>
+          <span v-if="user.newMessagesCount > 0" class="notification-badge">{{ user.newMessagesCount }}</span>
+          <span class="hidden-email" :data-email="user.email"></span>
         </div>
       </div>
     </section>
   </div>
 </template>
 
-
-
 <script>
 import * as signalR from "@microsoft/signalr";
 import axios from '../api/axios.js';
 import { getUserEmailFromToken } from "@/authorization/userEmail.js";
+import { geRoleFromToken } from "@/authorization/authRoleId.js";
 
 export default {
   data() {
@@ -56,10 +60,13 @@ export default {
       messages: [],
       newMessage: '',
       recipient: '',
+      recipientName: '',
       connection: null,
       users: [],
       email: '',
-      isChatOn: false, // State to manage chat toggle
+      isChatOn: false,
+      role:'',
+      showNotification: false,
     };
   },
   mounted() {
@@ -69,29 +76,35 @@ export default {
       .build();
 
     this.connection.on("broadcastMessage", (user, newMessage) => {
-      console.log("Message received from ${user} ${newMessage}");
-
-      this.messages.push({
-        position: user === this.email ? 'right' : 'left',
-        name: user,
-        time: new Date().toLocaleTimeString(),
-        text: newMessage
-      });
+      console.log(`Message received from ${user}: ${newMessage}`);
+      this.handleNewMessage(user, newMessage);
     });
 
-    this.connection.start()
-      .catch(err => console.error(err.toString()));
-    
+    this.connection.start().catch(err => console.error(err.toString()));
     this.fetchUsers();
   },
   methods: {
+    handleNewMessage(user, newMessage) {
+      if (user !== this.email) {
+        const recipientUser = this.users.find(u => u.email === user);
+        if (recipientUser) {
+          recipientUser.newMessagesCount++;
+        }
+      }
+      this.messages.push({
+        position: user === this.email ? 'right' : 'left',
+        senderEmail: user,
+        time: new Date().toLocaleTimeString(),
+        text: newMessage
+      });
+    },
     sendMessage() {
       if (this.newMessage.trim() === '') return;
       if (this.recipient.trim() === '') {
         alert("Please specify a recipient.");
         return;
       }
-      const email = getUserEmailFromToken();
+      const email = this.email;
       let selectedUser = this.users.find(user => user.email === this.recipient.trim());
       if (!selectedUser) {
         alert("Recipient not found.");
@@ -100,40 +113,61 @@ export default {
 
       this.messages.push({
         position: 'right',
-        name: email,
+        senderEmail: email,
         time: new Date().toLocaleTimeString(),
         text: this.newMessage.trim()
       });
 
       this.connection.invoke("SendToSpecific", email, this.newMessage.trim(), this.recipient.trim())
         .catch(err => console.error(err.toString()));
-
       this.newMessage = '';
     },
     changeRecipient(email) {
       this.recipient = email;
+      const selectedUser = this.users.find(user => user.email === email);
+      if (selectedUser) {
+        this.recipientName = `${selectedUser.name} ${selectedUser.surname}`;
+        selectedUser.newMessagesCount = 0;
+      }
       this.isChatOn = true; 
-      this.fetchConversationHistory(this.email,email); 
-      console.log('emails' + this.email + email);
+      this.fetchConversationHistory(this.email, email);
     },
     fetchUsers() {
-      const email = getUserEmailFromToken();
-      axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=2`)
+      this.role = geRoleFromToken();
+      console.log('Role from token:', this.role);
+
+      let roleID = 0;
+      const normalizedRole = this.role.toLowerCase();
+      if (normalizedRole === 'supervisor') {
+        roleID = 3;
+      } else if (normalizedRole === 'volunteer') {
+        roleID = 2;
+      } else {
+        console.error('Unexpected role:', this.role);
+        return;
+      }
+
+      console.log('Role ID:', roleID);
+      const email = this.email;
+
+      axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=${roleID}`)
         .then(response => {
-          this.users = response.data.filter(user => user.email !== email);
-          console.log(this.users);
+          this.users = response.data.filter(user => user.email !== email).map(user => ({
+            ...user,
+            newMessagesCount: 0
+          }));
+          console.log('Fetched users:', this.users);
         })
         .catch(error => {
           console.error('Error fetching users:', error);
         });
     },
-    fetchConversationHistory(myEmail,otherEmail) {
-      axios.get(`http://localhost:5051/api/Chat/conversation?senderEmail=${myEmail}&receiverEmail=${otherEmail}`)
- 
+    fetchConversationHistory(myEmail, otherEmail) {
+      axios.get(`http://localhost:5051/api/Chat/conversation?user1=${myEmail}&user2=${otherEmail}`)
         .then(response => {
           this.messages = response.data.map(message => ({
-            position: message.conversation.senderEmail === myEmail ? 'right' : 'left',
-            name: message.conversation.senderEmail,
+            position: message.sender === myEmail ? 'right' : 'left',
+            senderEmail: message.sender,
             time: new Date(message.createdAt).toLocaleTimeString(),
             text: message.content
           }));
@@ -142,12 +176,14 @@ export default {
         .catch(error => {
           console.error('Error fetching conversation history:', error);
         });
+    },
+    getUserName(email) {
+      const user = this.users.find(user => user.email === email);
+      return user ? `${user.name} ${user.surname}` : email;
     }
   }
 };
 </script>
-
-
 
 <style>
 .main {
@@ -214,10 +250,10 @@ export default {
   cursor: pointer;
 }
 
-.user {
+/* .user {
   padding: 10px;
   border-bottom: 1px solid #ddd;
-}
+} */
 
 .msger-chat {
   flex: 1;
@@ -327,4 +363,27 @@ export default {
 .msger-chat {
   background-color: #fcfcfe;
 }
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.user-email {
+  flex-grow: 1;
+}
+
+.notification-badge {
+  background-color: #ff4136;
+  color: #fff;
+  font-size: 0.8em;
+  padding: 5px 8px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+
 </style>

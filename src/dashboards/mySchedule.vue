@@ -11,25 +11,27 @@
         <td><b>Termini 1</b></td>
         <td>{{ formatDate(schedule.firstDate) }}</td>
         <td>{{ getDayOfWeek(schedule.firstDate) }}</td>
-        <td>08:00 AM</td>
+        <td>{{ formatTime(schedule.firstDate) }}</td>
       </tr>
       <tr>
         <td><b>Termini 2</b></td>
         <td>{{ formatDate(schedule.secondDate) }}</td>
         <td>{{ getDayOfWeek(schedule.secondDate) }}</td>
-        <td>10:45 AM</td>
+        <td>{{ formatTime(schedule.secondDate) }}</td>
+
       </tr>
       <tr>
         <td><b>Termini 3</b></td>
         <td>{{ formatDate(schedule.thirdDate) }}</td>
         <td>{{ getDayOfWeek(schedule.thirdDate) }}</td>
-        <td>02:00 PM</td>
+        <td>{{ formatTime(schedule.thirdDate) }}</td>
       </tr>
       <tr>
         <td><b>Termini 4</b></td>
         <td>{{ formatDate(schedule.fourthDate) }}</td>
         <td>{{ getDayOfWeek(schedule.fourthDate) }}</td>
-        <td>04:45 PM</td>
+        <td>{{ formatTime(schedule.fourthDate) }}</td>
+
       </tr>
     </table>
   </div>
@@ -71,16 +73,19 @@ export default {
       console.error('Gabim gjatë marrjes së të dhënave:', error);
     });
 },
-
-    formatDate(dateString) {
+  formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' });
     },
-    getDayOfWeek(dateString) {
-      const daysOfWeek = ['E Diel', 'E Hënë', 'E Martë', 'E Mërkurë', 'E Enjte', 'E Premte', 'E Shtunë'];
+      getDayOfWeek(dateString) {
+        const daysOfWeek = ['E Diel', 'E Hënë', 'E Martë', 'E Mërkurë', 'E Enjte', 'E Premte', 'E Shtunë'];
+        const date = new Date(dateString);
+        return daysOfWeek[date.getDay()];
+      },
+    formatTime(dateString) {
       const date = new Date(dateString);
-      return daysOfWeek[date.getDay()];
-    },
+      return date.toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' });
+    }
   }
 };
 </script>
@@ -94,7 +99,7 @@ export default {
 table {
   width: 80%;
   height: 300px;
-  margin-left: 8%;
+  margin-left:8%;
   border-collapse: collapse;
 }
 

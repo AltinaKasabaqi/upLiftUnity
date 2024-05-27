@@ -297,7 +297,6 @@ export default {
   text-align: left;
   font-family: Arial, Helvetica, sans-serif;
   width: 250px;
-  overflow-y: auto;
   transition: transform 0.3s ease;
   z-index: 1;
   transform: translateX(-250px);

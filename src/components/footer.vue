@@ -4,7 +4,7 @@
         <img src="../assets/logo-no-background.png" alt="Logo" />
       </div>
       <div class="right">
-        <p>Kontaktoni ne: info@company.com</p>
+        <p>Kontaktoni në: upLiftUnity@outlook.com</p>
         <p>Telefon: +311 222 345</p>
         <p>&copy; 2024 UpLiftUnity. Të gjitha të drejtat e rezervuara.</p>
       </div>

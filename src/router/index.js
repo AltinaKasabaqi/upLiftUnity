@@ -23,7 +23,7 @@ const routes = [
         path: "/chat",
         name: "LiveChat",
         component: () => import("@/components/liveChat.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+        meta: { requiresAuth: true, requiredRoles: ['SuperVisor', 'Volunteer'] }
       },
       {
         path: "/register",
@@ -164,7 +164,11 @@ const routes = [
     name: "AboutUs",
     component: () => import("@/views/AboutUs.vue"),
   },
-
+  {
+    path: "/contactUS",
+    name: "ContactUsModal",
+    component: () => import("@/components/ContactUsModal.vue"),
+  },
 
 ];
 

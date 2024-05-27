@@ -3,7 +3,7 @@
     <section :class="['msger', { 'box-shadow': isChatOn }]">
       <header class="msger-header" @click="toggleChat">
         <div class="msger-header-title">
-          <i class="fas fa-comment-alt"></i> {{ recipient ? recipient : 'Live Chat' }}
+          <i class="fas fa-comment-alt"></i> {{ recipient ? recipientName : 'Live Chat' }}
         </div>
         <div class="msger-header-options">
           <span><i class="fas fa-cog"></i></span>
@@ -14,7 +14,7 @@
         <div v-for="(message, index) in messages" :key="index" :class="{'msg right-msg': message.position === 'right', 'msg left-msg': message.position === 'left'}">
           <div class="msg-bubble">
             <div class="msg-info">
-              <div class="msg-info-name">{{ message.name == this.email ? 'You' : message.name }}</div>
+              <div class="msg-info-name">{{ message.senderEmail === email ? 'You' : getUserName(message.senderEmail) }}</div>
               <div class="msg-info-time">{{ message.time }}</div>
             </div>
             <div class="msg-text">{{ message.text }}</div>
@@ -31,19 +31,22 @@
     <section class="user-sidebar">
       <header class="user-sidebar-header">
         <div class="user-sidebar-title">
-          <i class="fas fa-users"></i> Users
+          <i class="fas fa-users"></i> 
+          <span v-if="this.role === 'Volunteer'"><b>Mbikqyrësit</b></span>
+          <span v-else-if="this.role === 'SuperVisor'"><b>Vullnetarët</b></span>
+          <span v-else>Users</span>
         </div>
       </header>
       <div class="user-list">
         <div v-for="(user, index) in users" :key="index" class="user" @click="changeRecipient(user.email)">
-          <span class="user-email">{{ user.email }}</span>
+          <span class="user-name">{{ user.name }} {{ user.surname }}</span>
           <span v-if="user.newMessagesCount > 0" class="notification-badge">{{ user.newMessagesCount }}</span>
+          <span class="hidden-email" :data-email="user.email"></span>
         </div>
       </div>
     </section>
   </div>
 </template>
-
 
 <script>
 import * as signalR from "@microsoft/signalr";
@@ -57,13 +60,13 @@ export default {
       messages: [],
       newMessage: '',
       recipient: '',
+      recipientName: '',
       connection: null,
       users: [],
       email: '',
       isChatOn: false,
-      role: '',
+      role:'',
       showNotification: false,
-      sender: ''
     };
   },
   mounted() {
@@ -90,7 +93,7 @@ export default {
       }
       this.messages.push({
         position: user === this.email ? 'right' : 'left',
-        name: user,
+        senderEmail: user,
         time: new Date().toLocaleTimeString(),
         text: newMessage
       });
@@ -110,7 +113,7 @@ export default {
 
       this.messages.push({
         position: 'right',
-        name: email,
+        senderEmail: email,
         time: new Date().toLocaleTimeString(),
         text: this.newMessage.trim()
       });
@@ -121,12 +124,13 @@ export default {
     },
     changeRecipient(email) {
       this.recipient = email;
-      this.isChatOn = true; 
-      this.fetchConversationHistory(this.email, email);
       const selectedUser = this.users.find(user => user.email === email);
       if (selectedUser) {
+        this.recipientName = `${selectedUser.name} ${selectedUser.surname}`;
         selectedUser.newMessagesCount = 0;
       }
+      this.isChatOn = true; 
+      this.fetchConversationHistory(this.email, email);
     },
     fetchUsers() {
       this.role = geRoleFromToken();
@@ -163,7 +167,7 @@ export default {
         .then(response => {
           this.messages = response.data.map(message => ({
             position: message.sender === myEmail ? 'right' : 'left',
-            name: message.sender,
+            senderEmail: message.sender,
             time: new Date(message.createdAt).toLocaleTimeString(),
             text: message.content
           }));
@@ -172,10 +176,13 @@ export default {
         .catch(error => {
           console.error('Error fetching conversation history:', error);
         });
+    },
+    getUserName(email) {
+      const user = this.users.find(user => user.email === email);
+      return user ? `${user.name} ${user.surname}` : email;
     }
   }
 };
-
 </script>
 
 <style>

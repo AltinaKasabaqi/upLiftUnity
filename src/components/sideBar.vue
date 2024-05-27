@@ -18,7 +18,7 @@
           <li class="user-role" v-else-if="user.roleId === 2">Mbikqyrës</li>
           <li class="user-role" v-else-if="user.roleId === 3">Vullnetarë</li>
         </ul>
-        <h3 class="sidebar-heading">Paneli i Administratorit</h3>
+      
         <ul class="sidebar-list">
           <router-link to="/statistics" class="sidebar-item"
             >Statistikat</router-link

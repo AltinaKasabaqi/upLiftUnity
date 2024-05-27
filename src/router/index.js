@@ -108,7 +108,7 @@ const routes = [
         meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
       {
-        path: "callsForm",
+        path: "/callsForm",
         name: "CallForm",
         component: () => import("@/dashboards/CallForm.vue"),
         meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
@@ -132,11 +132,15 @@ const routes = [
         component: () => import("@/dashboards/settingsPage.vue"),
         meta: { requiresAuth: true }
 
-      }
+      },
+      {
+        path: "/unauth",
+        name: "unAuthPage",
+        component: () => import("@/views/unAuthPage.vue"),
+      },
+     
     ]
   },
-
-
 
   {
     path: "/Login",
@@ -149,11 +153,7 @@ const routes = [
     component: () => import("@/views/VAplicationForm.vue"),
 
   },
-  {
-    path: "/unauth",
-    name: "unAuthPage",
-    component: () => import("@/views/unAuthPage.vue"),
-  },
+
   {
     path: "/donationPackages",
     name: "DonationPackages",

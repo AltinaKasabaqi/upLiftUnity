@@ -36,6 +36,7 @@
           <td>
             <button
               @click="reviewedApplication(application)"
+              :disabled="application.isReviewed"
               class="btn"
             >
               <i class="fas fa-check"></i>
@@ -44,12 +45,14 @@
           <td>
             <button
               @click="acceptApplication(application)"
+              :disabled="application.isAccepted || application.isRejected || !application.isReviewed"
               class="btn2 accept-btn"
             >
               Pranuar
             </button>
             <button
               @click="rejectApplication(application)"
+              :disabled="application.isRejected || application.isAccepted || !application.isReviewed"
               class="btn2 reject-btn"
             >
               Refuzuar
@@ -69,7 +72,7 @@ export default {
   data() {
     return {
       allApplications: [],
-      selectedType: "",
+      selectedType: ""
     };
   },
   created() {
@@ -90,25 +93,29 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.fetchApplications(); 
-
-        if (status === "Pranuar") {
-          localStorage.setItem('acceptedApplicationId', id);
-        
-          window.location.href = "http://localhost:8080/#/register";
-        }
+          if (status === "Pranuar") {
+            localStorage.setItem('acceptedApplicationId', id);
+            window.location.href = "http://localhost:8080/#/register";
+          }
         })
         .catch((error) => {
           console.error("Error during PUT request:", error);
         });
     },
     reviewedApplication(application) {
-      this.showUpdateAlert(application.applicationId, "Shqyrtuar");
+      if (!application.isReviewed) {
+        this.showUpdateAlert(application.applicationId, "Shqyrtuar");
+      }
     },
     acceptApplication(application) {
-      this.showUpdateAlert(application.applicationId, "pranohet");
+      if (application.isReviewed && !application.isRejected) {
+        this.showUpdateAlert(application.applicationId, "Pranuar");
+      }
     },
     rejectApplication(application) {
-      this.showUpdateAlert(application.applicationId, "refuzohet");
+      if (application.isReviewed && !application.isAccepted) {
+        this.showUpdateAlert(application.applicationId, "Refuzuar");
+      }
     },
     showUpdateAlert(id, status) {
       Swal.fire({
@@ -133,7 +140,12 @@ export default {
       axios
         .get("http://localhost:5051/api/applications/GetApplications")
         .then((response) => {
-          this.allApplications = response.data;
+          this.allApplications = response.data.map(application => ({
+            ...application,
+            isReviewed: application.applicationStatus !== 'e pa shqyrtuar',
+            isAccepted: application.applicationStatus === 'Pranuar',
+            isRejected: application.applicationStatus === 'Refuzuar'
+          }));
         })
         .catch((error) => {
           console.error("Gabim gjatë marrjes së të dhënave:", error);
@@ -149,7 +161,12 @@ export default {
             `http://localhost:5051/api/applications/GetApplicationByType?type=${this.selectedType}`
           )
           .then((response) => {
-            this.allApplications = response.data;
+            this.allApplications = response.data.map(application => ({
+              ...application,
+              isReviewed: application.applicationStatus !== 'e pa shqyrtuar',
+              isAccepted: application.applicationStatus === 'Pranuar',
+              isRejected: application.applicationStatus === 'Refuzuar'
+            }));
           })
           .catch((error) => {
             console.error("Gabim gjatë marrjes së të dhënave:", error);

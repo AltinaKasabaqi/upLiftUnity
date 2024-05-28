@@ -25,7 +25,6 @@ export default {
       try {
         const response = await axios.get('http://localhost:5051/api/Activities/GetMonthlyLoginCounts');
         this.activityData = response.data;
-        console.log("Response data: ",response.data);
         this.renderChart();
       } catch (error) {
         console.error('Error fetching activity data:', error);

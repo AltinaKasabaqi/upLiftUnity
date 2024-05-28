@@ -68,99 +68,28 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="fixed-icons" v-if="!isSidebarOpen">
-        <div class="icon">
-          <router-link to="/profile" class="icon"
-            ><i class="fas fa-user"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/settings" class="icon"
-            ><i class="fas fa-cogs"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/home" class="icon"
-            ><i class="fas fa-home"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/users" class="icon"
-            ><i class="fas fa-users"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/donations" class="icon"
-            ><i class="fas fa-money-bill"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/statistics" class="icon"
-            ><i class="fas fa-chart-bar"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/chat" class="icon"
-            ><i class="fas fa-comments"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/feedback" class="icon"
-            ><i class="fas fa-comment"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/suggestions" class="icon"
-            ><i class="fas fa-lightbulb"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/help" class="icon"
-            ><i class="fas fa-question-circle"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/documents" class="icon"
-            ><i class="fas fa-book"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/notifications" class="icon">
-            <i @click="$emit('activate')" class="activate-icon fas fa-bell"></i>
-            <span v-if="unreadNotifications > 0" class="notification-badge">{{
-              unreadNotifications
-            }}</span>
-          </router-link>
-        </div>
-        <router-link to="/logout" class="icon"
-          ><i class="fas fa-sign-out-alt"></i
-        ></router-link>
-      </div>
-    </div>
-    <div class="content">
-      <router-view class="router-view-component"></router-view>
-    </div>
-  </div> -->
+     
       <div class="fixed-icons" v-if="!isSidebarOpen">
         <div class="icon"><i class="fas fa-user"></i></div>
-
-        <div class="icon"><i class="fas fa-cogs"></i></div>
-        <div class="icon"><i class="fas fa-home"></i></div>
-        <div class="icon"><i class="fas fa-users"></i></div>
-        <div class="icon"><i class="fas fa-money-bill"></i></div>
         <div class="icon"><i class="fas fa-chart-bar"></i></div>
-        <div class="icon"><i class="fas fa-comments"></i></div>
-        <div class="icon"><i class="fas fa-comment"></i></div>
-        <div class="icon"><i class="fas fa-lightbulb"></i></div>
-        <div class="icon"><i class="fas fa-question-circle"></i></div>
-        <div class="icon"><i class="fas fa-book"></i></div>
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <div class="icon"><i class="fas fa-user-plus"></i></div>
+        <div class="icon"><i class="fas fa-money-bill"></i></div>
+        <div class="icon"><i class="fas fa-phone-alt"></i></div>
+        <div class="icon"><i class="fas fa-pencil-alt"></i></div>
+        <div class="icon"><i class="fas fa-briefcase"></i></div>        
+        <div class="icon"><i class="fas fa-eye"></i></div>
+        <div class="icon"><i class="fas fa-clock"></i></div>
+        <div class="icon"><i class="fas fa-calendar-alt"></i></div>
         <div class="icon" @click="goToNotificationsPage">
           <i class="activate-icon fas fa-bell"></i>
           <span v-if="unreadNotifications > 0" class="notification-badge">{{
             unreadNotifications
           }}</span>
         </div>
+        <div class="icon"><i class="fas fa-comments"></i></div>     
         <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="icon"><i class="fas fa-cogs"></i></div>
       </div>
     </div>
     <div class="content">

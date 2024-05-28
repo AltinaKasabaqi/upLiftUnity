@@ -3,7 +3,7 @@
       <i @click="$emit('close')" class="close-icon fas fa-times"></i>
       <div class="notification-content">
         <div v-if="notifications.length > 0" class="notification-list">
-          <NotificationItem v-for="notification in notifications" :key="notification" :notification="notification" />
+          <NotificationItem v-for="notification in notifications" :key="notification.NotificationId" :notification="notification" />
         </div>
         <p v-else class="no-notifications-text">No notifications</p>
       </div>
@@ -27,18 +27,6 @@
   </script>
   
   <style scoped>
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 300px;
-  background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  overflow-y: auto;
-}
-
 .notification-content {
   padding: 20px;
 }

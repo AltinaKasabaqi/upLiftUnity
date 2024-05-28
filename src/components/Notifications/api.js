@@ -1,5 +1,16 @@
 import axios from "axios";
 
+
+export function fetchAllNotifications() {
+  return axios.get('http://localhost:5051/notifications/getNotifications')
+    .then(response => response.data)
+    .catch(error => {
+      console.error("Failed to fetch notifications:", error);
+      throw error;
+    });
+}
+
+
 export function fetchUserNotifications(userId) {
   return axios.get(`http://localhost:5051/api/notifications/Notifications?userId=${userId}`)
     .then(response => {

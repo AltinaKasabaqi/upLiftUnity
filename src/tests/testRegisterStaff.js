@@ -1,4 +1,4 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 
 async function testRegisterStaff() {
     let driver = await new Builder().forBrowser('chrome').build();

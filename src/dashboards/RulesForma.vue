@@ -9,11 +9,11 @@
         <div class="left">
           <div class="form-group">
             <label for="emri">Rregulla</label>
-            <input type="text" id="name" v-model="formData.name" required>
+            <input type="text" id="name" v-model="formData.ruleName" required>
           </div>
           <div class="form-group">
             <label for="mbiemri">Pershkrimi:</label>
-            <input type="text" id="description" v-model="formData.description" required>
+            <input type="text" id="description" v-model="formData.ruleDesc" required>
           </div>
           <button type="submit">Shto</button>
         </div>
@@ -27,21 +27,23 @@
 <script>
 import axios from '../api/axios';
 import Swal from 'sweetalert2';
+import { getUserIdFromToken } from '@/authorization/authUserId';
 
 export default {
   components: {},
   data() {
     return {
       formData: {
-        name: '',
-        description: ''
+        ruleName: '',
+        ruleDesc: '',
+        userId:getUserIdFromToken()
       },
       errorMessage: ''
     };
   },
   methods: {
     async submitForm() {
-      if (!this.formData.name || !this.formData.description) {
+      if (!this.formData.ruleName || !this.formData.ruleDesc) {
         await Swal.fire({
           icon: 'error',
           title: 'Gabim',

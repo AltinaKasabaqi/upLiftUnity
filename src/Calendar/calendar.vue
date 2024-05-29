@@ -3,7 +3,8 @@
     <div class="wrapper bg-white rounded shadow w-full">
       <div class="header flex justify-between border-b p-2">
         <span class="text-lg font-bold">
-          {{ currentDate.format('YYYY MMMM') }} 
+          {{ currentDate.clone().add(1, 'month').format('YYYY MMMM') }}
+
         </span>
       </div>
       <table class="w-full">
@@ -134,20 +135,34 @@ export default {
     console.log(response.data);
     const schedules = response.data; 
 
+    const renderMonth = this.currentDate.clone().add(1, 'month').month();
+    const renderYear = this.currentDate.clone().add(1, 'month').year();
+
     schedules.forEach(schedule => {
       console.log(schedule); 
-      const { id, firstDate, secondDate, thirdDate, fourthDate } = schedule; // Kthe ID-në e eventit
-      if (firstDate) this.addEventToCalendar(id, firstDate); // Përfshijeni ID-në në funksionin addEventToCalendar
-      if (secondDate) this.addEventToCalendar(id, secondDate);
-      if (thirdDate) this.addEventToCalendar(id, thirdDate);
-      if (fourthDate) this.addEventToCalendar(id, fourthDate);
+      const { id, firstDate, secondDate, thirdDate, fourthDate } = schedule; 
+
+      if (firstDate && this.isDateInRenderMonth(firstDate, renderMonth, renderYear)) {
+        this.addEventToCalendar(id, firstDate); 
+      }
+      if (secondDate && this.isDateInRenderMonth(secondDate, renderMonth, renderYear)) {
+        this.addEventToCalendar(id, secondDate);
+      }
+      if (thirdDate && this.isDateInRenderMonth(thirdDate, renderMonth, renderYear)) {
+        this.addEventToCalendar(id, thirdDate);
+      }
+      if (fourthDate && this.isDateInRenderMonth(fourthDate, renderMonth, renderYear)) {
+        this.addEventToCalendar(id, fourthDate);
+      }
     });
   } catch (error) {
     console.error('Gabim gjatë marrjes së ngjarjeve nga backend-i:', error);
   }
+},
 
-
-
+isDateInRenderMonth(date, renderMonth, renderYear) {
+  const eventDate = moment(date);
+  return eventDate.month() === renderMonth && eventDate.year() === renderYear;
 },
 addEventToCalendar(id, date) {
   const eventDate = moment(date); 
@@ -178,36 +193,38 @@ addEventToCalendar(id, date) {
       this.generateCalendar();
     },
     generateCalendar() {
-      const startOfMonth = this.currentDate.clone().startOf('month');
-      const endOfMonth = this.currentDate.clone().endOf('month');
-      const startOfWeek = startOfMonth.clone().startOf('week');
-      const endOfWeek = endOfMonth.clone().endOf('week');
+  // Përcakto fillimin dhe fundin e muajit të ardhshëm
+  const startOfNextMonth = this.currentDate.clone().add(1, 'month').startOf('month');
+  const endOfNextMonth = this.currentDate.clone().add(1, 'month').endOf('month');
+  const startOfWeek = startOfNextMonth.clone().startOf('week');
+  const endOfWeek = endOfNextMonth.clone().endOf('week');
 
-      const calendar = [];
-      let week = [];
-      let currentDate = startOfWeek.clone();
+  const calendar = [];
+  let week = [];
+  let currentDate = startOfWeek.clone();
 
-      while (currentDate.isSameOrBefore(endOfWeek, 'day')) {
-        for (let i = 0; i < 7; i++) {
-          if (currentDate.isSameOrAfter(startOfMonth, 'day') && currentDate.isSameOrBefore(endOfMonth, 'day')) {
-            week.push({
-              date: currentDate.format('D'),
-              events: [] 
-            });
-          } else {
-            week.push({
-              date: '',
-              events:[]
-            });
-          }
-          currentDate.add(1, 'day');
-        }
-        calendar.push(week);
-        week = [];
+  while (currentDate.isSameOrBefore(endOfWeek, 'day')) {
+    for (let i = 0; i < 7; i++) {
+      if (currentDate.isSameOrAfter(startOfNextMonth, 'day') && currentDate.isSameOrBefore(endOfNextMonth, 'day')) {
+        week.push({
+          date: currentDate.format('D'),
+          events: [] 
+        });
+      } else {
+        week.push({
+          date: '',
+          events: []
+        });
       }
+      currentDate.add(1, 'day');
+    }
+    calendar.push(week);
+    week = [];
+  }
 
-      this.calendar = calendar;
-    },
+  this.calendar = calendar;
+},
+
 
  
     showAddEventModal(date, month, year) {

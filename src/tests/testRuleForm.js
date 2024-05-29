@@ -9,7 +9,7 @@ async function testRuleForm() {
         await driver.wait(until.elementLocated(By.id('email')), 20000);
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 20000);
 
-        await driver.findElement(By.id('email')).sendKeys('admin2@gmail.com'); 
+        await driver.findElement(By.id('email')).sendKeys('admin@gmail.com'); 
         await driver.findElement(By.id('password')).sendKeys('admini'); 
         await driver.findElement(By.xpath("//button[text()='Kyçu']")).click();
 

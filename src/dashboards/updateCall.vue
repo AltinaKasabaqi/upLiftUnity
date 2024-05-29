@@ -19,7 +19,7 @@
               <label for="RiskLevel">Shkalla e rrezikut:</label>
               <input type="int" id="RiskLevel" v-model="formData.riskLevel" required>
             </div>
-            <button type="submit">Shto</button>
+            <button type="submit">Ndrysho</button>
           </div>
         </form>
       </div>

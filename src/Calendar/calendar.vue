@@ -167,13 +167,13 @@ isDateInRenderMonth(date, renderMonth, renderYear) {
 addEventToCalendar(id, date) {
   const eventDate = moment(date); 
 
-  console.log('Data e eventit:', eventDate.format('YYYY-MM-DD HH:mm')); // Shfaq datën e eventit në console
+  console.log('Data e eventit:', eventDate.format('YYYY-MM-DD HH:mm')); 
 
   this.calendar.forEach(week => {
     week.forEach(day => {
       if (day.date === eventDate.date().toString()) {
         day.events.push({
-          id: id, // Përfshijeni ID-në e eventit në të dhënat e ngjarjes
+          id: id, 
           time: eventDate.format('HH:mm'), 
         });
 

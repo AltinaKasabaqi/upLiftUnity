@@ -30,12 +30,9 @@
               <input
                 id="fjalekalimi"
                 v-model="formData.password"
-                :type="showPassword ? 'text' : 'password'"
+                type="password"
                 required
               />
-              <span class="password-toggle" @click="togglePasswordVisibility">
-                <i class="fas" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-              </span>
             </div>
           </div>
           <div class="form-group">
@@ -69,7 +66,17 @@ import Swal from "sweetalert2";
 export default {
   data() {
     return {
-      formData: {
+      formData: this.getInitialFormData(),
+      errorMessage: "",
+      showPassword: false,
+    };
+  },
+  created() {
+    this.resetFormData();
+  },
+  methods: {
+    getInitialFormData() {
+      return {
         name: "",
         surname: "",
         email: "",
@@ -77,38 +84,33 @@ export default {
         password: "",
         phoneNumber: "",
         address: "",
-      },
-      errorMessage: "",
-      showPassword: false,
-    };
-  },
-  created() {
+      };
+    },
+    resetFormData() {
+      this.formData = this.getInitialFormData();
 
-    const acceptedApplicationId = localStorage.getItem("acceptedApplicationId");
-
-    if (acceptedApplicationId) {
+      const acceptedApplicationId = localStorage.getItem("acceptedApplicationId");
+      if (acceptedApplicationId) {
+        this.fillFormDataFromApplication(acceptedApplicationId);
+        localStorage.removeItem("acceptedApplicationId");
+      }
+    },
+    fillFormDataFromApplication(applicationId) {
       axios
-        .get(`http://localhost:5051/api/applications/GetApplicationById/${acceptedApplicationId}`)
+        .get(`http://localhost:5051/api/applications/GetApplicationById/${applicationId}`)
         .then((response) => {
-
           const application = response.data;
-
           if (application.nameSurname && typeof application.nameSurname === "string") {
-
             const nameSurnameParts = application.nameSurname.split(" ");
-
             this.formData.name = nameSurnameParts[0] || "";
             this.formData.surname = nameSurnameParts.slice(1).join(" ") || "";
           }
-
           this.formData.email = application.email;
           this.formData.phoneNumber = application.phoneNumber;
           this.formData.password = this.generateRandomPassword();
-
-        
-          if (application.applicationType === "Supervisor") {
+          if (application.applicationType === "supervisor") {
             this.formData.RoleId = "2"; 
-          } else if (application.applicationType === "Vullnetare") {
+          } else if (application.applicationType === "vullnetare") {
             this.formData.RoleId = "3"; 
           } else {
             this.formData.RoleId = "";
@@ -117,9 +119,7 @@ export default {
         .catch((error) => {
           console.error("Error fetching application data:", error);
         });
-    }
-  },
-  methods: {
+    },
     generateRandomPassword(length = 8) {
       const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       let password = "";
@@ -148,9 +148,6 @@ export default {
           text: error.response.data || "Gabim gjatë regjistrimit!",
         });
       }
-    },
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
     },
   },
 };
@@ -229,16 +226,4 @@ button:hover {
   position: relative;
 }
 
-.password-toggle {
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #666;
-}
-
-.password-toggle:hover {
-  color: #333;
-}
 </style>

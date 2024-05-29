@@ -30,7 +30,10 @@
           <td>{{ application.nameSurname }}</td>
           <td>{{ application.email }}</td>
           <td>{{ application.phoneNumber }}</td>
-          <td>{{ application.cv }}</td>
+          <td>
+  <a :href="getDownloadLink(application.cv)" download>Shkarko CV</a>
+</td>
+
           <td>{{ application.applicationType }}</td>
           <td>{{ application.applicationStatus }}</td>
           <td>
@@ -93,7 +96,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.fetchApplications(); 
-          if (status === "Pranuar") {
+          if (status === "pranohet") {
             localStorage.setItem('acceptedApplicationId', id);
             window.location.href = "http://localhost:8080/#/register";
           }
@@ -102,6 +105,9 @@ export default {
           console.error("Error during PUT request:", error);
         });
     },
+    getDownloadLink(cvFilename) {
+    return `${window.location.origin}/${cvFilename}`;
+  },
     reviewedApplication(application) {
       if (!application.isReviewed) {
         this.showUpdateAlert(application.applicationId, "Shqyrtuar");
@@ -109,12 +115,12 @@ export default {
     },
     acceptApplication(application) {
       if (application.isReviewed && !application.isRejected) {
-        this.showUpdateAlert(application.applicationId, "Pranuar");
+        this.showUpdateAlert(application.applicationId, "pranohet");
       }
     },
     rejectApplication(application) {
       if (application.isReviewed && !application.isAccepted) {
-        this.showUpdateAlert(application.applicationId, "Refuzuar");
+        this.showUpdateAlert(application.applicationId, "refuzohet");
       }
     },
     showUpdateAlert(id, status) {
@@ -143,8 +149,8 @@ export default {
           this.allApplications = response.data.map(application => ({
             ...application,
             isReviewed: application.applicationStatus !== 'e pa shqyrtuar',
-            isAccepted: application.applicationStatus === 'Pranuar',
-            isRejected: application.applicationStatus === 'Refuzuar'
+            isAccepted: application.applicationStatus === 'pranohet',
+            isRejected: application.applicationStatus === 'refuzohet'
           }));
         })
         .catch((error) => {

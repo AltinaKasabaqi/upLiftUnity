@@ -56,7 +56,7 @@ export default {
   max-width: 15%;
   width: 100%;
   float: left;
-  margin-top: -11%;
+  margin-top: -10%;
   margin-left: 3%;
 }
 

@@ -91,11 +91,10 @@ export default {
     async deleteNoteConfirm(note) {
       const confirmResult = await Swal.fire({
         icon: "warning",
-        title: "Are you sure?",
-        text: "This note will be permanently deleted.",
+        text: "Ky shënim do të fshihet përgjithmonë.",
         showCancelButton: true,
-        confirmButtonText: "Delete",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "Fshij",
+        cancelButtonText: "Anulo",
       });
 
       if (confirmResult.isConfirmed) {
@@ -114,8 +113,7 @@ export default {
 
           Swal.fire({
             icon: "success",
-            title: "Success!",
-            text: "Note deleted successfully.",
+            text: "Shënimet u fshin me sukses.",
           });
         } else {
           throw new Error("Delete operation failed.");
@@ -125,7 +123,7 @@ export default {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Failed to delete note. Please try again.",
+          text: "Provoni përsëri",
         });
       }
     },
@@ -150,7 +148,7 @@ export default {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Please fill in all fields.",
+          text: "Plotesoni të gjitha fushat",
         });
 
         return;
@@ -173,15 +171,15 @@ export default {
 
         Swal.fire({
           icon: "success",
-          title: "Success!",
-          text: "Note added successfully.",
+          title: "Sukses!",
+          text: "Shenimet u shtuan me sukses.",
         });
       } catch (error) {
         console.error("Error creating note:", error.response.data);
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Failed to create note. Please try again.",
+          text: "Provoni përsëri.",
         });
       }
     },
@@ -211,15 +209,15 @@ export default {
         console.log("Note updated successfully:", response.data);
         Swal.fire({
           icon: "success",
-          title: "Success!",
-          text: "Note updated successfully.",
+          title: "Sukses!",
+          text: "Ndryshimet u ruajtën me sukses.",
         });
       } catch (error) {
         console.error("Error updating note:", error.response.data);
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Failed to update note. Please try again.",
+          text: "Provoni përsëri.",
         });
       }
     },

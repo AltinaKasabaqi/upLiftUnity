@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <center><h1>Orari im</h1></center><br><br>
     <table v-if="schedule.firstDate || schedule.secondDate || schedule.thirdDate || schedule.fourthDate">
       <tr>
         <th>Termini</th>

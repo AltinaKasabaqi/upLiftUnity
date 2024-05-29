@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+      <button @click="sendEmailToUsers" class="notify-btn">Njofto per hapjen e orarit</button>
       <h1 class="page-title">Përdoruesit</h1>
         <div class="filter-section">
           <label class="filter-label" for="filterType">Filtro Përdoruesit:</label>
@@ -45,6 +46,7 @@
 
    <script>
    import axios from '../api/axios.js';
+   import Swal from 'sweetalert2';
    
    export default {
      data() {
@@ -96,8 +98,31 @@
     },
       goToSignUp() {
         this.$router.push({ name: 'SignUpForm' });
-      }
-    }
+      },
+      sendEmailToUsers() {
+      Swal.fire({
+        title: 'Jeni të sigurt?',
+        text: 'Dëshironi të dërgoni emaila për të gjithë vullnetarët?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Po, dërgo!',
+        cancelButtonText: 'Anulo'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.post('http://localhost:5051/api/email/sendEmailToUsers')
+            .then(() => {
+              console.log('Emailat u dërguan me sukses.');
+              // Optionally, you can show a success message or perform any other actions after sending emails
+            })
+            .catch(error => {
+              console.error('Gabim gjatë dërgimit të emaileve:', error);
+              // Optionally, you can show an error message or perform any other actions in case of an error
+            });
+        }
+      });
+    }}
 
      
    };
@@ -171,6 +196,14 @@
     color: white;
     
     
+  }
+  .notify-btn{
+    cursor: pointer;
+    background-color: #9ab59a;
+    padding: 1%;
+    border: none;
+    border-radius: 10px;
+    color: white;
   }
   </style>
   

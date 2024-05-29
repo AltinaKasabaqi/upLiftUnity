@@ -12,10 +12,6 @@
                 :type="showPassword1 ? 'text' : 'password'"
                 required
               />
-              <span class="password-toggle" @click="togglePasswordVisibility">
-                <i class="fas" :class="showPassword1 ? 'fa-eye-slash' : 'fa-eye'"></i>
-              </span>
-            
             </div>
          
         </div>
@@ -25,13 +21,9 @@
             <input
                 id="newPassword"
                 v-model="passwordData.newPassword"
-                :type="showPassword2 ? 'text' : 'password'"
+                type="password"
                 required
-              />
-              <span class="password-toggle" @click="togglePasswordVisibility1">
-                <i class="fas" :class="showPassword2 ? 'fa-eye-slash' : 'fa-eye'"></i>
-              </span>
-            
+              /> 
             </div>
          
 
@@ -42,13 +34,9 @@
             <input
                 id="confirmPassword"
                 v-model="passwordData.confirmPassword"
-                :type="showPassword3 ? 'text' : 'password'"
+                type="password"
                 required
-              />
-              <span class="password-toggle" @click="togglePasswordVisibility2">
-                <i class="fas" :class="showPassword3 ? 'fa-eye-slash' : 'fa-eye'"></i>
-              </span>
-            
+              />   
             </div>
          
         </div>
@@ -73,9 +61,9 @@ export default {
         userId: '',
         
       },
-      showPassword1:false,
-        showPassword2:false,
-        showPassword3:false
+      // showPassword1:false,
+      //   showPassword2:false,
+      //   showPassword3:false
     };
   },
   methods: {
@@ -127,17 +115,7 @@ export default {
         });
       }
       },
-      togglePasswordVisibility() {
-        console.log("Toggled Password Visibility 1"); 
-
-      this.showPassword1 = !this.showPassword1;
-    },
-    togglePasswordVisibility1() {
-      this.showPassword2 = !this.showPassword2;
-    },
-    togglePasswordVisibility2() {
-      this.showPassword3 = !this.showPassword3;
-    }
+     
     }
   }
 

@@ -46,6 +46,7 @@
       </div>
     </section>
   </div>
+  <aiPrompt></aiPrompt>
 </template>
 
 <script>
@@ -53,8 +54,12 @@ import * as signalR from "@microsoft/signalr";
 import axios from '../api/axios.js';
 import { getUserEmailFromToken } from "@/authorization/userEmail.js";
 import { geRoleFromToken } from "@/authorization/authRoleId.js";
+import aiPrompt from "./aiPrompt.vue";
 
 export default {
+  components:{
+    aiPrompt
+  },
   data() {
     return {
       messages: [],

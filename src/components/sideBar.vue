@@ -29,6 +29,9 @@
           <router-link to="/register" class="sidebar-item"
             >Shto staf</router-link
           >
+          <router-link to="/RulesForma" class="sidebar-item"
+            >Shto rregulla</router-link
+          >
           <router-link to="/donations" class="sidebar-item"
             >Donacionet</router-link
           >
@@ -49,7 +52,6 @@
             >Kalendari</router-link
           >
         </ul>
-        <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">
           <router-link to="/notifications" class="sidebar-item"
             >Lajmërime</router-link
@@ -73,6 +75,7 @@
         <div class="icon"><i class="fas fa-user"></i></div>
         <div class="icon"><i class="fas fa-chart-bar"></i></div>
         <div class="icon"><i class="fas fa-users"></i></div>
+        <div class="icon"><i class="fas fa-clipboard-list"></i></div>
         <div class="icon"><i class="fas fa-user-plus"></i></div>
         <div class="icon"><i class="fas fa-money-bill"></i></div>
         <div class="icon"><i class="fas fa-phone-alt"></i></div>
@@ -209,7 +212,7 @@ export default {
   top: 20px;
   background: none;
   border: none;
-  color: #fff;
+  color: #b8b8b8;
   font-size: 24px;
   cursor: pointer;
   z-index: 2;

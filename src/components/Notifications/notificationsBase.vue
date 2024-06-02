@@ -26,7 +26,6 @@ import { connectToSignalR, disconnectFromSignalR } from "./signalR.js";
 import { fetchUserNotifications, fetchAllNotifications } from "./api.js";
 import { getUserIdFromToken } from "../../authorization/authUserId.js";
 import { geRoleFromToken } from "../../authorization/authRoleId.js";
-// import NotificationList from "./notificationList.vue";
 import NotificationItem from "./notificationItem.vue";
 
 export default {

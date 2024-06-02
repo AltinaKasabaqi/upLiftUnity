@@ -61,9 +61,6 @@ export default {
         userId: '',
         
       },
-      // showPassword1:false,
-      //   showPassword2:false,
-      //   showPassword3:false
     };
   },
   methods: {

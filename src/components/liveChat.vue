@@ -190,7 +190,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .main {
   display: flex;
   height: 100vh;
@@ -254,11 +254,6 @@ export default {
   height: calc(100% - 50px);
   cursor: pointer;
 }
-
-/* .user {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-} */
 
 .msger-chat {
   flex: 1;

@@ -56,23 +56,38 @@ export default {
   },
   methods: {
     fetchData() {
+  const currentDate = new Date();
+  let currentMonth = currentDate.getMonth() + 1; // getMonth() returns month from 0 to 11, add 1 to make it 1-12
+  let currentYear = currentDate.getFullYear();
+
+  // Check if the current date is greater than 27
+  if (currentDate.getDate() > 27) {
+    currentMonth += 1; // Move to the next month
+    if (currentMonth > 12) { // If month exceeds December, reset to January and increment the year
+      currentMonth = 1;
+      currentYear += 1;
+    }
+  }
+
   axios.get('http://localhost:5051/api/Schedule/GetScheduleByUserId', {
-      params: {
-        userId: this.userId
-      }
-    })
-    .then(response => {
-      this.schedule = response.data;
-      if (!this.schedule.firstDate && !this.schedule.secondDate && !this.schedule.thirdDate && !this.schedule.fourthDate) {
-        Swal.fire({
-          title: "Ju nuk keni zgjedhur orarin tuaj per kete muaj",
-          icon: "error"
-        });
-      }
-    })
-    .catch(error => {
-      console.error('Gabim gjatë marrjes së të dhënave:', error);
-    });
+    params: {
+      userId: this.userId,
+      month: currentMonth,
+      year: currentYear // Pass the year as well to handle year transition
+    }
+  })
+  .then(response => {
+    this.schedule = response.data;
+    if (!this.schedule.firstDate && !this.schedule.secondDate && !this.schedule.thirdDate && !this.schedule.fourthDate) {
+      Swal.fire({
+        title: "Ju nuk keni zgjedhur orarin tuaj per kete muaj",
+        icon: "error"
+      });
+    }
+  })
+  .catch(error => {
+    console.error('Gabim gjatë marrjes së të dhënave:', error);
+  });
 },
   formatDate(dateString) {
       const date = new Date(dateString);

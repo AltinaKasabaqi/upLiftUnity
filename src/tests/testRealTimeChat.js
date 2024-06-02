@@ -6,7 +6,7 @@ async function testChat() {
     try {
         await driver.get('http://localhost:8080/#/login');
 
-        await driver.findElement(By.id('email')).sendKeys('ds61483@ubt-uni.ne');
+        await driver.findElement(By.id('email')).sendKeys('ds61483@ubt-uni.net');
         await driver.findElement(By.id('password')).sendKeys('1234', Key.RETURN);
 
         await driver.wait(until.urlIs('http://localhost:8080/#/statistics'), 10000);

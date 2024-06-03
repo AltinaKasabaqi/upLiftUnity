@@ -52,11 +52,13 @@
                     <div v-for="event in day.events" :key="event.id" :class="getEventSlotClass(event)" :title="event.userId == userId ? 'Orari im' : ''">
                     <div class="event rounded p-1 text-sm mb-1 text-white">
                         <span class="time">{{ event.time }}</span>
+                       
                     </div>
+
                   </div>
                   </div>
-                  <div class="plus-icon">
-                    <button class="text-gray-500 hover:text-gray-800 focus:outline-none" @click="showAddEventModal(day.date, currentDate.month()+1, currentDate.year())">
+                  <div class="plus-icon" v-if="roleId === 'Volunteer'">
+                    <button class="text-gray-500 hover:text-gray-800 focus:outline-none" @click="showAddEventModal(day.date, currentDate.month(), currentDate.year())">
                       <svg width="1.5em" fill="currentColor" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus-circle" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path fill-rule="evenodd" d="M7.5 4.5a.5.5 0 0 1 .5.5V7h2a.5.5 0 0 1 0 1H8v2a.5.5 0 0 1-1 0V8H5.5a.5.5 0 0 1 0-1H7V5a.5.5 0 0 1 .5-.5z"/>
@@ -93,6 +95,7 @@
         </div>
         <button type="submit" class="bg-blue-500 text-white rounded px-5 py-2" style="background-color: #52a086;">  Ruaj  </button>
       </form>
+      <h5 style="color:gray">Ju duhet te zgjedhni 4 slote </h5>
     </div>
   </div>
 </template>
@@ -103,6 +106,7 @@ import moment from 'moment';
 import axios from '../api/axios.js';
 import { getUserIdFromToken } from '@/authorization/authUserId';
 import Swal from 'sweetalert2';
+import { geRoleFromToken } from '@/authorization/authRoleId.js';
 
 export default {
   name: "CalendarV",
@@ -118,7 +122,8 @@ export default {
       maxEventDates: 4,
       userId:'',
       slots: ['02:00','08:00', '14:00', '20:00'],
-      currentMonthName:''
+      currentMonthName:'',
+      roleId:geRoleFromToken()
 
    
  
@@ -196,7 +201,7 @@ generateCalendar() {
   const dayOfMonth = currentDate.date();
 
   let targetDate;
-  if (dayOfMonth >= 27) {
+  if (dayOfMonth >= 3) {
     targetDate = currentDate.clone().add(1, 'month');
   } else {
     targetDate = currentDate;
@@ -235,15 +240,15 @@ generateCalendar() {
 
     showAddEventModal(date, month, year) {
   const formattedDate = moment(`${year}-${month + 1}-${date}`, 'YYYY-MM-DD');
-  // const currentDate=moment();
-  //   if (currentDate.date() < 27 || currentDate.date() > 31) {
-  //     Swal.fire({
-  //       title: "Afati i përzgjedhjes së orarit",
-  //       text: "Nuk është hapur ende afati për përzgjedhjen e orarit.",
-  //       icon: "error"
-  //     });
-  //     return; 
-  //   }
+  const currentDate=moment();
+    if (currentDate.date() < 3 || currentDate.date() > 31) {
+      Swal.fire({
+        title: "Afati i përzgjedhjes së orarit",
+        text: "Nuk është hapur ende afati për përzgjedhjen e orarit.",
+        icon: "error"
+      });
+      return; 
+    }
     this.eventDate = formattedDate.format('YYYY-MM-DD HH:mm:ss');
     this.showModal = true;
 }, closeModal(){
@@ -327,7 +332,7 @@ addEvent() {
       const dayOfMonth = currentDate.date();
 
       let targetDate;
-      if (dayOfMonth >= 27) {
+      if (dayOfMonth >= 3) {
         targetDate = currentDate.clone().add(1, 'month');
       } else {
         targetDate = currentDate;

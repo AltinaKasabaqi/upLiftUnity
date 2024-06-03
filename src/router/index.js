@@ -124,7 +124,7 @@ const routes = [
         path: "/schedules",
         name: "Schedule",
         component: () => import("@/dashboards/schedulesDashboard.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requiredRoles:['SuperAdmin', 'SuperVisor']}
 
       },
       {

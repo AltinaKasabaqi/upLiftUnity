@@ -47,10 +47,14 @@
             >Monitorimi i aktiviteteve</router-link
           >
           <router-link to="/mySchedule" class="sidebar-item"
-          v-if="user.roleId === 2 || user.roleId === 3 " >Orari i punës</router-link
+          v-if=" user.roleId === 3 " >Orari i punës</router-link
           >
           <router-link to="/Calendar" class="sidebar-item"
           v-if="user.roleId === 1 || user.roleId === 2 || user.roleId === 3 " >Kalendari</router-link
+          >
+
+          <router-link to="/schedules" class="sidebar-item"
+          v-if="user.roleId === 1 || user.roleId === 2" >Orari i vullnetareve</router-link
           >
         </ul>
         <ul class="sidebar-list">

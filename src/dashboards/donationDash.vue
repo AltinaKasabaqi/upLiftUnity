@@ -25,7 +25,7 @@
                 <td>{{ donation.nameSurname }}</td>
                 <td>{{ donation.email }}</td>
                 <td>{{ donation.address }}</td>
-                <td>{{ donation.amount }}</td>
+                <td>{{ (donation.amount / 100).toFixed(2) }} €</td>
                 <td>{{ formatDate(donation.date) }}</td>
                 <td class="actions">
                   <button

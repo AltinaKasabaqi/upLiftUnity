@@ -5,7 +5,7 @@ const authorizeMiddleware = (to, from, next) => {
   const token = Cookies.get('token');
 
   if (to.path === '/login' && token) {
-    next('/statistics');
+    next('/callsHistory');
   } else if (to.meta.requiresAuth && !token) {
     next('/login');
   } else if (to.meta.requiresAuth && token) {

@@ -20,40 +20,41 @@
         </ul>
       
         <ul class="sidebar-list">
-          <router-link to="/statistics" class="sidebar-item"
-            >Statistikat</router-link
-          >
-          <router-link to="/allUsersView" class="sidebar-item"
-            >Përdoruesit</router-link
-          >
-          <router-link to="/register" class="sidebar-item"
-            >Shto staf</router-link
-          >
-          <router-link to="/RulesForma" class="sidebar-item"
-            >Shto rregulla</router-link
-          >
-          <router-link to="/donations" class="sidebar-item"
-            >Donacionet</router-link
-          >
-          <router-link to="/callsHistory" class="sidebar-item"
+          <router-link  to="/callsHistory" class="sidebar-item"
             >Historiku i thirrjeve</router-link
           >
+          <router-link v-if="user.roleId === 1" to="/statistics" class="sidebar-item"
+            >Statistikat</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/allUsersView" class="sidebar-item"
+            >Përdoruesit</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/register" class="sidebar-item"
+            >Shto staf</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/RulesForma" class="sidebar-item"
+            >Shto rregulla</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/donations" class="sidebar-item"
+            >Donacionet</router-link
+          >
+         
           <router-link to="/addNotes" class="sidebar-item">Shenime</router-link>
           <router-link to="/applications" class="sidebar-item"
-            >Aplikimet</router-link
+          v-if="user.roleId === 1">Aplikimet</router-link
           >
-          <router-link to="/userActivities" class="sidebar-item"
+          <router-link v-if="user.roleId === 1" to="/userActivities" class="sidebar-item"
             >Monitorimi i aktiviteteve</router-link
           >
           <router-link to="/mySchedule" class="sidebar-item"
-            >Orari i punës</router-link
+          v-if="user.roleId === 2 || user.roleId === 3 " >Orari i punës</router-link
           >
           <router-link to="/Calendar" class="sidebar-item"
-            >Kalendari</router-link
+          v-if="user.roleId === 1 || user.roleId === 2 || user.roleId === 3 " >Kalendari</router-link
           >
         </ul>
         <ul class="sidebar-list">
-          <router-link to="/notifications" class="sidebar-item"
+          <router-link v-if="user.roleId === 1 "  to="/notifications" class="sidebar-item"
             >Lajmërime</router-link
           >
         </ul>
@@ -72,19 +73,19 @@
       </div>
      
       <div class="fixed-icons" v-if="!isSidebarOpen">
-        <div class="icon"><i class="fas fa-user"></i></div>
-        <div class="icon"><i class="fas fa-chart-bar"></i></div>
-        <div class="icon"><i class="fas fa-users"></i></div>
-        <div class="icon"><i class="fas fa-clipboard-list"></i></div>
-        <div class="icon"><i class="fas fa-user-plus"></i></div>
-        <div class="icon"><i class="fas fa-money-bill"></i></div>
+        <div  class="icon"><i class="fas fa-user"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-chart-bar"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-users"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-clipboard-list"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-user-plus"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-money-bill"></i></div>
         <div class="icon"><i class="fas fa-phone-alt"></i></div>
         <div class="icon"><i class="fas fa-pencil-alt"></i></div>
-        <div class="icon"><i class="fas fa-briefcase"></i></div>        
-        <div class="icon"><i class="fas fa-eye"></i></div>
-        <div class="icon"><i class="fas fa-clock"></i></div>
+        <div v-if="user.roleId === 1 || user.roleId === 2" class="icon"><i class="fas fa-briefcase"></i></div>        
+        <div  v-if="user.roleId === 1" class="icon"><i class="fas fa-eye"></i></div>
+        <div  class="icon"><i class="fas fa-clock"></i></div>
         <div class="icon"><i class="fas fa-calendar-alt"></i></div>
-        <div class="icon" @click="goToNotificationsPage">
+        <div v-if="user.roleId === 1" class="icon" @click="goToNotificationsPage">
           <i class="activate-icon fas fa-bell"></i>
           <span v-if="unreadNotifications > 0" class="notification-badge">{{
             unreadNotifications

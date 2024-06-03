@@ -32,8 +32,8 @@
       <header class="user-sidebar-header">
         <div class="user-sidebar-title">
           <i class="fas fa-users"></i> 
-          <span v-if="this.role === 'Volunteer'"><b>Mbikqyrësit</b></span>
-          <span v-else-if="this.role === 'SuperVisor'"><b>Vullnetarët</b></span>
+          <span v-if="this.role === 'Volunteer'"><b>Mbikqyrësit & Administratorë</b></span>
+          <span v-else-if="this.role === 'SuperVisor'"><b>Vullnetarët & Administratorë</b></span>
           <span v-else>Users</span>
         </div>
       </header>
@@ -89,6 +89,12 @@ export default {
     this.fetchUsers();
   },
   methods: {
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const chatContainer = this.$refs.chat;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
+    },
     handleNewMessage(user, newMessage) {
       if (user !== this.email) {
         const recipientUser = this.users.find(u => u.email === user);
@@ -102,6 +108,7 @@ export default {
         time: new Date().toLocaleTimeString(),
         text: newMessage
       });
+      this.scrollToBottom();
     },
     sendMessage() {
       if (this.newMessage.trim() === '') return;
@@ -126,6 +133,7 @@ export default {
       this.connection.invoke("SendToSpecific", email, this.newMessage.trim(), this.recipient.trim())
         .catch(err => console.error(err.toString()));
       this.newMessage = '';
+      this.scrollToBottom();
     },
     changeRecipient(email) {
       this.recipient = email;
@@ -141,26 +149,30 @@ export default {
       this.role = geRoleFromToken();
       console.log('Role from token:', this.role);
 
-      let roleID = 0;
       const normalizedRole = this.role.toLowerCase();
-      if (normalizedRole === 'supervisor') {
-        roleID = 3;
-      } else if (normalizedRole === 'volunteer') {
-        roleID = 2;
-      } else {
-        console.error('Unexpected role:', this.role);
-        return;
-      }
-
-      console.log('Role ID:', roleID);
       const email = this.email;
 
-      axios.get(`http://localhost:5051/api/users/GetUsersByRoleId?roleId=${roleID}`)
+      axios.get('http://localhost:5051/api/users/GetUsers')
         .then(response => {
-          this.users = response.data.filter(user => user.email !== email).map(user => ({
+          let allUsers = response.data.filter(user => user.email !== email).map(user => ({
             ...user,
             newMessagesCount: 0
           }));
+
+          if (normalizedRole === 'superadmin') {
+            this.users = allUsers;
+          } else if (normalizedRole === 'supervisor') {
+            this.users = allUsers.filter(user => user.roleId === 1 || user.roleId === 3);
+          } else if (normalizedRole === 'volunteer') {
+            this.users = allUsers.filter(user => user.roleId === 1 || user.roleId === 2);
+          } else {
+            console.error('Unexpected role:', this.role);
+          }
+          this.users.sort((a, b) => {
+            if (a.roleId === 1 && b.roleId !== 1) return -1;
+            if (a.roleId !== 1 && b.roleId === 1) return 1;
+            return 0;
+          });
           console.log('Fetched users:', this.users);
         })
         .catch(error => {
@@ -177,6 +189,7 @@ export default {
             text: message.content
           }));
           console.log(response.data);
+          this.scrollToBottom();
         })
         .catch(error => {
           console.error('Error fetching conversation history:', error);

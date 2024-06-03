@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div class="all">
       <button @click="sendEmailToUsers" class="notify-btn">Njofto per hapjen e orarit</button>
       <h1 class="page-title">Përdoruesit</h1>
         <div class="filter-section">
@@ -139,7 +139,7 @@
    </script>
   
   <style scoped>
-  #app {
+  .all {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;

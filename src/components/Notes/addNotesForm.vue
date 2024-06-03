@@ -168,19 +168,8 @@ export default {
 
         this.newNote.title = "";
         this.newNote.content = "";
-
-        Swal.fire({
-          icon: "success",
-          title: "Sukses!",
-          text: "Shenimet u shtuan me sukses.",
-        });
       } catch (error) {
         console.error("Error creating note:", error.response.data);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Provoni përsëri.",
-        });
       }
     },
     startEditingTitle(note) {
@@ -202,23 +191,14 @@ export default {
       try {
         const noteID = note.noteId;
         console.log('id'+ noteID);
-        const response = await axios.put(
+         await axios.put(
           `http://localhost:5051/notes/Update/${noteID}`,
           note
         );
-        console.log("Note updated successfully:", response.data);
-        Swal.fire({
-          icon: "success",
-          title: "Sukses!",
-          text: "Ndryshimet u ruajtën me sukses.",
-        });
+
       } catch (error) {
         console.error("Error updating note:", error.response.data);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Provoni përsëri.",
-        });
+
       }
     },
   },

@@ -106,7 +106,7 @@ export default {
         });
     },
     getDownloadLink(cvFilename) {
-    return `${window.location.origin}/${cvFilename}`;
+    return `${window.open}/${cvFilename}`;
   },
     reviewedApplication(application) {
       if (!application.isReviewed) {

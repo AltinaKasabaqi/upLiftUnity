@@ -23,7 +23,7 @@ const routes = [
         path: "/chat",
         name: "LiveChat",
         component: () => import("@/components/liveChat.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperVisor', 'Volunteer'] }
+        meta: { requiresAuth: true, requiredRoles: ['SuperVisor', 'Volunteer','SuperAdmin'] }
       },
       {
         path: "/register",

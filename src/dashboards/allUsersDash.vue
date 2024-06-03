@@ -35,7 +35,7 @@
                 {{ user.roleId == '2' ? 'Mbikqyrës' : (user.roleId == '3' ? 'Vullnetarë' : 'Admin') }}
             </td>
             <td>
-              <button @click="deleteUser(user.id)" class="delete-btn">Fshije</button>
+              <button @click="confirmDelete(user.id)" class="delete-btn">Fshije</button>
             </td>
           </tr>
         </tbody>
@@ -86,7 +86,22 @@
            this.fetchUsers();
          }
        },
-       deleteUser(userId) {
+       confirmDelete(userId) {
+    Swal.fire({
+      title: 'A jeni të sigurt?',
+      text: 'Nuk do të mund ta ktheni këtë veprim!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Po, fshije!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteUser(userId);
+        }
+      });
+    },
+    deleteUser(userId) {
       axios.delete(`http://localhost:5051/api/users/DeleteUser?id=${userId}`)
         .then(() => {
           console.log('Përdoruesi u fshi me sukses');
@@ -96,9 +111,6 @@
           console.error('Gabim gjatë fshirjes së përdoruesit:', error);
         });
     },
-      goToSignUp() {
-        this.$router.push({ name: 'SignUpForm' });
-      },
       sendEmailToUsers() {
       Swal.fire({
         title: 'Jeni të sigurt?',
@@ -114,11 +126,9 @@
           axios.post('http://localhost:5051/api/email/sendEmailToUsers')
             .then(() => {
               console.log('Emailat u dërguan me sukses.');
-              // Optionally, you can show a success message or perform any other actions after sending emails
             })
             .catch(error => {
               console.error('Gabim gjatë dërgimit të emaileve:', error);
-              // Optionally, you can show an error message or perform any other actions in case of an error
             });
         }
       });

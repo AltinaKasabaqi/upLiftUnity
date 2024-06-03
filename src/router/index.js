@@ -15,9 +15,16 @@ const routes = [
     meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] },
     children: [
       {
+        path: "/callsHistory",
+        name: "callsHistory",
+        component: () => import("@/dashboards/callsHistory.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+      {
         path: '/statistics',
         name: 'Statistics',
         component: () => import("@/dashboards/statistics/statisticsPage.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin'] },
       },
       {
         path: "/chat",
@@ -56,12 +63,6 @@ const routes = [
         name: "DonationsDash",
         component: () => import("@/dashboards/donationDash.vue"),
         meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
-      },
-      {
-        path: "/callsHistory",
-        name: "callsHistory",
-        component: () => import("@/dashboards/callsHistory.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
       {
         path: "/updateCall/:id?",

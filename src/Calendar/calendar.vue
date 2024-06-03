@@ -49,11 +49,11 @@
                 <div class="bottom flex-grow h-24 py-1 w-full cursor-pointer">
                   <div v-if="day.events.length === 0" class="text-gray-500"></div>
                   <div v-else>
-                    <div v-for="event in day.events" :key="event.id" :class="getEventSlotClass(event)">
-                      <div class="event rounded p-1 text-sm mb-1 text-white">
-                          <span class="time">{{ event.time }}</span>
-                      </div>
+                    <div v-for="event in day.events" :key="event.id" :class="getEventSlotClass(event)" :title="event.userId == userId ? 'Orari im' : ''">
+                    <div class="event rounded p-1 text-sm mb-1 text-white">
+                        <span class="time">{{ event.time }}</span>
                     </div>
+                  </div>
                   </div>
                   <div class="plus-icon">
                     <button class="text-gray-500 hover:text-gray-800 focus:outline-none" @click="showAddEventModal(day.date, currentDate.month()+1, currentDate.year())">
@@ -144,9 +144,7 @@ export default {
     }
 
     schedules.forEach(schedule => {
-      // console.log(schedule);
       const { id, firstDate, secondDate, thirdDate, fourthDate } = schedule;
-      // console.log(schedule.userId + '  dcnjdkbncjksdncjknd');
 
       if (firstDate && this.isDateInRenderMonth(firstDate, renderMonth, renderYear)) {
         this.addEventToCalendar(id, firstDate, schedule.userId);
@@ -237,15 +235,15 @@ generateCalendar() {
 
     showAddEventModal(date, month, year) {
   const formattedDate = moment(`${year}-${month + 1}-${date}`, 'YYYY-MM-DD');
-  const currentDate=moment();
-    if (currentDate.date() < 27 || currentDate.date() > 31) {
-      Swal.fire({
-        title: "Afati i përzgjedhjes së orarit",
-        text: "Nuk është hapur ende afati për përzgjedhjen e orarit.",
-        icon: "error"
-      });
-      return; 
-    }
+  // const currentDate=moment();
+  //   if (currentDate.date() < 27 || currentDate.date() > 31) {
+  //     Swal.fire({
+  //       title: "Afati i përzgjedhjes së orarit",
+  //       text: "Nuk është hapur ende afati për përzgjedhjen e orarit.",
+  //       icon: "error"
+  //     });
+  //     return; 
+  //   }
     this.eventDate = formattedDate.format('YYYY-MM-DD HH:mm:ss');
     this.showModal = true;
 }, closeModal(){
@@ -320,9 +318,9 @@ addEvent() {
     },
 
     getEventSlotClass(event) {
-      console.log(event.userId + "eventi  " + this.userId + " useri")
-      return event.userId == this.userId ? 'bg-mine' : 'bg-other';
+      return event.userId == this.userId ? 'bg-mine your-schedule' : 'bg-other';
     },
+
 
     updateCurrentMonthName() {
       const currentDate = this.currentDate.clone();
@@ -362,4 +360,19 @@ addEvent() {
 .bg-other {
   background-color: rgb(179, 228, 200);
 }
+
+.your-schedule:hover::after {
+  content: 'Orari im';
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+}
 </style>
+

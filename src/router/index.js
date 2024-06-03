@@ -106,7 +106,7 @@ const routes = [
         path: "/notifications",
         name: "Notifications",
         component: () => import("@/components/Notifications/notificationsBase.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin']}
       },
       {
         path: "/callsForm",

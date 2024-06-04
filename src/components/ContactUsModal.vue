@@ -20,7 +20,10 @@
             </div>
             <p>Ne do të dëshironim të dëgjonim nga ju</p>
           </div>
+          
+
           <div class="rating-system">
+            <form @submit.prevent="submitFeedback"  >
             <p>Vlerëso shërbimin tonë:</p>
             <div class="stars">
               <span
@@ -37,24 +40,34 @@
             </div>
             <div class="feedback-form">
               <p>Na tregoni çfarë mendoni rreth nesh :</p>
-              <textarea v-model="feedback" placeholder="Shkruani këtu..." rows="5"></textarea>
-              <button @click="submitFeedback">Dërgo</button>
+              <textarea v-model="suggestion" placeholder="Shkruani këtu..." rows="5"></textarea>
+              <button type='submit'>Dërgo</button>
             </div>
+          </form>
           </div>
+          
+          
         </div>
+        
       </div>
+ 
     </div>
   </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2';
+import axios from '../api/axios.js';
+
 export default {
   data() {
     return {
       showModal: true,
       rating: 0,
       hoverRating: 0,
-      feedback: ''
+      suggestion: '',
+      formData :{}
+    
     };
   },
   methods: {
@@ -71,10 +84,42 @@ export default {
     clearHover() {
       this.hoverRating = 0;
     },
-    submitFeedback() {
-      console.log(`Feedback: ${this.feedback}, Rating: ${this.rating}`);
-      // Handle feedback submission logic here
-      this.closeModal();
+    async submitFeedback() {
+      if (!this.rating || !this.suggestion) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Gabim',
+          text: 'Ju lutem plotësoni të gjitha fushat.'
+        });
+        return;
+      }
+      this.formData = {
+        rating :this.rating,
+        suggestion : this.suggestion
+      }
+      try {
+        const response = await axios.post('http://localhost:5051/api/feedback/AddFeedBack', this.formData);
+        if (response && response.status === 200) {
+          await Swal.fire({
+            icon: 'success',
+            title: 'Sukses',
+            text: 'Vleresimi u dergua!'
+          });
+          this.$router.push({ name: 'HomePage' });
+        }
+      } catch (error) {
+        console.error('Gabim në shtimin e vleresimit:', error.response.data);
+        if (error.response.status === 409) {
+          this.errorMessage = 'Gabime gjatë shtimit te vleresimit: ' + error.response.data;
+        } else {
+          this.errorMessage = error.response.data;
+        }
+        await Swal.fire({
+          icon: 'error',
+          title: 'Gabim',
+          text: this.errorMessage || 'Gabim gjatë shtimit te vleresimeve!'
+        });
+      }
     }
   }
 };
@@ -99,7 +144,7 @@ export default {
   padding: 30px;
   border-radius: 10px;
   width: 800px;
-  box-shadow: 0px 0px 20px rgb(11, 180, 144)}
+  box-shadow: 0px 0px 20px #b8ddbe;}
 
 .modal-header {
   display: flex;
@@ -140,6 +185,7 @@ export default {
 .rating-system {
   flex: 1;
   text-align: center;
+ 
 }
 
 .contact-info {
@@ -169,6 +215,7 @@ export default {
   justify-content: center;
   margin-bottom: 20px;
 }
+
 
 .star {
   font-size: 2rem;
@@ -209,6 +256,7 @@ export default {
   border-radius: 5px;
   transition: background-color 0.3s ease;
   margin-top: 10px;
+ 
 }
 
 .feedback-form button:hover {

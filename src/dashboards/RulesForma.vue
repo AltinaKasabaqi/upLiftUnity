@@ -59,7 +59,7 @@ export default {
             title: 'Sukses',
             text: 'Rregullat u shtuan me sukses!'
           });
-          this.$router.push({ name: 'AdminDashboard' });
+          this.$router.push({ name: 'RulesDash' });
         }
       } catch (error) {
         console.error('Gabim në shtimin e rregullave:', error.response.data);

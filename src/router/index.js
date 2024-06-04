@@ -103,6 +103,12 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
+        path: "/rulesDash",
+        name: "RulesDash",
+        component: () => import("@/dashboards/RulesDash.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
         path: "/addNotes",
         name: "MyNotes",
         component: () => import("@/components/Notes/addNotesForm.vue"),

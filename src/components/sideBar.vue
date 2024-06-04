@@ -35,6 +35,12 @@
           <router-link v-if="user.roleId === 1" to="/RulesForma" class="sidebar-item"
             >Shto rregulla</router-link
           >
+          <router-link to="/RulesDash" class="sidebar-item"
+            >Rregullat e linjes</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/feedDash" class="sidebar-item"
+            >Vleresimet</router-link
+          >
           <router-link v-if="user.roleId === 1" to="/donations" class="sidebar-item"
             >Donacionet</router-link
           >

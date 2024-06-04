@@ -96,6 +96,12 @@ const routes = [
 
       },
       {
+        path: "/feedDash",
+        name: "FeedbackDash",
+        component: () => import("@/dashboards/FeedbackDash.vue"),
+        meta: { requiresAuth: true }
+      },
+      {
         path: "/addNotes",
         name: "MyNotes",
         component: () => import("@/components/Notes/addNotesForm.vue"),

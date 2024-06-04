@@ -4,11 +4,10 @@
       <div class="modal-container">
         <div class="modal-header">
           <h2>Na Kontakto</h2>
-          <router-link to="/"><button @click="closeModal">X</button></router-link>          
+          <router-link to="/"><button @click="closeModal">X</button></router-link>
         </div>
         <div class="modal-content">
           <div class="company-info">
-            <!-- <h3>Kontakto Kompaninë</h3> -->
             <div class="contact-info">
               <div class="contact-item">
                 <img src="@/assets/Call.icon.jpg" alt="Ikona e telefonit" class="phone-icon">
@@ -19,26 +18,28 @@
                 <span>Email: UpLiftUnity@outlook.com</span>
               </div>
             </div>
-            <p> Ne jemi të hapur për një bisedë</p>
-            <img src="@/assets/usamap.jpg" alt="Lokacioni">
+            <p>Ne do të dëshironim të dëgjonim nga ju</p>
           </div>
-          <!-- Forma për të plotësuar aplikuesit -->
-          <div class="applicant-form">
-            <form @submit.prevent="submitForm">
-              <div class="form-group">
-                <label for="nameSurname">Emri & Mbiemri:</label>
-                <input type="text" id="nameSurname" v-model="formData.nameSurname" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Emaili:</label>
-                <input type="email" id="email" v-model="formData.email" required>
-              </div>
-              <div class="form-group">
-                <label for="phoneNumber">Numri i Telefonit:</label>
-                <input type="tel" id="phoneNumber" v-model="formData.phoneNumber" required>
-              </div>
-              <button type="submit">Dërgo</button>
-            </form>
+          <div class="rating-system">
+            <p>Vlerëso shërbimin tonë:</p>
+            <div class="stars">
+              <span
+                v-for="index in 5"
+                :key="index"
+                class="star"
+                :class="{ active: index <= rating, hover: index <= hoverRating }"
+                @click="rate(index)"
+                @mouseover="setHover(index)"
+                @mouseleave="clearHover"
+              >
+                &#9733;
+              </span>
+            </div>
+            <div class="feedback-form">
+              <p>Na tregoni çfarë mendoni rreth nesh :</p>
+              <textarea v-model="feedback" placeholder="Shkruani këtu..." rows="5"></textarea>
+              <button @click="submitFeedback">Dërgo</button>
+            </div>
           </div>
         </div>
       </div>
@@ -51,19 +52,28 @@ export default {
   data() {
     return {
       showModal: true,
-      formData: {
-        nameSurname: '',
-        email: '',
-        phoneNumber: ''
-      }
+      rating: 0,
+      hoverRating: 0,
+      feedback: ''
     };
   },
   methods: {
     closeModal() {
       this.showModal = false;
     },
-    submitForm() {
-      console.log(this.formData);
+    rate(star) {
+      this.rating = star;
+      console.log(`Rated ${star} stars`);
+    },
+    setHover(index) {
+      this.hoverRating = index;
+    },
+    clearHover() {
+      this.hoverRating = 0;
+    },
+    submitFeedback() {
+      console.log(`Feedback: ${this.feedback}, Rating: ${this.rating}`);
+      // Handle feedback submission logic here
       this.closeModal();
     }
   }
@@ -89,8 +99,7 @@ export default {
   padding: 30px;
   border-radius: 10px;
   width: 800px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-}
+  box-shadow: 0px 0px 20px rgb(11, 180, 144)}
 
 .modal-header {
   display: flex;
@@ -120,7 +129,6 @@ export default {
 }
 
 .modal-content {
-  margin-bottom: 20px;
   display: flex;
 }
 
@@ -129,8 +137,9 @@ export default {
   padding-right: 20px;
 }
 
-.applicant-form {
+.rating-system {
   flex: 1;
+  text-align: center;
 }
 
 .contact-info {
@@ -155,25 +164,43 @@ export default {
   border-radius: 8px;
 }
 
-.form-group {
+.stars {
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
+.star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.form-group input {
-  width: calc(100% - 20px);
+.star.active,
+.star.hover {
+  color: #ffd700;
+}
+
+.feedback-form {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.feedback-form p {
+  margin-bottom: 10px;
+}
+
+.feedback-form textarea {
+  width: 90%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #b8ddbe;
+  border-radius: 10px;
+  resize: none;
 }
 
-button[type="submit"] {
+.feedback-form button {
   background-color: #52a086;
   color: #fff;
   border: none;
@@ -181,10 +208,10 @@ button[type="submit"] {
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  /* margin-left: 40%; */
+  margin-top: 10px;
 }
 
-button[type="submit"]:hover {
+.feedback-form button:hover {
   background-color: #b8ddbe;
 }
 </style>

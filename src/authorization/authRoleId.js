@@ -7,6 +7,7 @@ export const geRoleFromToken = () => {
       const decodedToken = VueJwtDecode.decode(token);
       const role =decodedToken.role;
       return role
+     
 
     }
     return null;

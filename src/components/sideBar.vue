@@ -20,38 +20,45 @@
         </ul>
       
         <ul class="sidebar-list">
-          <router-link to="/statistics" class="sidebar-item"
-            >Statistikat</router-link
-          >
-          <router-link to="/allUsersView" class="sidebar-item"
-            >Përdoruesit</router-link
-          >
-          <router-link to="/register" class="sidebar-item"
-            >Shto staf</router-link
-          >
-          <router-link to="/donations" class="sidebar-item"
-            >Donacionet</router-link
-          >
-          <router-link to="/callsHistory" class="sidebar-item"
+          <router-link  to="/callsHistory" class="sidebar-item"
             >Historiku i thirrjeve</router-link
           >
+          <router-link v-if="user.roleId === 1" to="/statistics" class="sidebar-item"
+            >Statistikat</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/allUsersView" class="sidebar-item"
+            >Përdoruesit</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/register" class="sidebar-item"
+            >Shto staf</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/RulesForma" class="sidebar-item"
+            >Shto rregulla</router-link
+          >
+          <router-link v-if="user.roleId === 1" to="/donations" class="sidebar-item"
+            >Donacionet</router-link
+          >
+         
           <router-link to="/addNotes" class="sidebar-item">Shenime</router-link>
           <router-link to="/applications" class="sidebar-item"
-            >Aplikimet</router-link
+          v-if="user.roleId === 1">Aplikimet</router-link
           >
-          <router-link to="/userActivities" class="sidebar-item"
+          <router-link v-if="user.roleId === 1" to="/userActivities" class="sidebar-item"
             >Monitorimi i aktiviteteve</router-link
           >
           <router-link to="/mySchedule" class="sidebar-item"
-            >Orari i punës</router-link
+          v-if=" user.roleId === 3 " >Orari i punës</router-link
           >
           <router-link to="/Calendar" class="sidebar-item"
-            >Kalendari</router-link
+          v-if="user.roleId === 1 || user.roleId === 2 || user.roleId === 3 " >Kalendari</router-link
+          >
+
+          <router-link to="/schedules" class="sidebar-item"
+          v-if="user.roleId === 1 || user.roleId === 2" >Orari i vullnetareve</router-link
           >
         </ul>
-        <h3 class="sidebar-heading">Shërbimet e tjera</h3>
         <ul class="sidebar-list">
-          <router-link to="/notifications" class="sidebar-item"
+          <router-link v-if="user.roleId === 1 "  to="/notifications" class="sidebar-item"
             >Lajmërime</router-link
           >
         </ul>
@@ -68,99 +75,29 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="fixed-icons" v-if="!isSidebarOpen">
-        <div class="icon">
-          <router-link to="/profile" class="icon"
-            ><i class="fas fa-user"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/settings" class="icon"
-            ><i class="fas fa-cogs"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/home" class="icon"
-            ><i class="fas fa-home"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/users" class="icon"
-            ><i class="fas fa-users"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/donations" class="icon"
-            ><i class="fas fa-money-bill"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/statistics" class="icon"
-            ><i class="fas fa-chart-bar"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/chat" class="icon"
-            ><i class="fas fa-comments"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/feedback" class="icon"
-            ><i class="fas fa-comment"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/suggestions" class="icon"
-            ><i class="fas fa-lightbulb"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/help" class="icon"
-            ><i class="fas fa-question-circle"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/documents" class="icon"
-            ><i class="fas fa-book"></i
-          ></router-link>
-        </div>
-        <div class="icon">
-          <router-link to="/notifications" class="icon">
-            <i @click="$emit('activate')" class="activate-icon fas fa-bell"></i>
-            <span v-if="unreadNotifications > 0" class="notification-badge">{{
-              unreadNotifications
-            }}</span>
-          </router-link>
-        </div>
-        <router-link to="/logout" class="icon"
-          ><i class="fas fa-sign-out-alt"></i
-        ></router-link>
-      </div>
-    </div>
-    <div class="content">
-      <router-view class="router-view-component"></router-view>
-    </div>
-  </div> -->
+     
       <div class="fixed-icons" v-if="!isSidebarOpen">
-        <div class="icon"><i class="fas fa-user"></i></div>
-
-        <div class="icon"><i class="fas fa-cogs"></i></div>
-        <div class="icon"><i class="fas fa-home"></i></div>
-        <div class="icon"><i class="fas fa-users"></i></div>
-        <div class="icon"><i class="fas fa-money-bill"></i></div>
-        <div class="icon"><i class="fas fa-chart-bar"></i></div>
-        <div class="icon"><i class="fas fa-comments"></i></div>
-        <div class="icon"><i class="fas fa-comment"></i></div>
-        <div class="icon"><i class="fas fa-lightbulb"></i></div>
-        <div class="icon"><i class="fas fa-question-circle"></i></div>
-        <div class="icon"><i class="fas fa-book"></i></div>
-        <div class="icon" @click="goToNotificationsPage">
+        <div  class="icon"><i class="fas fa-user"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-chart-bar"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-users"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-clipboard-list"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-user-plus"></i></div>
+        <div v-if="user.roleId === 1" class="icon"><i class="fas fa-money-bill"></i></div>
+        <div class="icon"><i class="fas fa-phone-alt"></i></div>
+        <div class="icon"><i class="fas fa-pencil-alt"></i></div>
+        <div v-if="user.roleId === 1 || user.roleId === 2" class="icon"><i class="fas fa-briefcase"></i></div>        
+        <div  v-if="user.roleId === 1" class="icon"><i class="fas fa-eye"></i></div>
+        <div  class="icon"><i class="fas fa-clock"></i></div>
+        <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+        <div v-if="user.roleId === 1" class="icon" @click="goToNotificationsPage">
           <i class="activate-icon fas fa-bell"></i>
           <span v-if="unreadNotifications > 0" class="notification-badge">{{
             unreadNotifications
           }}</span>
         </div>
+        <div class="icon"><i class="fas fa-comments"></i></div>     
         <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="icon"><i class="fas fa-cogs"></i></div>
       </div>
     </div>
     <div class="content">
@@ -280,7 +217,7 @@ export default {
   top: 20px;
   background: none;
   border: none;
-  color: #fff;
+  color: #b8b8b8;
   font-size: 24px;
   cursor: pointer;
   z-index: 2;
@@ -297,7 +234,6 @@ export default {
   text-align: left;
   font-family: Arial, Helvetica, sans-serif;
   width: 250px;
-  overflow-y: auto;
   transition: transform 0.3s ease;
   z-index: 1;
   transform: translateX(-250px);

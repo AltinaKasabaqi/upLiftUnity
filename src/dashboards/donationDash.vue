@@ -1,5 +1,4 @@
 <template>
-   <!-- <notification-bar></notification-bar> -->
   <div>
     <div class="dashboard">
       <div class="header">
@@ -26,9 +25,9 @@
                 <td>{{ donation.nameSurname }}</td>
                 <td>{{ donation.email }}</td>
                 <td>{{ donation.address }}</td>
-                <td>{{ donation.amount }}</td>
+                <td>{{ (donation.amount / 100).toFixed(2) }} €</td>
                 <td>{{ formatDate(donation.date) }}</td>
-                <td>
+                <td class="actions">
                   <button
                     class="btn-view"
                     @click="viewDonation(donation.donationID)"
@@ -78,11 +77,11 @@
   </div>
 </template>
 
+
 <script>
 import axios from "../api/axios.js";
 import Swal from "sweetalert2";
 import Modal from "./updateDonation.vue"; 
-// import NotificationBar from '../components/notificationBar.vue'; 
 
 
 
@@ -213,41 +212,45 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
 .btn-view,
 .btn-edit,
 .btn-delete {
   border: none;
   padding: 10px 20px;
-  margin:4px;
+  margin: 0;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .btn-view {
-  background-color: #74b976 ;
+  background-color: #caf5cc;
   color: white;
 }
 
 .btn-edit {
-  background-color:#ffbd03;
+  background-color: #f7f6cb;
   color: white;
 }
 
 .btn-delete {
-  background-color: #ED0800;
+  background-color: #fabdbb;
   color: rgb(255, 255, 255);
 }
 
 .btn-prev,
 .btn-next {
-  /* background-color: #74b976; */
   color: rgb(0, 0, 0);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  border:solid 1px #000000;
+  border: solid 1px #000000;
   background-color: white;
 }
 

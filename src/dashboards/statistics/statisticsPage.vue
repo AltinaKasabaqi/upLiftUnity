@@ -4,7 +4,7 @@
     <div class="dashboard-boxes">
       <activity-chart />
       <analysis-chart />
-      <payment-chart />
+      <payment-chart class="payment"/>
     </div>
   </div>
 </template>
@@ -50,7 +50,10 @@ export default {
   box-sizing: border-box;
   transition: box-shadow 0.3s ease;
 }
-
+.payment{
+  margin-left: 25%;
+  margin-top: 3%;
+}
 .dashboard-box:hover {
   box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
 }

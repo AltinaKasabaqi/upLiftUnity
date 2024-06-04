@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
               <label for="cv">CV:</label>
-              <input type="text" id="cv" required>
+              <input type="text" id="cv" v-model="formData.cv" required>
             </div>
             <div class="form-group">
               <label for="description">Mesazhi:</label>

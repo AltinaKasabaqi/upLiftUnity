@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="div">
       <h1>Notes Chat</h1>
       <NotesChat />
     </div>
@@ -16,8 +16,8 @@
   };
   </script>
   
-  <style>
-  #app {
+  <style scoped>
+  #div {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;

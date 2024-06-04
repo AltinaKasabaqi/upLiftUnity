@@ -1,37 +1,41 @@
 <template>
   <div>
-    <button @click="toggleSidebar" class="notification-icon">
-      <i class="fas fa-bell" style="font-size: 24px"></i>
-      <span v-if="unreadNotifications > 0" class="notification-badge">{{
-        unreadNotifications
-      }}</span>
-    </button>
-    <NotificationList
-      v-if="showSidebar"
-      :notifications="notifications"
-      @close="closeSidebar"
-    />
+    <div class="notification-container">
+      <div class="notification-content">
+        <i
+          v-if="unreadNotifications > 0"
+          class="fas fa-bell new-notification-icon"
+        ></i>
+        <div class="notification-list" v-if="notifications.length > 0">
+          <NotificationItem
+            v-for="notification in notifications"
+            :key="notification.id"
+            :notification="notification"
+            @click="notificationClick(notification)"
+            :class="{ 'new-notification': isNewNotification(notification) }"
+          />
+        </div>
+        <p v-else class="no-notifications-text">No notifications</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { connectToSignalR, disconnectFromSignalR } from "./signalR.js";
-import { fetchUserNotifications } from "./api.js";
+import { fetchUserNotifications, fetchAllNotifications } from "./api.js";
 import { getUserIdFromToken } from "../../authorization/authUserId.js";
 import { geRoleFromToken } from "../../authorization/authRoleId.js";
-import NotificationList from "./notificationList.vue";
-
-
+import NotificationItem from "./notificationItem.vue";
 
 export default {
   components: {
-    NotificationList,
+    NotificationItem,
   },
   data() {
     return {
       notifications: [],
       unreadNotifications: 0,
-      showSidebar: true,
       connection: null,
       userId: getUserIdFromToken(),
       roleName: geRoleFromToken(),
@@ -43,35 +47,44 @@ export default {
       this.roleName,
       this.receiveNotification
     );
+    this.fetchNotifications();
   },
 
   beforeUnmount() {
-    disconnectFromSignalR(this.connection, this.userId,this.roleName);
+    disconnectFromSignalR(this.connection, this.userId, this.roleName);
   },
 
   methods: {
-    toggleSidebar() {
-      this.showSidebar = !this.showSidebar;
-      if (this.showSidebar) {
-        this.unreadNotifications = 0;
-        fetchUserNotifications(this.userId).then((notifications) => {
-          this.notifications = notifications;
-          console.log("Fetched notifications: ", notifications);
-        });
-      }
+    fetchNotifications() {
+      fetchAllNotifications().then((notifications) => {
+        this.notifications = notifications;
+        console.log("Fetched notifications: ", notifications);
+      });
     },
-    closeSidebar() {
-      this.showSidebar = false;
+    showNotifications() {
+      this.unreadNotifications = 0;
+      fetchUserNotifications(this.userId).then((notifications) => {
+        this.notifications = notifications;
+        console.log("Fetched notifications: ", notifications);
+      });
     },
     receiveNotification(notification) {
-      console.log(" A notification has been received!");
+      console.log("A notification has been received!");
       this.notifications.unshift(notification);
-      if (!this.showSidebar) {
-        this.unreadNotifications++;
-      }
+      this.unreadNotifications++;
       console.log("Received notification: ", notification);
     },
-
+    notificationClick(notification) {
+      console.log("Notification clicked:", notification);
+    },
+    isNewNotification(notification) {
+     //The notifications that are 5 mins old are the new notifications!!!
+      const notificationDate = new Date(notification.createdOnUtc)
+      const currentTime = new Date();
+      const timeDiff = Math.abs(currentTime - notificationDate);
+      const diffMinutes = Math.ceil(timeDiff / (1000 * 60)); 
+      return diffMinutes <= 5;
+    },
     connectToSignalR() {
       this.connection = connectToSignalR(
         this.userId,
@@ -86,41 +99,22 @@ export default {
       );
     },
     disconnectFromSignalR() {
-      disconnectFromSignalR(this.connection, this.userId,this.roleName);
+      disconnectFromSignalR(this.connection, this.userId, this.roleName);
     },
   },
 };
 </script>
 
 <style scoped>
-.notification-icon {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-.notification-badge {
-  position: absolute;
-  top: -9px;
-  right: -11px;
-  background-color: rgb(212, 37, 37);
-  color: rgb(255, 255, 255);
-  border-radius: 50%;
-  padding: 3px;
-  font-size: 12px;
-}
-
-.sidebar {
+.notification-container {
   position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-height: 600px; 
   background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
   overflow-y: auto;
 }
@@ -129,16 +123,12 @@ export default {
   padding: 20px;
 }
 
-.close-icon {
+.new-notification-icon {
   position: absolute;
   top: 10px;
-  right: 10px;
-  cursor: pointer;
-  color: #999;
-}
-
-.close-icon:hover {
-  color: #666;
+  left: 10px;
+  color: #5cb85c;
+  font-size: 24px;
 }
 
 .notification-list {
@@ -151,5 +141,11 @@ export default {
   color: #999;
   text-align: center;
   margin-top: 20px;
+}
+
+.new-notification {
+  border: 2px solid #5cb85c;
+  border-radius: 5px;
+  padding: 10px;
 }
 </style>

@@ -1,12 +1,11 @@
 <template>
-    <div class="notification-item" :class="notification.variant" @click="markAsRead">
-      <h5 class="alert-heading">{{ notification.title }}</h5>
-      <p>{{ notification.text }}</p>
-      <hr />
-      <p class="mb-0 notification-footer">{{ getRelativeTime(notification.date) }}</p>
-    </div>
-  </template>
-  
+  <div class="notification-item" :class="notification.variant" @click="markAsRead">
+    <h5 class="alert-heading">{{ notification.title }}</h5>
+    <p>{{ notification.text }}</p>
+    <hr />
+    <p class="mb-0 notification-footer">{{ getRelativeTime(notification.createdOnUtc) }}</p>
+  </div>
+</template>
   <script>
   export default {
     props: {
@@ -33,13 +32,16 @@
           return `${days} day${days !== 1 ? "s" : ""} ago`;
         }
       },
+       markAsRead() {
+      this.$emit('markAsRead', this.notification);
+    }
     },
   };
   </script>
   
   <style scoped>
 .notification-item {
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;

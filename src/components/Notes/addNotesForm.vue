@@ -1,22 +1,19 @@
 <template>
   <div class="notes-chat-container">
-    <div class="notes-chat msger">
-      <header class="msger-header">
-        <div class="msger-header-title">
+    <div class="notes-chat ">
+      <header class="notes-header">
+        <div class="notes-header-title">
           <i class="fas fa-comment-alt"></i> Notes
         </div>
-        <div class="msger-header-options"></div>
       </header>
-
-      <main class="msger-chat notes-window">
+      <main class="note-chat notes-window">
         <div
           v-for="(note, index) in notes"
           :key="index"
-          class="msg note-message"
+          class="note-message"
         >
-          <div class="msg-bubble">
-            <div class="msg-info"></div>
-            <div class="msg-text">
+          <div class="note-bubble">
+            <div>
               <div
                 v-if="!note.editingTitle"
                 @dblclick="startEditingTitle(note)"
@@ -45,7 +42,7 @@
                 class="edit-mode"
               ></textarea>
             </div>
-            <div class="msg-actions">
+            <div class="note-actions">
               <i
                 id="icon-bin"
                 class="fas fa-trash-alt delete-icon"
@@ -56,19 +53,17 @@
         </div>
       </main>
 
-      <form class="msger-inputarea input-field" @submit.prevent="addNote">
+      <form class="note-inputarea input-field" @submit.prevent="addNote">
         <input
           v-model.trim="newNote.title"
           type="text"
-          class="msger-input"
           placeholder="Note Title"
         />
         <textarea
           v-model.trim="newNote.content"
-          class="msger-input"
           placeholder="Enter your note"
         ></textarea>
-        <button type="submit" class="msger-send-btn input-btn">Add Note</button>
+        <button type="submit" class="input-btn">Add Note</button>
       </form>
     </div>
   </div>
@@ -96,11 +91,10 @@ export default {
     async deleteNoteConfirm(note) {
       const confirmResult = await Swal.fire({
         icon: "warning",
-        title: "Are you sure?",
-        text: "This note will be permanently deleted.",
+        text: "Ky shënim do të fshihet përgjithmonë.",
         showCancelButton: true,
-        confirmButtonText: "Delete",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "Fshij",
+        cancelButtonText: "Anulo",
       });
 
       if (confirmResult.isConfirmed) {
@@ -119,8 +113,7 @@ export default {
 
           Swal.fire({
             icon: "success",
-            title: "Success!",
-            text: "Note deleted successfully.",
+            text: "Shënimet u fshin me sukses.",
           });
         } else {
           throw new Error("Delete operation failed.");
@@ -130,7 +123,7 @@ export default {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Failed to delete note. Please try again.",
+          text: "Provoni përsëri",
         });
       }
     },
@@ -155,7 +148,7 @@ export default {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Please fill in all fields.",
+          text: "Plotesoni të gjitha fushat",
         });
 
         return;
@@ -175,19 +168,8 @@ export default {
 
         this.newNote.title = "";
         this.newNote.content = "";
-
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: "Note added successfully.",
-        });
       } catch (error) {
         console.error("Error creating note:", error.response.data);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Failed to create note. Please try again.",
-        });
       }
     },
     startEditingTitle(note) {
@@ -209,23 +191,14 @@ export default {
       try {
         const noteID = note.noteId;
         console.log('id'+ noteID);
-        const response = await axios.put(
+         await axios.put(
           `http://localhost:5051/notes/Update/${noteID}`,
           note
         );
-        console.log("Note updated successfully:", response.data);
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: "Note updated successfully.",
-        });
+
       } catch (error) {
         console.error("Error updating note:", error.response.data);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Failed to update note. Please try again.",
-        });
+
       }
     },
   },
@@ -249,7 +222,7 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.msger-header {
+.notes-header {
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -258,11 +231,11 @@ export default {
   color: #495057;
 }
 
-.msger-header-title {
+.notes-header-title {
   font-size: 1.2em;
 }
 
-.msger-chat {
+.note-chat {
   flex: 1;
   overflow-y: auto;
   padding: 10px;
@@ -304,7 +277,7 @@ export default {
   width: 100%;
 }
 
-.msger-inputarea {
+.note-inputarea {
   display: flex;
   justify-content: space-between;
   align-items: stretch;

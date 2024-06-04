@@ -4,11 +4,23 @@
       <h1 class="form-title">Kyçu</h1>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" v-model="formData.email" class="form-control" required>
+        <input
+          type="email"
+          id="email"
+          v-model="formData.email"
+          class="form-control"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="password">Fjalëkalimi:</label>
-        <input type="password" id="password" v-model="formData.password" class="form-control" required>
+        <input
+          type="password"
+          id="password"
+          v-model="formData.password"
+          class="form-control"
+          required
+        />
       </div>
       <button type="submit" class="btn btn-primary">Kyçu</button>
     </form>
@@ -16,45 +28,46 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
-import Cookies from 'js-cookie';
-import Swal from 'sweetalert2';
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export default {
   data() {
     return {
       formData: {
-        email: '',
-        password: ''
-      }
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
     submitForm() {
-  axios.post('http://localhost:5051/login', this.formData)
-    .then(response => {
-      const token = response.data.token;
+      axios
+        .post("http://localhost:5051/login", this.formData)
+        .then((response) => {
+          const token = response.data.token;
 
-      
-      Cookies.set('token', token, {expires:1}); 
-      console.log("Tokeni i vendosur në cookie:", token); 
+          Cookies.set("token", token, { expires: 1 });
+          console.log("Tokeni i vendosur në cookie:", token);
 
-      this.$router.push({ name: 'Statistics' });
-    })
-    .catch(error => {
-        console.error('Gabim në kyçje', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Kredenciale te gabuar',
-          text: 'Emaili ose fjalëkalimi është i gabuar. Ju lutem provoni përsëri.'
+          this.$router.push({ name: "callsHistory" });
+        })
+        .catch((error) => {
+          console.error("Gabim në kyçje", error);
+          Swal.fire({
+            icon: "error",
+            title: "Kredenciale te gabuar",
+            text: "Emaili ose fjalëkalimi është i gabuar. Ju lutem provoni përsëri.",
+          }).then(() => {
+            console.log("Swal fire u ekzekutua.");
+          });
         });
-      });
-}
-  }
+    },
+  },
 };
 </script>
-
 
 <style>
 .login-container {
@@ -66,18 +79,16 @@ export default {
   align-items: center;
 }
 
-
-
 .login-form {
   background-color: rgb(252, 251, 249);
   padding: 20px;
   border-radius: 10px;
   width: 35%;
-  text-align: center; 
+  text-align: center;
 }
 
 .form-title {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .form-group {
@@ -90,7 +101,7 @@ label {
 }
 
 input {
-  width: calc(100% - 1.5rem); 
+  width: calc(100% - 1.5rem);
   padding: 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -103,7 +114,7 @@ input {
 
 .btn-primary {
   color: #fff;
-  background-color: #B8DDBE;
+  background-color: #b8ddbe;
   border: none;
   border-radius: 0.25rem;
   padding: 0.75rem 1.5rem;
@@ -112,6 +123,6 @@ input {
 }
 
 .btn-primary:hover {
-  background-color: #52A086;
+  background-color: #52a086;
 }
 </style>

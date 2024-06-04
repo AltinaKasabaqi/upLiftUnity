@@ -37,6 +37,7 @@ export default {
   name: 'BannerT'
 }
 </script>
+
 <style scoped>
 .container {
   display: flex;

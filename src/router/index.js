@@ -15,15 +15,22 @@ const routes = [
     meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] },
     children: [
       {
+        path: "/callsHistory",
+        name: "callsHistory",
+        component: () => import("@/dashboards/callsHistory.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+      },
+      {
         path: '/statistics',
         name: 'Statistics',
         component: () => import("@/dashboards/statistics/statisticsPage.vue"),
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin'] },
       },
       {
         path: "/chat",
         name: "LiveChat",
         component: () => import("@/components/liveChat.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+        meta: { requiresAuth: true, requiredRoles: ['SuperVisor', 'Volunteer','SuperAdmin'] }
       },
       {
         path: "/register",
@@ -56,12 +63,6 @@ const routes = [
         name: "DonationsDash",
         component: () => import("@/dashboards/donationDash.vue"),
         meta: { requiresAuth: true, requiredRoles: 'SuperAdmin' }
-      },
-      {
-        path: "/callsHistory",
-        name: "callsHistory",
-        component: () => import("@/dashboards/callsHistory.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
       },
       {
         path: "/updateCall/:id?",
@@ -111,7 +112,7 @@ const routes = [
         path: "/notifications",
         name: "Notifications",
         component: () => import("@/components/Notifications/notificationsBase.vue"),
-        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin', 'SuperVisor', 'Volunteer'] }
+        meta: { requiresAuth: true, requiredRoles: ['SuperAdmin']}
       },
       {
         path: "/callsForm",
@@ -129,7 +130,7 @@ const routes = [
         path: "/schedules",
         name: "Schedule",
         component: () => import("@/dashboards/schedulesDashboard.vue"),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requiredRoles:['SuperAdmin', 'SuperVisor']}
 
       },
       {
@@ -147,6 +148,7 @@ const routes = [
      
     ]
   },
+ 
 
   {
     path: "/Login",

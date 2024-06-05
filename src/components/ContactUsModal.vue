@@ -66,24 +66,12 @@ export default {
       rating: 0,
       hoverRating: 0,
       suggestion: '',
-      formData :{}
+      formData :{},
+      
     
     };
   },
   methods: {
-    closeModal() {
-      this.showModal = false;
-    },
-    rate(star) {
-      this.rating = star;
-      console.log(`Rated ${star} stars`);
-    },
-    setHover(index) {
-      this.hoverRating = index;
-    },
-    clearHover() {
-      this.hoverRating = 0;
-    },
     async submitFeedback() {
       if (!this.rating || !this.suggestion) {
         await Swal.fire({
@@ -97,9 +85,11 @@ export default {
         rating :this.rating,
         suggestion : this.suggestion
       }
+      console.log(this.formData);
       try {
         const response = await axios.post('http://localhost:5051/api/feedback/AddFeedBack', this.formData);
         if (response && response.status === 200) {
+          console.log(this.formData);
           await Swal.fire({
             icon: 'success',
             title: 'Sukses',
@@ -120,8 +110,23 @@ export default {
           text: this.errorMessage || 'Gabim gjatë shtimit te vleresimeve!'
         });
       }
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+    rate(star) {
+      this.rating = star;
+      console.log(`Rated ${star} stars`);
+    },
+    setHover(index) {
+      this.hoverRating = index;
+    },
+    clearHover() {
+      this.hoverRating = 0;
+    },
+    
     }
-  }
+  
 };
 </script>
 

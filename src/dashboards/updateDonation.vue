@@ -107,7 +107,7 @@ export default {
             //Used for debuggingf
         console.log(this.editedDonation.nameSurname, this.editedDonation.email, this.editedDonation.date, this.editedDonation.amount);
             
-            await axios.put('/donations/UpdateDonation', this.editedDonation);
+            await axios.put('http://localhost:5051/api/donations/UpdateDonation', this.editedDonation);
 
             this.$emit("update-donation", this.editedDonation);
             

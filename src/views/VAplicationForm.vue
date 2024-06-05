@@ -2,7 +2,7 @@
   <NavBar></NavBar>
   <div class="container">
     <div class="title">
-      <h1>Bëju pjesë e UpLiftUnity</h1>
+      <h1>Bëhu pjesë e UpLiftUnity</h1>
     </div>
     <div class="content">
       <div class="image-container">

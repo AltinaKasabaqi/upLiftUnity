@@ -3,8 +3,8 @@
     <table>
       <thead>
         <tr>
-          <th>Rating</th>
-          <th>Feedback</th>
+          <th>Vleresimi</th>
+          <th>Mesazhi</th>
           <th >Veprime</th>
         </tr>
       </thead>
@@ -12,7 +12,7 @@
         <tr v-for="feedback in feedbacks" :key="feedback.id">
           <td>{{ getStars(feedback.rating) }}</td>
           <td>{{ feedback.suggestion }}</td>
-         <td> <button class="btn-delete" @click="deleteFeedback(feedback.feedbackId)">Delete</button></td>
+         <td> <button class="delete-btn" @click="deleteFeedback(feedback.feedbackId)">Fshije</button></td>
         </tr>
       </tbody>
     </table>
@@ -96,4 +96,19 @@ td {
   text-align: center;
   font-size: 1.2em;
 }
+.delete-btn {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete-btn {
+    border:solid 1px #f44336;
+    color: black;
+    font-size: 14px;
+    background-color: white;
+  }
+  
 </style>

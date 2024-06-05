@@ -1,6 +1,6 @@
 <template>
      <RouterLink to="/RulesForma">
-      <button class="addBtn">Shto rregull <i class="fas fa-plus"></i></button>
+      <button class="add-btn">Shto rregull <i class="fas fa-plus"></i></button>
     </RouterLink>
     <div class="container">
       <table>
@@ -17,7 +17,7 @@
             <td>{{ rule.ruleDesc }}</td>
             <td class="actions" v-if="userRole === 'SuperAdmin'">
               <button class="btn-edit" @click="editRule(rule)">Edit</button>
-              <button class="btn-delete" @click="deleteRule(rule.ruleId)">Delete</button>
+              <button class="delete-btn" @click="deleteRule(rule.ruleId)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -130,6 +130,39 @@ export default {
   td {
     text-align: center;
     font-size: 1.2em;
+  }
+  .delete-btn,
+  .add-btn {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-edit {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border: solid 1px #007bff; 
+    color: black;
+    font-size: 14px;
+    background-color: white;
+}
+  .delete-btn {
+    border:solid 1px #f44336;
+    color: black;
+    font-size: 14px;
+    background-color: white;
+  }
+  
+  .add-btn {
+    background-color: #9ab59a;
+    color: white;
+    margin-left:21%;
+    
+    
   }
   </style>
   

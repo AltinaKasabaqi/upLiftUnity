@@ -12,7 +12,7 @@
                 <th>Emri dhe Mbiemri</th>
                 <th>Email</th>
                 <th>Adresa</th>
-                <th>Shuma ($)</th>
+                <th>Shuma (€)</th>
                 <th>Data</th>
                 <th>Veprimet</th>
               </tr>
@@ -32,16 +32,16 @@
                     class="btn-view"
                     @click="viewDonation(donation.donationID)"
                   >
-                    View
+                    Shiko
                   </button>
                   <button class="btn-edit" @click="editDonation(donation)">
-                    Edit
+                    Nrysho
                   </button>
                   <button
                     class="btn-delete"
                     @click="deleteDonation(donation.donationID)"
                   >
-                    Delete
+                    Fshij
                   </button>
                 </td>
               </tr>
@@ -55,7 +55,7 @@
           :disabled="currentPage === 1"
           @click="prevPage"
         >
-          Previous
+          Prapa
         </button>
         <span>Page {{ currentPage }} of {{ pageCount }}</span>
         <button
@@ -63,7 +63,7 @@
           :disabled="currentPage === pageCount"
           @click="nextPage"
         >
-          Next
+          Para
         </button>
       </div>
     </div>

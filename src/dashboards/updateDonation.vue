@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Shuma ($):</label>
+          <label class="label">Shuma (€):</label>
           <div class="control">
             <input
               class="input is-rounded custom-input"

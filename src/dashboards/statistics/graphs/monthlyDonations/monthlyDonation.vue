@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-box">
-    <h2>Monthly Donation Chart</h2>
+    <h2>Donacionet Mujore</h2>
     <div v-if="chartData.labels.length > 0">
       <component :is="chartType === 'pie' ? 'PieChart' : 'BarChart'"
                  :data="chartData"

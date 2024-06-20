@@ -7,9 +7,9 @@ async function testRejectApplication() {
         await driver.get('http://localhost:8080/#/login');
         
         await driver.findElement(By.id('email')).sendKeys('admin@gmail.com');
-        await driver.findElement(By.id('password')).sendKeys('admini', Key.RETURN);
+        await driver.findElement(By.id('password')).sendKeys('admin', Key.RETURN);
 
-        await driver.wait(until.urlIs('http://localhost:8080/#/statistics'), 10000);
+        await driver.wait(until.urlIs('http://localhost:8080/#/callsHistory'), 10000);
 
         await driver.get('http://localhost:8080/#/applications');
 

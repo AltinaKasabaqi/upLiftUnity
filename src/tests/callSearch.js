@@ -7,16 +7,16 @@ async function testSearchBar() {
         await driver.get('http://localhost:8080/#/login');
 
         await driver.findElement(By.id('email')).sendKeys('admin@gmail.com');
-        await driver.findElement(By.id('password')).sendKeys('admini', Key.RETURN);
+        await driver.findElement(By.id('password')).sendKeys('admin', Key.RETURN);
 
-        await driver.wait(until.urlIs('http://localhost:8080/#/statistics'), 10000);
+        await driver.wait(until.urlIs('http://localhost:8080/#/callsHistory'), 10000);
 
         await driver.get('http://localhost:8080/#/callsHistory');
 
         await driver.wait(until.elementLocated(By.css('.search-bar input')), 20000);
         let searchBar = await driver.findElement(By.css('.search-bar input'));
 
-        await searchBar.sendKeys('hardhuca');
+        await searchBar.sendKeys('nita');
         
         await driver.wait(async () => {
             let filteredItems = await driver.findElements(By.xpath("//tbody/tr"));
@@ -27,7 +27,7 @@ async function testSearchBar() {
 
         for (let row of rows) {
             let callerNickname = await row.findElement(By.xpath("td[1]")).getText();
-            assert(callerNickname.toLowerCase().includes('hardhuca'), `Caller Nickname does not match: ${callerNickname}`);
+            assert(callerNickname.toLowerCase().includes('nita'), `Caller Nickname does not match: ${callerNickname}`);
         }
 
         console.log('Test passed: All filtered rows contain the search query in Caller Nickname.');

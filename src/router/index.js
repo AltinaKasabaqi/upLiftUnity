@@ -183,6 +183,34 @@ const routes = [
     name: "ContactUsModal",
     component: () => import("@/components/ContactUsModal.vue"),
   },
+  {
+    path: "/planetForm",
+    name: "PlanetForm",
+    component: () => import("@/views/planetForm.vue"),
+  },
+  {
+    path: "/sateliteForm",
+    name: "SateliteForm",
+    component: () => import("@/views/sateliteForm.vue"),
+  },
+  {
+    path: "/planetDsh",
+    name: "PlanetDashb",
+    component: () => import("@/views/planetDashboard.vue"),
+  },
+
+
+  {
+    path: "/planetU/:name?",
+    name: "PlanetU",
+    component: () => import("@/views/editPlanet.vue"),
+  },
+  {
+    path: "/sateliteD",
+    name: "SateliteD",
+    component: () => import("@/views/sateliteDashboard.vue"),
+  },
+
 
 ];
 

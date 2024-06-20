@@ -21,9 +21,9 @@ async function testLoginWithValidCredentials() {
 
         await driver.sleep(2000);
 
-        await driver.wait(until.urlContains('statistics'), 20000);
+        await driver.wait(until.urlContains('callsHistory'), 20000);
         let currentUrl = await driver.getCurrentUrl();
-        if (currentUrl.includes('statistics')) {
+        if (currentUrl.includes('callsHistory')) {
             console.log('Testimi i login-it kaloi me sukses!');
         } else {
             console.log('Testimi i login-it dështoi.');

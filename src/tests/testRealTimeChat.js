@@ -9,7 +9,7 @@ async function testChat() {
         await driver.findElement(By.id('email')).sendKeys('ds61483@ubt-uni.net');
         await driver.findElement(By.id('password')).sendKeys('1234', Key.RETURN);
 
-        await driver.wait(until.urlIs('http://localhost:8080/#/statistics'), 10000);
+        await driver.wait(until.urlIs('http://localhost:8080/#/callsHistory'), 10000);
 
         await driver.get('http://localhost:8080/#/chat');
 

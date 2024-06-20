@@ -9,10 +9,10 @@ async function testCallRegistrationForm() {
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('email'))), 20000);
 
         await driver.findElement(By.id('email')).sendKeys('admin@gmail.com'); 
-        await driver.findElement(By.id('password')).sendKeys('admini'); 
+        await driver.findElement(By.id('password')).sendKeys('admin'); 
         await driver.findElement(By.xpath("//button[text()='Kyçu']")).click();
 
-        await driver.wait(until.urlIs('http://localhost:8080/#/statistics'), 20000);
+        await driver.wait(until.urlIs('http://localhost:8080/#/callsHistory'), 20000);
       
         await driver.get('http://localhost:8080/#/callsForm');
 

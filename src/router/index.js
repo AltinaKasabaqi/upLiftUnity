@@ -4,8 +4,8 @@ import authorizeMiddleware from '../authorization/auth';
 const routes = [
   {
     path: "/",
-    name: "GroupsPage",
-    component: () => import("@/views/GroupsPage.vue"),
+    name: "HomePage",
+    component: () => import("@/views/HomePage.vue"),
     meta: { requiresAuth: false }
   },
   {
